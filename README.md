@@ -20,6 +20,10 @@ e2-standard-4 (4 vCPUs, 16 GB memory)
 
 Ubuntu 20.04 LTS
 
+**Cloud API access scopes**
+
+Allow full access to all Cloud APIs
+
 ### Install Java
 #### Terminal
 ```
@@ -96,3 +100,14 @@ tcp:8080
     - enter 'glome-capsa-jenkins-user' as user
     
 
+### Install gcloud
+
+```
+echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+sudo apt-get install apt-transport-https ca-certificates gnupg
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+sudo apt-get update && sudo apt-get install google-cloud-sdk
+sudo apt-get install kubectl
+gcloud init --console-only
+```
+see https://cloud.google.com/sdk/docs/downloads-apt-get
