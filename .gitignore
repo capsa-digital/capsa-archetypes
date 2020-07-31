@@ -1,0 +1,16 @@
+.git
+.gradle
+
+**/build/
+**/out/
+**/bin/
+
+.project
+
+/.idea/*
+!/.idea/runConfigurations
+
+**/main/protoGen
+.DS_Store
+
+**/.attach_pid*
