@@ -1,6 +1,6 @@
 # glome-capsa-infra
 
-## Install Jenkins
+## Install Jenkins Master
 
 ### Create VM Instance
 
@@ -98,7 +98,60 @@ tcp:8080
 - add github Credentials user/password 
     - go to https://github.com/settings/tokens to generate token and use token as password
     - enter 'glome-capsa-jenkins-user' as user
-    
+
+## Install Jenkins Agent
+
+### Create VM Instance
+
+**Name**
+
+jenkins-agent
+
+**Machine type**
+
+e2-standard-4 (4 vCPUs, 16 GB memory)
+
+**Boot disk**
+
+50GB
+
+**OS**
+
+Ubuntu 20.04 LTS
+
+**Cloud API access scopes**
+
+Allow full access to all Cloud APIs
+
+### Install Java
+
+#### Terminal
+```
+> sudo apt update && sudo apt upgrade
+> wget https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz
+> tar -xvf openjdk-11+28_linux-x64_bin.tar.gz
+```
+
+#### Create .bashrc
+```
+export JAVA_HOME=~/jdk-11
+export PATH=$JAVA_HOME/bin:$PATH
+```
+
+#### Terminal
+```
+. .bashrc
+```
+
+### Install docker
+```
+sudo apt install docker.io
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER
+newgrp docker
+docker run hello-world
+```
+see https://docs.docker.com/engine/install/ubuntu/
 
 ### Install gcloud
 
