@@ -164,3 +164,13 @@ sudo apt-get install kubectl
 gcloud init --console-only
 ```
 see https://cloud.google.com/sdk/docs/downloads-apt-get
+
+### Connect agent
+
+#### Upload agent.jar
+
+#### 
+```
+java -jar agent.jar -jnlpUrl http://10.128.0.6:8080/computer/agent/slave-agent.jnlp -secret d6dbd38a39f6eeca182d9b2e9c696947e3a4e2732c670912444d0ef54781f6c7 -workDir "~/jenkins" &
+```
+
