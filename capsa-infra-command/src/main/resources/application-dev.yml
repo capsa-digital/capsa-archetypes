@@ -1,23 +1,14 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://metrofox-do-user-2192421-0.db.ondigitalocean.com:25060/metrofox-dev?sslmode=require
-    username: metrofox-admin
-    hikari:
-      connectionTimeout: 20000
-      maximumPoolSize: 5
-  jpa:
-    hibernate:
-      ddl-auto: create
   kafka:
     bootstrap-servers:
-      - pkc-43n10.us-central1.gcp.confluent.cloud:9092
+      - pkc-4yyd6.us-east1.gcp.confluent.cloud:9092
     properties:
       # CCloud broker connection parameters
       ssl.endpoint.identification.algorithm: https
       sasl.mechanism: PLAIN
       request.timeout.ms: 20000
       retry.backoff.ms: 500
-      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="AW3LELBZCR6ASAGR" password="dL716uS8fukzJ0Dam2u/934okavvLSE7O3/MBgBAdyhj1+eGUVaUI5sOTZLmQ4z8";
+      sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="QVA55CKWYUP27PWE" password="g73Hdd2yvqVO10YKdEFzjLF19Td1xNk2K5nsuxO3JmLQHhBuSarL8l4HLYis8yko";
       security.protocol: SASL_SSL
 
       # CCloud Schema Registry Connection parameter
