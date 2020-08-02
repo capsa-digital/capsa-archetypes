@@ -1,0 +1,27 @@
+pluginManagement {
+    apply from: 'dependency.gradle'
+    plugins {
+        id 'org.jetbrains.kotlin.jvm' version "${versions.kotlinVersion}"
+        id 'org.jetbrains.kotlin.plugin.allope' version "${versions.kotlinVersion}"
+        id 'org.jetbrains.kotlin.plugin.noarg' version "${versions.kotlinVersion}"
+        id 'org.jetbrains.kotlin.plugin.spring' version "${versions.kotlinVersion}"
+        id 'org.jetbrains.kotlin.plugin.jpa' version "${versions.kotlinVersion}"
+        id 'io.gitlab.arturbosch.detekt' version "${versions.detektVersion}"
+        id 'io.spring.dependency-management' version "${versions.springDependencyManagementVersion}"
+        id 'org.owasp.dependencycheck' version "${versions.dependencyCheckGradleVersion}"
+        id 'org.springframework.boot' version "${versions.springBootVersion}"
+        id "com.gradle.enterprise" version "${versions.gradleEnterpriseVersion}"
+    }
+}
+
+plugins {
+   id 'com.gradle.enterprise'
+}
+
+rootProject.name = 'capsa-infra'
+include 'capsa-infra-core'
+include 'capsa-infra-eventbus'
+include 'capsa-infra-command'
+include 'capsa-infra-query'
+include 'capsa-infra-it'
+

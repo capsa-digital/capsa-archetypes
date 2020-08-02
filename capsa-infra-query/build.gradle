@@ -1,0 +1,14 @@
+dependencies {
+    implementation(
+            'com.fasterxml.jackson.module:jackson-module-kotlin',
+            'com.h2database:h2',
+            'org.jetbrains.kotlin:kotlin-reflect',
+            'org.jetbrains.kotlin:kotlin-stdlib-jdk8',
+            'org.springframework.boot:spring-boot-starter-data-jpa',
+            'org.springframework.boot:spring-boot-starter-web',
+            'org.springframework.cloud:spring-cloud-function-kotlin',
+            'org.springframework.cloud:spring-cloud-starter-function-web',
+            project(':capsa-infra-core'),
+            project(':capsa-infra-eventbus')
+    )
+}
