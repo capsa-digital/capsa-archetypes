@@ -1,4 +1,4 @@
-# glome-capsa-infra
+# capsa-infra
 
 ## Install Jenkins Master
 
@@ -93,10 +93,10 @@ tcp:8080
 
 #### Create new GitHub Organization
 
-- name glome-capsa
+- name capsa
 - add github Credentials user/password 
     - go to https://github.com/settings/tokens to generate token and use token as password
-    - enter 'glome-capsa-jenkins-user' as user
+    - enter 'capsa-jenkins-user' as user
 
 ### Install gcloud
 
