@@ -1,0 +1,29 @@
+apply plugin: 'kotlin-spring'
+apply plugin: 'kotlin-jpa'
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+    implementation(
+            'com.fasterxml.jackson.module:jackson-module-kotlin',
+            'com.h2database:h2',
+            'org.apache.commons:commons-lang3',
+            'org.jetbrains.kotlin:kotlin-noarg',
+            'org.jetbrains.kotlin:kotlin-reflect',
+            'org.jetbrains.kotlin:kotlin-stdlib-jdk8',
+            'org.springframework.boot:spring-boot-starter-actuator',
+            'org.springframework.boot:spring-boot-starter-data-jpa',
+            'org.springframework.boot:spring-boot-starter-web',
+            'org.springframework.cloud:spring-cloud-function-kotlin',
+            'org.springframework.cloud:spring-cloud-starter-function-web',
+            'org.springframework.security:spring-security-core',
+            'org.springframework.cloud:spring-cloud-starter-stream-kafka',
+            'io.projectreactor.kotlin:reactor-kotlin-extensions',
+            'org.springframework.security:spring-security-core',
+            project(':capsa-infra-core'),
+            project(':capsa-infra-eventbus')
+    )
+}
+
+
