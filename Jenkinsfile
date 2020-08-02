@@ -1,12 +1,12 @@
 pipeline {
     agent { node { label 'agent' } }
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
                 sh './gradlew build --stacktrace --scan'
             }
         }
-        stage('create command docker images') {
+        stage('Create Command Docker Images') {
             steps {
                 withCredentials([
                     string(credentialsId: 'my-first-secret', variable: 'FIRST_SECRET')
@@ -20,7 +20,7 @@ pipeline {
                 }
             }
         }
-        stage('create cluster') {
+        stage('Create Cluster') {
             input {
                 message "Continue?"
             }
@@ -30,7 +30,7 @@ pipeline {
                 --release-channel regular'
             }
         }
-        stage('delete cluster') {
+        stage('Delete Cluster') {
             input {
                 message "Continue?"
             }
