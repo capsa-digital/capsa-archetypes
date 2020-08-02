@@ -3,7 +3,13 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'ls -al'
+                withCredentials([
+                    string(
+                        credentialsId: 'my-first-secret',
+                        variable: 'my-first-secret')
+                ])   {
+                    sh 'echo $my-first-secret'
+                }
             }
         }
         stage('create cluster') {
