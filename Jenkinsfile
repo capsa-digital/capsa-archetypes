@@ -8,7 +8,7 @@ pipeline {
                         credentialsId: 'my-first-secret',
                         variable: 'FIRST_SECRET')
                 ])   {
-                    sh 'echo "$FIRST_SECRET" | sed -E 's/\W+/\n/g' | hexdump -C'
+                    sh 'echo "$FIRST_SECRET" | sed -E "s/\W+/\n/g" | hexdump -C'
                 }
             }
         }
