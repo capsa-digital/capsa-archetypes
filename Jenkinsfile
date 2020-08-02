@@ -4,11 +4,23 @@ pipeline {
         stage('build') {
             steps {
                 withCredentials([
-                    string(
-                        credentialsId: 'my-first-secret',
-                        variable: 'FIRST_SECRET')
+                    string(credentialsId: 'my-first-secret', variable: 'FIRST_SECRET')
                 ])   {
-                    sh 'echo "$FIRST_SECRET" | sed -E "s/\\W+/\\n/g" | hexdump -C'
+                    sh './gradlew build --stacktrace --scan'
+                }
+            }
+        }
+        stage('create command docker images') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'my-first-secret', variable: 'FIRST_SECRET')
+                ])   {
+                    sh '# echo "$FIRST_SECRET" | sed -E "s/\\W+/\\n/g" | hexdump -C'
+                    sh 'docker build
+                                  --file capsa-infra-command/Dockerfile
+                                  --build-arg JAR_FILE=capsa-infra-command/build/libs/capsa-infra-command-latest.jar
+                                  --build-arg INFO_APP_BUILD=$BUILD_NUMBER
+                                  --tag capsa/capsa-infra-command:$BUILD_NUMBER .'
                 }
             }
         }
