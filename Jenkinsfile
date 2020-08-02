@@ -6,9 +6,9 @@ pipeline {
                 withCredentials([
                     string(
                         credentialsId: 'my-first-secret',
-                        variable: 'my-first-secret')
+                        variable: 'FIRST_SECRET')
                 ])   {
-                    sh 'echo $my-first-secret'
+                    sh 'echo "$FIRST_SECRET" | sed -E 's/\W+/\n/g' | hexdump -C'
                 }
             }
         }
