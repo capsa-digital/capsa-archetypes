@@ -70,6 +70,7 @@ docker container run --name jenkins-blueocean --detach --restart unless-stopped 
   --volume jenkins-data:/var/jenkins_home \
   --volume jenkins-docker-certs:/certs/client:ro \
   --publish 8080:8080 --publish 50000:50000 jenkinsci/blueocean
+sudo usermod -a -G docker ${USER}
 ```
 see https://www.jenkins.io/doc/book/installing/
 
@@ -107,6 +108,7 @@ curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyr
 sudo apt-get update && sudo apt-get install google-cloud-sdk
 sudo apt-get install kubectl
 gcloud init --console-only
+gcloud auth configure-docker
 ```
 see https://cloud.google.com/sdk/docs/downloads-apt-get
 
