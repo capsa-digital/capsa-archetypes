@@ -2,7 +2,6 @@ package digital.capsa.eventbus
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import digital.capsa.core.exceptions.EventPublishingException
-import digital.capsa.eventbus.AggregateOutput
 import digital.capsa.eventbus.repo.EventRecord
 import digital.capsa.eventbus.repo.EventRepository
 import org.slf4j.Logger
@@ -17,7 +16,7 @@ import java.util.UUID
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.findAnnotation
 
-@EnableBinding(value = [EventBusOutput::class, AggregateOutput::class])
+@EnableBinding(value = [EventBusOutput::class])
 open class EventPublisher {
 
     private val eventLogger: Logger = LoggerFactory.getLogger("EventPublisher")
