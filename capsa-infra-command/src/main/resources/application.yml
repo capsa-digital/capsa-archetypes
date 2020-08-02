@@ -1,0 +1,45 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    stream:
+      binders:
+        kafka:
+          type: kafka
+      bindings:
+        event-bus-output:
+          binder: kafka
+          group: capsaApp
+        event-bus-input:
+          binder: kafka
+          group: capsaApp
+      kafka:
+        binder:
+          headers: eventType
+        bindings:
+          event-bus-output:
+            producer:
+              configuration:
+                key:
+                  serializer: org.apache.kafka.common.serialization.StringSerializer
+          event-bus-input:
+            consumer:
+              configuration:
+                key:
+                  serializer: org.apache.kafka.common.serialization.StringSerializer
+      inMemory:
+        binder:
+          headers: eventType
+server:
+  servlet:
+    context-path: /api
+info:
+  app:
+    name:  Capsa Application
+    version: 0.0.2

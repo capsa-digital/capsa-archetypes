@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+  jpa:
+    properties:
+    ###### generate schema ########
+    #      javax:
+    #        persistence:
+    #          schema-generation:
+    #            create-source: metadata
+    #            scripts:
+    #              action: create
+    #              create-target: metrofox-monolith/build/db/create.sql
+    hibernate:
+      ddl-auto: create
+  cloud:
+    stream:
+      bindings:
+        event-bus-output:
+          destination: metrofox-event-bus-local
+          binder: kafka
+        event-bus-input:
+          destination: metrofox-event-bus-local
+          binder: kafka
+      schema-registry-client:
+        endpoint: http://localhost:8081
+info:
+  app:
+    env: local
+metrofox:
+  apiGateway:
+    uri: http://localhost:8080
+  app:
+    uri: http://localhost
