@@ -29,9 +29,6 @@ open class EventPublisher {
     private lateinit var eventBusOutput: EventBusOutput
 
     @Autowired
-    private lateinit var aggregateOutput: AggregateOutput
-
-    @Autowired
     private lateinit var eventRepository: EventRepository
 
     @Autowired
@@ -47,7 +44,6 @@ open class EventPublisher {
                 .setHeader(KafkaHeaders.MESSAGE_KEY, event.meta.partitionKey)
                 .setHeader("eventType", eventType).build()
         try {
-            aggregateOutput.output().send(message)
             eventBusOutput.output().send(message)
             val eventRecord = EventRecord(
                     id = event.id,
