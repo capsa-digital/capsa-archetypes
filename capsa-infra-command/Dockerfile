@@ -10,4 +10,6 @@ COPY ${JAR_FILE} /opt/app/app.jar
 ENV INFO_APP_BUILD=${INFO_APP_BUILD}
 ENV SPRING_PROFILES_ACTIVE=${INFO_APP_ENV}
 
+EXPOSE 8080
+
 CMD java -jar /opt/app/app.jar

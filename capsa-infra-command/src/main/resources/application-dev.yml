@@ -37,28 +37,13 @@ spring:
           replication-factor: 3
       bindings:
         event-bus-output:
-          destination: metrofox-event-bus-dev
+          destination: capsa-event-bus-dev
           binder: kafka
         event-bus-input:
-          destination: metrofox-event-bus-dev
+          destination: capsa-event-bus-dev
           binder: kafka
-        aggregate-output:
-          destination: metrofox-aggregates-dev
-          binder: inMemory
-        aggregate-input:
-          destination: metrofox-aggregates-dev
-          binder: inMemory
       schema-registry-client:
         endpoint: https://psrc-lz3xz.us-central1.gcp.confluent.cloud
-  mail:
-    host: test-doubles.metrofoxsecurity.com
-    port: 3025
-    noreply:
-      user: noreply@metrofoxsecurity.com
-      password: Password1
-    info:
-      user: info@metrofoxsecurity.com
-      password: Password1
 info:
   app:
     env: dev
