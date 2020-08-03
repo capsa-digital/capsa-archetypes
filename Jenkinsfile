@@ -16,7 +16,10 @@ pipeline {
                                   --file capsa-infra-command/Dockerfile \
                                   --build-arg JAR_FILE=capsa-infra-command/build/libs/capsa-infra-command-latest.jar \
                                   --build-arg INFO_APP_BUILD=$BUILD_NUMBER \
-                                  --tag capsa/capsa-infra-command:$BUILD_NUMBER .'
+                                  --tag gcr.io/capsa-digital/capsa-infra-command:$BUILD_NUMBER \
+                                  --tag gcr.io/capsa-digital/capsa-infra-command:latest .'
+                    sh 'docker push gcr.io/capsa-digital/capsa-infra-command:$BUILD_NUMBER'
+                    sh 'docker push gcr.io/capsa-digital/capsa-infra-command:latest'
                 }
             }
         }
