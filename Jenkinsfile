@@ -38,6 +38,7 @@ pipeline {
                 sh 'kubectl create deployment command-app --image=gcr.io/capsa-digital/capsa-infra-command:$BUILD_NUMBER'
                 sh 'kubectl scale deployment command-app --replicas=3'
                 sh 'kubectl autoscale deployment command-app --cpu-percent=80 --min=1 --max=5'
+                sh 'kubectl set env deployment/command-app --env “SPRING_PROFILES_ACTIVE=dev”'
                 sh 'kubectl get pods'
             }
         }
