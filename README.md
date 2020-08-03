@@ -1,5 +1,29 @@
 # capsa-infra
 
+## Create GCP project
+
+###  Create new project 
+
+###  Create firewall rule 
+
+**Name**
+
+allow-http-8080
+
+**Target tags**
+
+http-server
+
+**IP ranges**
+
+0.0.0.0/0
+
+**Protocols and ports**
+
+tcp:8080 
+
+### Add Artifact Registry Administrator role to Service account
+
 ## Install Jenkins Master
 
 ### Create VM Instance
@@ -27,29 +51,22 @@ Allow full access to all Cloud APIs
 ### Install Java
 #### Upload and extract
 ```
-> sudo apt update && sudo apt upgrade
-> sudo apt install default-jdk
+sudo apt update \
+&& sudo apt upgrade \
+&& sudo apt install default-jdk
 ```
-
-#### Update .bashrc - append the foloowing
+#### Verify Java version
 ```
-export JAVA_HOME=~/jdk-11
-export PATH=$JAVA_HOME/bin:$PATH
+java -version
 ```
-
-#### Resource .bashrc
-```
-. .bashrc
-```
-
 ### Install docker
 ```
-sudo apt install docker.io
-sudo systemctl enable --now docker
-sudo groupadd docker
-sudo usermod -aG docker $USER
-newgrp docker
-docker run hello-world
+sudo apt install docker.io \
+&& sudo systemctl enable --now docker \
+&& sudo groupadd docker \
+&& sudo usermod -aG docker $USER \
+&& newgrp docker \
+&& docker run hello-world 
 ```
 see https://docs.docker.com/engine/install/ubuntu/
 
@@ -70,23 +87,8 @@ docker container run --name jenkins-blueocean --detach --restart unless-stopped 
   --volume jenkins-data:/var/jenkins_home \
   --volume jenkins-docker-certs:/certs/client:ro \
   --publish 8080:8080 --publish 50000:50000 jenkinsci/blueocean
-sudo usermod -a -G docker ${USER}
 ```
 see https://www.jenkins.io/doc/book/installing/
-
-###  Create firewall rule 
-
-**Target tags**
-
-http-server https-server
-
-**IP ranges**
-
-0.0.0.0/0
-
-**Protocols and ports**
-
-tcp:8080 
 
 ### Setup Jenkins
 
@@ -146,7 +148,7 @@ sudo nano /usr/sbin/jenkins-agent
 with content
 ```
 #!/bin/sh
-sudo /usr/bin/java -jar /usr/lib/agent.jar -jnlpUrl http://10.128.0.6:8080/computer/agent/slave-agent.jnlp -secret d6dbd38a39f6eeca182d9b2e9c696947e3a4e2732c670912444d0ef54781f6c7 -workDir "~/jenkins"
+sudo /usr/bin/java -jar /usr/lib/agent.jar -jnlpUrl http://10.128.0.2:8080/computer/agent/slave-agent.jnlp -secret d342eef4123444c6fa66f637b6df4bba7f4bede60463d5f99e01e7c55fdf99cc -workDir "/je>
 ```
 
 ```
