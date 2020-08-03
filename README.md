@@ -166,5 +166,15 @@ to stop
 ```
 sudo systemctl stop jenkins-agent
 ```
+### Debugging deployed containers
 
+#### Open Kubernetes clusters Cloud Shell
+```
+kubectl get pods
+kubectl get service
+kubectl describe pods
+kubectl logs command-app-xxxxxxxxx-xxxxx
+```
+
+curl -i http://10.0.1.4:8080/api/actuator/info
 

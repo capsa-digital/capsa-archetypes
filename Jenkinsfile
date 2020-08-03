@@ -38,8 +38,10 @@ pipeline {
                 sh 'kubectl create deployment command-app --image=gcr.io/capsa-digital/capsa-infra-command:$BUILD_NUMBER'
                 sh 'kubectl scale deployment command-app --replicas=3'
                 sh 'kubectl autoscale deployment command-app --cpu-percent=80 --min=1 --max=5'
-                sh 'kubectl set env deployment/command-app --env “SPRING_PROFILES_ACTIVE=dev”'
-                sh 'kubectl get pods'
+                sh 'kubectl set env deployment/command-app --env SPRING_PROFILES_ACTIVE=dev'
+                sh 'kubectl expose deployment command-app --name=command-app-service --type=LoadBalancer --port 80 --target-port 8080'
+                sh 'kubectl describe pods'
+                sh 'kubectl get service'
             }
         }
         stage('Delete Cluster') {
