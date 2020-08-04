@@ -178,3 +178,4 @@ kubectl logs command-app-xxxxxxxxx-xxxxx
 
 curl -i http://10.0.1.4:8080/api/actuator/info
 
+
