@@ -41,5 +41,5 @@ server:
     context-path: /api
 info:
   app:
-    name:  Capsa Command Application
+    name:  Capsa Query Application
     version: 0.0.2

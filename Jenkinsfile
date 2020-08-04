@@ -56,7 +56,13 @@ pipeline {
         }
         stage('Deploy `Query` Docker Container') {
             steps {
-               sh 'echo TODO'
+                sh 'kubectl create deployment query-app --image=gcr.io/capsa-digital/capsa-infra-command:$BUILD_NUMBER'
+                sh 'kubectl scale deployment query-app --replicas=3'
+                sh 'kubectl autoscale deployment query-app --cpu-percent=80 --min=1 --max=5'
+                sh 'kubectl set env deployment/query-app --env SPRING_PROFILES_ACTIVE=dev'
+                sh 'kubectl expose deployment query-app --name=query-app-service --type=LoadBalancer --port 80 --target-port 8080'
+                sh 'kubectl describe pods'
+                sh 'kubectl get service'
             }
         }
         stage('Component test `Query` Docker Container') {

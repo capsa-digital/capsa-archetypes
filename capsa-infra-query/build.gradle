@@ -1,7 +1,14 @@
+apply plugin: 'kotlin-spring'
+apply plugin: 'kotlin-jpa'
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
 dependencies {
     implementation(
             'com.fasterxml.jackson.module:jackson-module-kotlin',
             'com.h2database:h2',
+            'io.confluent:kafka-avro-serializer',
             'io.projectreactor.kotlin:reactor-kotlin-extensions',
             'org.apache.commons:commons-lang3',
             'org.jetbrains.kotlin:kotlin-noarg',
@@ -19,3 +26,9 @@ dependencies {
             project(':capsa-infra-eventbus')
     )
 }
+
+bootJar {
+    archiveVersion = 'latest'
+}
+
+

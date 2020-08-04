@@ -1,0 +1,46 @@
+<configuration>
+    <logger name="org.springframework.cloud.stream.binding.DispatchingStreamListenerMessageHandler" level="ERROR"/>
+    <logger name="org.springframework.cloud.function.context.catalog.BeanFactoryAwareFunctionRegistry" level="ERROR"/>
+    <logger name="org.springframework.cloud.function.context.catalog.SimpleFunctionRegistry" level="ERROR"/>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="CONSOLE-ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="CONSOLE"/>
+    </appender>
+    <root level="info">
+        <appender-ref ref="CONSOLE-ASYNC"/>
+    </root>
+    <springProfile name="local">
+        <logger name="EventPublisher" level="INFO"/>
+    </springProfile>
+    <springProfile name="qa">
+        <appender name="LOGGLY" class="ch.qos.logback.ext.loggly.LogglyAppender">
+            <endpointUrl>https://logs-01.loggly.com/inputs/8cd9d4a5-a21f-42a1-abdd-a5024ccd2881/tag/qa
+            </endpointUrl>
+            <pattern>%d{"ISO8601", UTC} %p %t %c{0}.%M - %m%n</pattern>
+        </appender>
+        <appender name="LOGGLY-ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+            <appender-ref ref="LOGGLY"/>
+        </appender>
+        <root level="info">
+            <appender-ref ref="LOGGLY-ASYNC"/>
+        </root>
+    </springProfile>
+    <springProfile name="prod">
+        <appender name="LOGGLY" class="ch.qos.logback.ext.loggly.LogglyAppender">
+            <endpointUrl>https://logs-01.loggly.com/inputs/8cd9d4a5-a21f-42a1-abdd-a5024ccd2881/tag/prod
+            </endpointUrl>
+            <pattern>%d{"ISO8601", UTC} %p %t %c{0}.%M - %m%n</pattern>
+        </appender>
+        <appender name="LOGGLY-ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+            <appender-ref ref="LOGGLY"/>
+        </appender>
+        <root level="info">
+            <appender-ref ref="LOGGLY-ASYNC"/>
+        </root>
+    </springProfile>
+
+</configuration>
