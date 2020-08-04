@@ -12,11 +12,14 @@ services:
       - "3995:3995"
     restart: always
 
-  wiremock:
-    image: metrofoxservices/metrofox-test-doubles-wiremock:15
-    container_name: wiremock
+  wiremock-server:
+    build:
+      context: .
+      dockerfile: Dockerfile-WireMock
+    hostname: wiremock-server
     ports:
       - "9090:8080"
+      - "9443:8443"
     restart: always
 
   postgres:
