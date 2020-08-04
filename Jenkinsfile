@@ -1,12 +1,12 @@
 pipeline {
     agent { node { label 'agent' } }
     stages {
-        stage('Build') {
+        stage('Build, Unit test, Static code analysis') {
             steps {
                 sh './gradlew build --stacktrace --scan'
             }
         }
-        stage('Create `Command` Docker Images') {
+        stage('Create `Command` Docker Image') {
             steps {
                 withCredentials([
                     string(credentialsId: 'my-first-secret', variable: 'FIRST_SECRET')
@@ -23,7 +23,7 @@ pipeline {
                 }
             }
         }
-        stage('Create `Query` Docker Images') {
+        stage('Create `Query` Docker Image') {
             steps {
                 sh 'echo TODO'
             }

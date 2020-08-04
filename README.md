@@ -176,6 +176,7 @@ kubectl describe pods
 kubectl logs command-app-xxxxxxxxx-xxxxx
 ```
 
-curl -i http://10.0.1.4:8080/api/actuator/info
+### Helpful links
+https://github.com/eugenp/tutorials/tree/master/spring-mvc-forms-thymeleaf/src/main/java/com/baeldung/listbindingexample
 
 
