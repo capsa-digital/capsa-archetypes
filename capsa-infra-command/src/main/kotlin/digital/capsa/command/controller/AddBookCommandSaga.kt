@@ -1,13 +1,18 @@
 package digital.capsa.command.controller
 
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
+import digital.capsa.core.logger
 import digital.capsa.core.vocab.AggregateType
 import digital.capsa.eventbus.SagaManager
 import digital.capsa.eventbus.data.BookAdded
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Service
+import org.springframework.web.client.RestTemplate
 import java.util.UUID
 import java.util.function.Function
+
 
 @Service
 class AddBookCommandSaga(private val sagaManager: SagaManager) {
@@ -34,19 +39,18 @@ class AddBookCommandSaga(private val sagaManager: SagaManager) {
     }
 
     private fun AddBookCommand.bookAdded(bookId: UUID, volume: String): BookAdded {
+        val restTemplate = RestTemplate()
+        val url = "https://www.googleapis.com/books/v1/volumes/$volume"
+        val response = restTemplate.getForEntity(url, String::class.java)
 
-        //TODO call https://www.googleapis.com/books/v1/volumes/RDl4BgAAQBAJ
-
-        val bookName = ""
-        val authorName = ""
-        val coverURI = ""
-
+        val mapper = ObjectMapper()
+        val root: JsonNode = mapper.readTree(response.body)
         return BookAdded(
                 bookId = bookId,
                 volume = volume,
-                bookName = bookName,
-                authorName = authorName,
-                coverURI = coverURI
+                bookTitle = root.path("volumeInfo").path("title").textValue(),
+                authorName = root.path("volumeInfo").path("authors")[0].textValue(),
+                coverURI = root.path("volumeInfo").path("imageLinks").path("thumbnail").textValue()
         )
     }
 }

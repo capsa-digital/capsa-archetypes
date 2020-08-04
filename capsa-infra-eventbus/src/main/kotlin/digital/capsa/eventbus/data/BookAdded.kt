@@ -10,7 +10,7 @@ class BookAdded(
 
         var volume: String,
 
-        var bookName: String,
+        var bookTitle: String,
 
         var authorName: String,
 

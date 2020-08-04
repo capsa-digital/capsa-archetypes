@@ -29,7 +29,7 @@ class BookQueryResource {
             bookId = bookId,
             bookStatus = bookStatus,
             authorName = authorName,
-            bookName = bookName,
+            bookTitle = bookTitle,
             memberId = memberId,
             memberName = member?.name,
             memberEmail = member?.email

@@ -6,7 +6,7 @@ import java.util.UUID
 
 interface BookDTO {
     val bookId: UUID
-    val bookName: String
+    val bookTitle: String
     val authorName: String
     val bookStatus: BookStatus
     val memberId: UUID?
@@ -16,7 +16,7 @@ interface BookDTO {
 
 data class BookInfoDTO(
         override val bookId: UUID,
-        override val bookName: String,
+        override val bookTitle: String,
         override val authorName: String,
         override val bookStatus: BookStatus,
         override val memberId: UUID? = null,
