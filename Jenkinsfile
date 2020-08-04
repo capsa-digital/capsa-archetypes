@@ -6,7 +6,7 @@ pipeline {
                 sh './gradlew build --stacktrace --scan'
             }
         }
-        stage('Create Command Docker Images') {
+        stage('Create `Command` Docker Images') {
             steps {
                 withCredentials([
                     string(credentialsId: 'my-first-secret', variable: 'FIRST_SECRET')
@@ -23,9 +23,13 @@ pipeline {
                 }
             }
         }
-        stage('Create Cluster') {
+        stage('Create `Query` Docker Images') {
+            steps {
+            }
+        }
+        stage('Create K8s Cluster') {
             input {
-                message "Continue?"
+                message "Continue to Create K8s Cluster?"
             }
             steps {
                 sh 'gcloud container clusters create capsa-cluster \
@@ -33,7 +37,7 @@ pipeline {
                 --release-channel regular'
             }
         }
-        stage('Deploy Command Docker Container') {
+        stage('Deploy `Command` Docker Container') {
             steps {
                 sh 'kubectl create deployment command-app --image=gcr.io/capsa-digital/capsa-infra-command:$BUILD_NUMBER'
                 sh 'kubectl scale deployment command-app --replicas=3'
@@ -44,13 +48,33 @@ pipeline {
                 sh 'kubectl get service'
             }
         }
-        stage('Delete Cluster') {
+        stage('Component test `Command` Docker Container') {
+            steps {
+            }
+        }
+        stage('Deploy `Query` Docker Container') {
+            steps {
+            }
+        }
+        stage('Component test `Query` Docker Container') {
+            steps {
+            }
+        }
+        stage('Integration test') {
+            steps {
+            }
+        }
+        stage('Delete K8s Cluster') {
             input {
-                message "Continue?"
+                message "Continue to Delete K8s Cluster?"
             }
             steps {
                 sh 'gcloud container clusters delete capsa-cluster \
                 --zone us-central1-a --quiet'
+            }
+        }
+        stage('Release') {
+            steps {
             }
         }
     }
