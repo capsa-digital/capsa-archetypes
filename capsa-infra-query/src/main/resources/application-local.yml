@@ -10,6 +10,8 @@ spring:
           binder: kafka
       schema-registry-client:
         endpoint: http://localhost:8081
+server:
+  port: 9591
 info:
   app:
     env: local

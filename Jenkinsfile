@@ -29,9 +29,6 @@ pipeline {
             }
         }
         stage('Create K8s Cluster') {
-            input {
-                message "Continue to Create K8s Cluster?"
-            }
             steps {
                 sh 'gcloud container clusters create capsa-cluster \
                 --zone us-central1-a \
@@ -77,7 +74,7 @@ pipeline {
         }
         stage('Delete K8s Cluster') {
             input {
-                message "Continue to Delete K8s Cluster?"
+                message "Delete K8s Cluster?"
             }
             steps {
                 sh 'gcloud container clusters delete capsa-cluster \
