@@ -10,17 +10,17 @@ import java.util.UUID
 import java.util.function.Function
 
 @Service
-class CreateMemberCommandSaga(private val sagaManager: SagaManager) {
+class RegisterMemberCommandSaga(private val sagaManager: SagaManager) {
 
     @Bean
-    @Qualifier("createMember")
-    fun createMember(): Function<CreateMemberCommand, CommandResponse> {
+    @Qualifier("registerMember")
+    fun registerMember(): Function<RegisterMemberCommand, CommandResponse> {
         return Function { command ->
-            command.createMemberSaga()
+            command.registerMemberSaga()
         }
     }
 
-    private fun CreateMemberCommand.createMemberSaga(): CommandResponse {
+    private fun RegisterMemberCommand.registerMemberSaga(): CommandResponse {
         val memberId: UUID = UUID.randomUUID()
         val sagaId = sagaManager.runSaga(
                 memberCreated(memberId = memberId)
@@ -33,7 +33,7 @@ class CreateMemberCommandSaga(private val sagaManager: SagaManager) {
         )
     }
 
-    private fun CreateMemberCommand.memberCreated(memberId: UUID) = MemberCreated(
+    private fun RegisterMemberCommand.memberCreated(memberId: UUID) = MemberCreated(
             memberId = memberId,
             name = name,
             email = email

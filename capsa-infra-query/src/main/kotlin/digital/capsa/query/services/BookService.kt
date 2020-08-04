@@ -7,8 +7,6 @@ import digital.capsa.query.repo.BookRepository
 import org.springframework.stereotype.Component
 import java.util.UUID
 
-//https://www.googleapis.com/books/v1/volumes/RDl4BgAAQBAJ
-
 @Component
 class BookService(private val repository: BookRepository) {
 

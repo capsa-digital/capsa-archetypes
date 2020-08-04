@@ -18,9 +18,13 @@ data class Book(
         @Id
         var bookId: UUID,
 
+        var volume: String,
+
         var bookName: String,
 
         var authorName: String,
+
+        var coverURI: String,
 
         var memberId: UUID? = null,
 

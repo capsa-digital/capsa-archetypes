@@ -2,7 +2,7 @@ package digital.capsa.command.controller
 
 import javax.validation.constraints.Email
 
-data class CreateMemberCommand(
+data class RegisterMemberCommand(
 
         val name: String,
 
