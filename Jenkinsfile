@@ -25,6 +25,7 @@ pipeline {
         }
         stage('Create `Query` Docker Images') {
             steps {
+                sh 'echo TODO'
             }
         }
         stage('Create K8s Cluster') {
@@ -50,18 +51,22 @@ pipeline {
         }
         stage('Component test `Command` Docker Container') {
             steps {
+               sh 'echo TODO'
             }
         }
         stage('Deploy `Query` Docker Container') {
             steps {
+               sh 'echo TODO'
             }
         }
         stage('Component test `Query` Docker Container') {
             steps {
+               sh 'echo TODO'
             }
         }
         stage('Integration test') {
             steps {
+               sh 'echo TODO'
             }
         }
         stage('Delete K8s Cluster') {
@@ -75,6 +80,7 @@ pipeline {
         }
         stage('Release') {
             steps {
+               sh 'echo TODO'
             }
         }
     }
