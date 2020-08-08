@@ -1,6 +1,7 @@
 package digital.capsa.it.tests
 
 import digital.capsa.core.logger
+import digital.capsa.it.dsl.given
 import digital.capsa.it.runner.HttpManager
 import org.junit.Assume
 import org.junit.BeforeClass
@@ -39,16 +40,19 @@ class PreloadedDataTest {
     fun verifyPreloadedLocalData(@Value("\${capsa.schema}") schema: String,
                                  @Value("\${capsa.command.host}") host: String,
                                  @Value("\${capsa.command.port}") port: String) {
-        val response = httpManager.sendHttpRequest(requestJsonFileName = "/requests/actuator-info.json",
-                transformationData = mapOf(
-                        "$.schema" to schema,
-                        "$.host" to host,
-                        "$.port" to port,
-                        "$.path" to "/api/actuator/info"))
-        assertEquals(200, response.statusCode.value())
+            given {
+                val response = httpManager.sendHttpRequest(requestJsonFileName = "/requests/actuator-info.json",
+                        transformationData = mapOf(
+                                "$.schema" to schema,
+                                "$.host" to host,
+                                "$.port" to port,
+                                "$.path" to "/api/actuator/info"))
+                assertEquals(200, response.statusCode.value())
+            }.on {
 
-
-        logger.info("++++++++++++verifyPreloadedLocalData")
+            }.thenAssert {
+                logger.info("++++++++++++verifyPreloadedLocalData")
+            }
     }
 
     @Test

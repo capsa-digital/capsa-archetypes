@@ -37,6 +37,7 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-test',
             'org.springframework.integration:spring-integration-mail',
             'org.springframework:spring-context',
+            'com.willowtreeapps.assertk:assertk-jvm:0.22',
             project(':capsa-infra-core')
     )
 }
