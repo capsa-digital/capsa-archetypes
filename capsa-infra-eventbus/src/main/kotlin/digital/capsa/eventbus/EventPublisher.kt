@@ -51,7 +51,7 @@ open class EventPublisher {
                     payload = objectMapper.writeValueAsString(event.data))
             eventRepository.save(eventRecord)
 
-            logger.info("\n====> ${StringEscapeUtils.unescapeJava(objectMapper.writeValueAsString(objectMapper.writeValueAsString(event.data)))}")
+            logger.info("\n====> ${StringEscapeUtils.unescapeJava(objectMapper.writeValueAsString(event.data))}")
         } catch (t: Throwable) {
             throw EventPublishingException("Failed to publish event $event", t)
         }

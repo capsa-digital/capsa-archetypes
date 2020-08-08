@@ -1,4 +1,5 @@
 ext.versions = [
+        'apacheCommonsVersion'             : '1.9',
         'assertkVersion'                   : '0.22',
         'cacheApiVersion'                  : '1.1.0',
         'cucumberVersion'                  : '4.2.0',
@@ -42,6 +43,7 @@ ext.versions = [
 ]
 
 ext.libraries = [
+        'apache-commons-text'      : "org.apache.commons:commons-text:${versions.apacheCommonsVersion}",
         'ApacheJMeter_core'        : "org.apache.jmeter:ApacheJMeter_http:${versions.jmeterVersion}",
         'ApacheJMeter_http'        : "org.apache.jmeter:ApacheJMeter_http:${versions.jmeterVersion}",
         'assertk-jvm'              : "com.willowtreeapps.assertk:assertk-jvm:${versions.assertkVersion}",
