@@ -16,11 +16,6 @@ class MemberService(private val repository: MemberRepository) {
         return repository.getOne(memberId)
     }
 
-    // TODO
-//    fun getBookList(agencyId: UUID, pageNumber: Int, pageSize: Int, search: String?, filter: BookFilter, sort: BookSort): List<Book> {
-//        return repository.findAllLeadsByCriteria(agencyId, pageNumber, pageSize, search, filter, sort)
-//    }
-
     fun registerMember(member: Member) {
         if (repository.existsById(member.memberId)) {
             throw Error("Member with ${member.memberId} already exist")

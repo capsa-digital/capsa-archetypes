@@ -2,10 +2,10 @@ package digital.capsa.eventbus
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import digital.capsa.core.exceptions.EventPublishingException
+import digital.capsa.core.logger
 import digital.capsa.eventbus.repo.EventRecord
 import digital.capsa.eventbus.repo.EventRepository
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.apache.commons.text.StringEscapeUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cloud.stream.annotation.EnableBinding
 import org.springframework.core.env.Environment
@@ -18,8 +18,6 @@ import kotlin.reflect.full.findAnnotation
 
 @EnableBinding(value = [EventBusOutput::class])
 open class EventPublisher {
-
-    private val eventLogger: Logger = LoggerFactory.getLogger("EventPublisher")
 
     @Autowired
     lateinit var eventTypeIdResolver: EventTypeIdResolver
@@ -53,15 +51,7 @@ open class EventPublisher {
                     payload = objectMapper.writeValueAsString(event.data))
             eventRepository.save(eventRecord)
 
-            val logEventRecord = EventRecord(
-                    id = eventRecord.id,
-                    eventType = eventRecord.eventType,
-                    correlationId = eventRecord.correlationId,
-                    partitionKey = eventRecord.partitionKey,
-                    timestamp = eventRecord.timestamp,
-                    payload = if (environment.activeProfiles.contains("prod")) "*****" else eventRecord.payload
-            )
-            eventLogger.info(objectMapper.writeValueAsString(logEventRecord))
+            logger.info("\n====> ${StringEscapeUtils.unescapeJava(objectMapper.writeValueAsString(objectMapper.writeValueAsString(event.data)))}")
         } catch (t: Throwable) {
             throw EventPublishingException("Failed to publish event $event", t)
         }

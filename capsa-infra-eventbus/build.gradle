@@ -16,6 +16,7 @@ dependencies {
             'org.springframework.cloud:spring-cloud-function-kotlin',
             'org.springframework.cloud:spring-cloud-starter-function-web',
             'org.springframework.cloud:spring-cloud-starter-stream-kafka',
+            'org.apache.commons:commons-text:1.9',
             project(':capsa-infra-core')
     )
     testImplementation(
