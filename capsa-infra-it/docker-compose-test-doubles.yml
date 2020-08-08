@@ -1,17 +1,5 @@
 version: '3'
 services:
-  greenmail:
-    image: metrofoxservices/metrofox-test-doubles-greenmail:15
-    container_name: greenmail
-    ports:
-      - "3025:3025"
-      - "3110:3110"
-      - "3143:3143"
-      - "3465:3465"
-      - "3993:3993"
-      - "3995:3995"
-    restart: always
-
   wiremock-server:
     build:
       context: .

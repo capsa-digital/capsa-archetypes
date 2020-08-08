@@ -1,4 +1,4 @@
-package com.metrofoxsecurity.core.model
+package digital.capsa.core.model
 
 import javax.persistence.Embeddable
 import javax.validation.constraints.Size

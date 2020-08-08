@@ -27,9 +27,23 @@ class ActuatorTest {
     lateinit var httpManager: HttpManager
 
     @Test
-    fun callActuator(@Value("\${metrofox.host}") host: String,
-                     @Value("\${metrofox.schema}") schema: String,
-                     @Value("\${metrofox.port}") port: String) {
+    fun callCommandActuator(@Value("\${capsa.schema}") schema: String,
+                            @Value("\${capsa.command.host}") host: String,
+                            @Value("\${capsa.command.port}") port: String) {
+        callActuator(schema, host, port, "Capsa Command Application")
+    }
+
+    @Test
+    fun callQueryActuator(@Value("\${capsa.schema}") schema: String,
+                          @Value("\${capsa.query.host}") host: String,
+                          @Value("\${capsa.query.port}") port: String) {
+        callActuator(schema, host, port, "Capsa Query Application")
+    }
+
+    private fun callActuator(schema: String,
+                             host: String,
+                             port: String,
+                             appName: String) {
         val response = httpManager.sendHttpRequest(requestJsonFileName = "/requests/actuator-info.json",
                 transformationData = mapOf(
                         "$.schema" to schema,
@@ -41,8 +55,9 @@ class ActuatorTest {
         val profiles = System.getProperty("spring.profiles.active", "")
 
         JsonPathValidator.assertJson(response.body.toString(), listOf(
-                ValidationRule("\$.app.name", OpType.equal, "Metrofox Application"),
+                ValidationRule("\$.app.name", OpType.equal, appName),
                 ValidationRule("\$.app.env", OpType.equal, profiles)
         ))
     }
+
 }

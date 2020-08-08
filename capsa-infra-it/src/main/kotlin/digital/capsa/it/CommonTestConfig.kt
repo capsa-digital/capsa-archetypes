@@ -8,6 +8,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.client.RestTemplate
 
 @Configuration
 open class CommonTestConfig {
@@ -22,4 +23,7 @@ open class CommonTestConfig {
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
     }
+
+    @Bean
+    fun restTemplate(): RestTemplate = RestTemplate()
 }

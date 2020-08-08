@@ -3,10 +3,10 @@ spring:
     stream:
       bindings:
         event-bus-output:
-          destination: metrofox-event-bus-local
+          destination: capsa-event-bus-local
           binder: kafka
         event-bus-input:
-          destination: metrofox-event-bus-local
+          destination: capsa-event-bus-local
           binder: kafka
       schema-registry-client:
         endpoint: http://localhost:8081
@@ -15,8 +15,3 @@ server:
 info:
   app:
     env: local
-metrofox:
-  apiGateway:
-    uri: http://localhost:8080
-  app:
-    uri: http://localhost

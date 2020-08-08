@@ -36,9 +36,9 @@ class PreloadedDataTest {
 
     @Test
     @EnabledIfSystemProperty(named = "spring.profiles.active", matches = "local")
-    fun verifyPreloadedLocalData(@Value("\${metrofox.host}") host: String,
-                                 @Value("\${metrofox.schema}") schema: String,
-                                 @Value("\${metrofox.port}") port: String) {
+    fun verifyPreloadedLocalData(@Value("\${capsa.schema}") schema: String,
+                                 @Value("\${capsa.command.host}") host: String,
+                                 @Value("\${capsa.command.port}") port: String) {
         val response = httpManager.sendHttpRequest(requestJsonFileName = "/requests/actuator-info.json",
                 transformationData = mapOf(
                         "$.schema" to schema,

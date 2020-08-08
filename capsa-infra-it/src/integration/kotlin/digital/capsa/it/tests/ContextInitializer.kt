@@ -24,9 +24,7 @@ class ContextInitializer : ApplicationContextInitializer<ConfigurableApplication
             val externalPodIp = waitForExternalIp()
             println("LoadBalancer Ingress IP: $externalPodIp")
             TestPropertySourceUtils.addInlinedPropertiesToEnvironment(applicationContext,
-                    "metrofox.host=" + externalPodIp);
-            TestPropertySourceUtils.addInlinedPropertiesToEnvironment(applicationContext,
-                    "metrofox.port=80");
+                    "capsa.command.host=" + externalPodIp);
         }
     }
 

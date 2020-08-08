@@ -1,7 +1,7 @@
 package digital.capsa.it.aggregate
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.metrofoxsecurity.core.model.Address
+import digital.capsa.core.model.Address
 import digital.capsa.core.logger
 import digital.capsa.core.vocab.AggregateType
 import digital.capsa.it.runner.HttpManager
@@ -28,18 +28,18 @@ class Library(var libraryName: String? = null,
         val environment = applicationContext.getBean(Environment::class.java)
 
         if (id == null) {
-            createLibrary(httpManager, context, environment)
+            createLibrary(httpManager, context)
         }
         logger.info("===> Library added, attr = ${getAttributes()}")
     }
 
-    private fun createLibrary(httpManager: HttpManager, context: AggregateBuilderContext, environment: Environment) {
+    private fun createLibrary(httpManager: HttpManager, context: AggregateBuilderContext) {
         val response = httpManager.sendHttpRequest("/requests/create-library.json",
                 context.memento,
                 mapOf(
-                        "$.schema" to environment.getProperty("metrofox.schema")!!,
-                        "$.host" to environment.getProperty("metrofox.host")!!,
-                        "$.port" to environment.getProperty("metrofox.port")!!,
+                        "$.schema" to context.environment.getProperty("capsa.schema")!!,
+                        "$.host" to context.environment.getProperty("capsa.command.host")!!,
+                        "$.port" to context.environment.getProperty("capsa.command.port")!!,
                         "$.body.libraryName" to libraryName!!.toString(),
                         "$.body.address" to address!!
                 )

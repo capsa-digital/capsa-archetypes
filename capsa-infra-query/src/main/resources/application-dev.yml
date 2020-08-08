@@ -47,8 +47,3 @@ spring:
 info:
   app:
     env: dev
-metrofox:
-  apiGateway:
-    uri: http://127.0.0.1:8080
-  app:
-    uri: http://app-dev.metrofoxsecurity.com
