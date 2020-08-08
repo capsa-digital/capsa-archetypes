@@ -19,7 +19,7 @@ class BookService(private val repository: BookRepository) {
 //        return repository.findAllLeadsByCriteria(agencyId, pageNumber, pageSize, search, filter, sort)
 //    }
 
-    fun createBook(book: Book) {
+    fun addBook(book: Book) {
         if (repository.existsById(book.bookId)) {
             throw Error("Book with ${book.bookId} already exist")
         }
