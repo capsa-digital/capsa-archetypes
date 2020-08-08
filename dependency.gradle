@@ -1,4 +1,5 @@
 ext.versions = [
+        'assertkVersion'                   : '0.22',
         'cacheApiVersion'                  : '1.1.0',
         'cucumberVersion'                  : '4.2.0',
         'detektVersion'                    : '1.10.0',
@@ -43,6 +44,7 @@ ext.versions = [
 ext.libraries = [
         'ApacheJMeter_core'        : "org.apache.jmeter:ApacheJMeter_http:${versions.jmeterVersion}",
         'ApacheJMeter_http'        : "org.apache.jmeter:ApacheJMeter_http:${versions.jmeterVersion}",
+        'assertk-jvm'              : "com.willowtreeapps.assertk:assertk-jvm:${versions.assertkVersion}",
         'cache-api'                : "javax.cache:cache-api:${versions.cacheApiVersion}",
         'cucumber-java8'           : "io.cucumber:cucumber-java8:${versions.cucumberVersion}",
         'cucumber-junit'           : "io.cucumber:cucumber-junit:${versions.cucumberVersion}",
@@ -83,9 +85,9 @@ ext.libraries = [
         'kotlin-test'              : "org.jetbrains.kotlin:kotlin-test:${versions.kotlinVersion}",
         'kubernetes-client-java'   : "io.kubernetes:client-java:${versions.kubernetesClientVersion}",
         'logback-classic'          : "ch.qos.logback:logback-classic:${versions.logbackClassicVersion}",
+        'logback-ext-loggly'       : "org.logback-extensions:logback-ext-loggly:${versions.logbackExtensionsVersion}",
         'logback-jackson'          : "ch.qos.logback.contrib:logback-jackson:${versions.logbackContrib}",
         'logback-json-classic'     : "ch.qos.logback.contrib:logback-json-classic:${versions.logbackContrib}",
-        'logback-ext-loggly'       : "org.logback-extensions:logback-ext-loggly:${versions.logbackExtensionsVersion}",
         'mockito-core'             : "org.mockito:mockito-core:${versions.mockitoVersion}",
         'mockito-junit-jupiter'    : "org.mockito:mockito-junit-jupiter:${versions.mockitoJunitJupiterVersion}",
         'postgresql'               : "org.postgresql:postgresql:${versions.postgresqlVersion}",

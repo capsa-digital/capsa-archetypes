@@ -14,6 +14,7 @@ dependencies {
             'com.google.guava:guava',
             'com.h2database:h2',
             'com.icegreen:greenmail',
+            'com.willowtreeapps.assertk:assertk-jvm',
             'io.cucumber:cucumber-java8',
             'io.cucumber:cucumber-junit',
             'io.cucumber:cucumber-spring',
@@ -37,7 +38,6 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-test',
             'org.springframework.integration:spring-integration-mail',
             'org.springframework:spring-context',
-            'com.willowtreeapps.assertk:assertk-jvm:0.22',
             project(':capsa-infra-core')
     )
 }
