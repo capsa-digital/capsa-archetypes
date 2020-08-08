@@ -21,17 +21,21 @@ class ContextInitializer : ApplicationContextInitializer<ConfigurableApplication
             val client: ApiClient = Config.defaultClient()
             Configuration.setDefaultApiClient(client)
 
-            val externalPodIp = waitForExternalIp()
-            println("LoadBalancer Ingress IP: $externalPodIp")
+            val commandPodIp = waitForExternalIp("metadata.name=command-app-service")
+            println("Command Pod IP: $commandPodIp")
             TestPropertySourceUtils.addInlinedPropertiesToEnvironment(applicationContext,
-                    "capsa.command.host=" + externalPodIp);
+                    "capsa.command.host=" + commandPodIp)
+
+            val queryPodIp = waitForExternalIp("metadata.name=query-app-service")
+            println("Query Pod IP: $queryPodIp")
+            TestPropertySourceUtils.addInlinedPropertiesToEnvironment(applicationContext,
+                    "capsa.query.host=" + commandPodIp);
         }
     }
 
-    private fun getExternalIp(): String? {
+    private fun getExternalIp(fieldSelector: String): String? {
         val api = CoreV1Api()
         var externalPodIp: String?
-        val fieldSelector = "metadata.name=monolith-app-service"
         val serviceList = api.listServiceForAllNamespaces(false, null, fieldSelector, null, 5, null, null, 100, null)
         for (service in serviceList.items) {
             logger.info("SERVICE:  " + service.metadata!!.name)
@@ -53,13 +57,13 @@ class ContextInitializer : ApplicationContextInitializer<ConfigurableApplication
         return null
     }
 
-    private fun waitForExternalIp(): String? {
+    private fun waitForExternalIp(fieldSelector: String): String? {
         var ipAddr: String?
         var retryCount = 0
         do {
-            ipAddr = getExternalIp()
+            ipAddr = getExternalIp(fieldSelector)
             retryCount++
-            if(ipAddr == null) {
+            if (ipAddr == null) {
                 TimeUnit.SECONDS.sleep(5)
             }
         } while (ipAddr == null && retryCount < 10)
