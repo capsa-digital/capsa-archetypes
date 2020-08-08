@@ -29,7 +29,7 @@ class ContextInitializer : ApplicationContextInitializer<ConfigurableApplication
             val queryPodIp = waitForExternalIp("metadata.name=query-app-service")
             println("Query Pod IP: $queryPodIp")
             TestPropertySourceUtils.addInlinedPropertiesToEnvironment(applicationContext,
-                    "capsa.query.host=" + commandPodIp);
+                    "capsa.query.host=" + queryPodIp);
         }
     }
 
