@@ -12,7 +12,9 @@ class MemberRegistered(
 
         var lastName: String,
 
-        var email: String
+        var email: String,
+
+        var phone: String? = null
 
 ) : MemberEventData(
         memberId = memberId

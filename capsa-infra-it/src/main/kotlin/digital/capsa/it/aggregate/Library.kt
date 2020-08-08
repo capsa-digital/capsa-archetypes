@@ -1,8 +1,8 @@
 package digital.capsa.it.aggregate
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import digital.capsa.core.model.Address
 import digital.capsa.core.logger
+import digital.capsa.core.model.Address
 import digital.capsa.core.vocab.AggregateType
 import digital.capsa.it.runner.HttpManager
 import org.springframework.core.env.Environment
@@ -37,11 +37,11 @@ class Library(var libraryName: String? = null,
         val response = httpManager.sendHttpRequest("/requests/create-library.json",
                 context.memento,
                 mapOf(
-                        "$.schema" to context.environment.getProperty("capsa.schema")!!,
-                        "$.host" to context.environment.getProperty("capsa.command.host")!!,
-                        "$.port" to context.environment.getProperty("capsa.command.port")!!,
-                        "$.body.libraryName" to libraryName!!.toString(),
-                        "$.body.address" to address!!
+                        "$.schema" to context.environment.getProperty("capsa.schema"),
+                        "$.host" to context.environment.getProperty("capsa.command.host"),
+                        "$.port" to context.environment.getProperty("capsa.command.port"),
+                        "$.body.libraryName" to libraryName,
+                        "$.body.address" to address
                 )
         )
         val ids = ObjectMapper().readTree(response.body)?.get("ids")

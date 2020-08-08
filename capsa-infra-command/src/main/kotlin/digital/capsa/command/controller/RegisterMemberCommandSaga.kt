@@ -37,6 +37,7 @@ class RegisterMemberCommandSaga(private val sagaManager: SagaManager) {
             memberId = memberId,
             firstName = firstName,
             lastName = lastName,
-            email = email
+            email = email,
+            phone = phone
     )
 }

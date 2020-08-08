@@ -23,9 +23,9 @@ class Book(var volume: String? = null
         val response = context.httpManager.sendHttpRequest("/requests/add-book.json",
                 context.memento,
                 mapOf(
-                        "$.schema" to context.environment.getProperty("capsa.schema")!!,
-                        "$.host" to context.environment.getProperty("capsa.command.host")!!,
-                        "$.port" to context.environment.getProperty("capsa.command.port")!!,
+                        "$.schema" to context.environment.getProperty("capsa.schema"),
+                        "$.host" to context.environment.getProperty("capsa.command.host"),
+                        "$.port" to context.environment.getProperty("capsa.command.port"),
                         "$.body.libraryId" to parent!!.id.toString(),
                         "$.body.volume" to volume
                 )

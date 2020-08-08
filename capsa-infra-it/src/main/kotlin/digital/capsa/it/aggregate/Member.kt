@@ -1,7 +1,9 @@
 package digital.capsa.it.aggregate
 
-import digital.capsa.core.logger
+import com.fasterxml.jackson.databind.ObjectMapper
+import digital.capsa.core.vocab.AggregateType
 import java.util.Random
+import java.util.UUID
 
 class Member(
         var firstName: String? = null,
@@ -26,7 +28,24 @@ class Member(
     }
 
     override fun onCreate(context: AggregateBuilderContext) {
-        logger.info("===> Member added, attr = ${getAttributes()}")
+        val response = context.httpManager.sendHttpRequest("/requests/register-member.json",
+                context.memento,
+                mapOf(
+                        "$.schema" to context.environment.getProperty("capsa.schema"),
+                        "$.host" to context.environment.getProperty("capsa.command.host"),
+                        "$.port" to context.environment.getProperty("capsa.command.port"),
+                        "$.body.firstName" to firstName,
+                        "$.body.lastName" to lastName,
+                        "$.body.email" to email,
+                        "$.body.phone" to phone
+                )
+        )
+        val ids = ObjectMapper().readTree(response.body)?.get("ids")
+        ids?.also {
+            it.get(AggregateType.book.name)?.also { node ->
+                id = UUID.fromString(node.asText())
+            }
+        }
     }
 
     companion object {
