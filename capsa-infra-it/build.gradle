@@ -1,0 +1,96 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+
+dependencies {
+    implementation(
+            'ch.qos.logback.contrib:logback-jackson',
+            'ch.qos.logback.contrib:logback-json-classic',
+            'ch.qos.logback:logback-classic',
+            'com.fasterxml.jackson.core:jackson-databind',
+            'com.fasterxml.jackson.module:jackson-module-kotlin',
+            'com.google.guava:guava',
+            'com.h2database:h2',
+            'com.icegreen:greenmail',
+            'io.cucumber:cucumber-java8',
+            'io.cucumber:cucumber-junit',
+            'io.cucumber:cucumber-spring',
+            'io.kubernetes:client-java',
+            'org.apache.commons:commons-lang3',
+            'org.apache.httpcomponents:httpclient',
+            'org.apache.httpcomponents:httpmime',
+            'org.hamcrest:java-hamcrest',
+            'org.jetbrains.kotlin:kotlin-compiler-embeddable',
+            'org.jetbrains.kotlin:kotlin-reflect',
+            'org.jetbrains.kotlin:kotlin-script-runtime',
+            'org.jetbrains.kotlin:kotlin-script-util',
+            'org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable',
+            'org.jetbrains.kotlin:kotlin-stdlib-jdk8',
+            'org.jetbrains.kotlin:kotlin-test',
+            'org.mockito:mockito-core',
+            'org.postgresql:postgresql',
+            'org.springframework.boot:spring-boot-starter-data-jpa',
+            'org.springframework.boot:spring-boot-starter-data-rest',
+            'org.springframework.boot:spring-boot-starter-mail',
+            'org.springframework.boot:spring-boot-starter-test',
+            'org.springframework.integration:spring-integration-mail',
+            'org.springframework:spring-context',
+            project(':capsa-infra-core')
+    )
+}
+
+sourceSets {
+    integration {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+configurations {
+    integrationImplementation.extendsFrom implementation
+    integrationRuntimeOnly.extendsFrom runtime
+    cucumberRuntime.extendsFrom runtime
+}
+
+task integrationTest(type: Test) {
+    systemProperty 'spring.profiles.active', profiles
+    useJUnitPlatform {
+        includeEngines 'junit-jupiter'
+        excludeEngines 'junit-vintage'
+    }
+    testClassesDirs = sourceSets.integration.output.classesDirs
+    classpath = sourceSets.integration.runtimeClasspath
+    testLogging {
+        // set options for log level LIFECYCLE
+        events TestLogEvent.FAILED,
+                TestLogEvent.PASSED,
+                TestLogEvent.SKIPPED,
+                TestLogEvent.STANDARD_OUT
+        exceptionFormat TestExceptionFormat.FULL
+        showExceptions true
+        showCauses true
+        showStackTraces true
+        showStandardStreams true
+
+        info.events = debug.events
+        info.exceptionFormat = debug.exceptionFormat
+
+        afterSuite { desc, result ->
+            if (!desc.parent) { // will match the outermost suite
+                def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+                def startItem = '|  ', endItem = '  |'
+                def repeatLength = startItem.length() + output.length() + endItem.length()
+                println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+            }
+        }
+    }
+}
+
+compileIntegrationKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "1.8"
+    }
+}

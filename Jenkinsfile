@@ -33,7 +33,7 @@ pipeline {
         stage('Create K8s Cluster') {
             steps {
                 sh 'gcloud container clusters create capsa-cluster-$GIT_BRANCH-$BUILD_NUMBER \
-                --num-nodes 1 \
+                --num-nodes 2 \
                 --zone us-central1-a \
                 --release-channel regular'
             }
@@ -41,8 +41,8 @@ pipeline {
         stage('Deploy `Command` Docker Container') {
             steps {
                 sh 'kubectl create deployment command-app --image=gcr.io/capsa-digital/capsa-infra-command:$BUILD_NUMBER'
-                sh 'kubectl scale deployment command-app --replicas=3'
-                sh 'kubectl autoscale deployment command-app --cpu-percent=80 --min=1 --max=5'
+                sh 'kubectl scale deployment command-app --replicas=1'
+                sh 'kubectl autoscale deployment command-app --cpu-percent=80 --min=1 --max=1'
                 sh 'kubectl set env deployment/command-app --env SPRING_PROFILES_ACTIVE=dev'
                 sh 'kubectl expose deployment command-app --name=command-app-service --type=LoadBalancer --port 80 --target-port 8080'
                 sh 'kubectl describe pods'
@@ -52,15 +52,15 @@ pipeline {
         stage('Deploy `Query` Docker Container') {
             steps {
                 sh 'kubectl create deployment query-app --image=gcr.io/capsa-digital/capsa-infra-query:$BUILD_NUMBER'
-                sh 'kubectl scale deployment query-app --replicas=3'
-                sh 'kubectl autoscale deployment query-app --cpu-percent=80 --min=1 --max=5'
+                sh 'kubectl scale deployment query-app --replicas=1'
+                sh 'kubectl autoscale deployment query-app --cpu-percent=80 --min=1 --max=1'
                 sh 'kubectl set env deployment/query-app --env SPRING_PROFILES_ACTIVE=dev'
                 sh 'kubectl expose deployment query-app --name=query-app-service --type=LoadBalancer --port 80 --target-port 8080'
                 sh 'kubectl describe pods'
                 sh 'kubectl get service'
             }
         }
-        stage('Integration test') {
+        stage('Component Test') {
             steps {
                 // TODO use LivenessProbe and ReadinessProbe from inside integration test com.metrofoxsecurity.it.tests.ContextInitializer
                 // instead hardcoded sleep

@@ -24,14 +24,14 @@ class BookQueryResource {
         }
     }
 
-
     fun Book.bookInfo(member: Member?): BookInfoDTO = BookInfoDTO(
             bookId = bookId,
             bookStatus = bookStatus,
             authorName = authorName,
             bookTitle = bookTitle,
             memberId = memberId,
-            memberName = member?.name,
+            memberFirstName = member?.firstName,
+            memberLastName = member?.lastName,
             memberEmail = member?.email
     )
 }

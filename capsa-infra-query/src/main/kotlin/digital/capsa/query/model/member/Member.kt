@@ -9,13 +9,16 @@ import javax.persistence.Table
 
 @Entity(name = "member")
 @Table(name = "member")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 data class Member(
 
         @Id
         var memberId: UUID,
 
-        var name: String,
+        var firstName: String,
 
-        var email: String
+        var lastName: String,
+
+        var email: String,
+
+        var phone: String? = null
 )

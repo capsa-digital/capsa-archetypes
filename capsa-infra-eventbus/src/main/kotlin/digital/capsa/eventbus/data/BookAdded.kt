@@ -8,6 +8,8 @@ class BookAdded(
 
         bookId: UUID,
 
+        var libraryId: UUID,
+
         var volume: String,
 
         var bookTitle: String,

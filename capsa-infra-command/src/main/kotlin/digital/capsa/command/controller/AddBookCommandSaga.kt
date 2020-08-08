@@ -2,7 +2,6 @@ package digital.capsa.command.controller
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
-import digital.capsa.core.logger
 import digital.capsa.core.vocab.AggregateType
 import digital.capsa.eventbus.SagaManager
 import digital.capsa.eventbus.data.BookAdded
@@ -47,6 +46,7 @@ class AddBookCommandSaga(private val sagaManager: SagaManager) {
         val root: JsonNode = mapper.readTree(response.body)
         return BookAdded(
                 bookId = bookId,
+                libraryId = libraryId,
                 volume = volume,
                 bookTitle = root.path("volumeInfo").path("title").textValue(),
                 authorName = root.path("volumeInfo").path("authors")[0].textValue(),

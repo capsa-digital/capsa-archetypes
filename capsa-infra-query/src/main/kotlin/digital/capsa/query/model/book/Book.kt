@@ -12,11 +12,12 @@ import javax.persistence.Table
 
 @Entity(name = "book")
 @Table(name = "book")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 data class Book(
 
         @Id
         var bookId: UUID,
+
+        var libraryId: UUID,
 
         var volume: String,
 

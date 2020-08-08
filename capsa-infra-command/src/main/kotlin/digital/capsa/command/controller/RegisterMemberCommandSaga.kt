@@ -35,7 +35,8 @@ class RegisterMemberCommandSaga(private val sagaManager: SagaManager) {
 
     private fun RegisterMemberCommand.memberCreated(memberId: UUID) = MemberCreated(
             memberId = memberId,
-            name = name,
+            firstName = firstName,
+            lastName = lastName,
             email = email
     )
 }

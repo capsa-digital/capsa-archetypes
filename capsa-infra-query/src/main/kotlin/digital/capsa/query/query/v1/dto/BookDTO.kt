@@ -10,7 +10,8 @@ interface BookDTO {
     val authorName: String
     val bookStatus: BookStatus
     val memberId: UUID?
-    val memberName: String?
+    val memberFirstName: String?
+    val memberLastName: String?
     val memberEmail: String?
 }
 
@@ -20,7 +21,8 @@ data class BookInfoDTO(
         override val authorName: String,
         override val bookStatus: BookStatus,
         override val memberId: UUID? = null,
-        override val memberName: String? = null,
+        override val memberFirstName: String? = null,
+        override val memberLastName: String? = null,
         override val memberEmail: String? = null
 ) : BookDTO
 

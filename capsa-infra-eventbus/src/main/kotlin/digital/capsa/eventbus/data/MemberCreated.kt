@@ -8,7 +8,9 @@ class MemberCreated(
 
         memberId: UUID,
 
-        var name: String,
+        var firstName: String,
+
+        var lastName: String,
 
         var email: String
 
