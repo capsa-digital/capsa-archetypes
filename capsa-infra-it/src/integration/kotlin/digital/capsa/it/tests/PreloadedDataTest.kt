@@ -38,6 +38,7 @@ class PreloadedDataTest : CapsaApiTestBase() {
 
     @Test
     fun `verify preloaded data`() {
+        Thread.sleep(2000L)
         given {
             mapOf(
                     "$.schema" to schema,
