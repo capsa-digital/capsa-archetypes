@@ -5,7 +5,7 @@ import org.junit.Assume
 import org.junit.jupiter.api.BeforeAll
 import org.springframework.context.ApplicationContext
 
-abstract class CapsaApiTest {
+abstract class CapsaApiTestBase {
 
     companion object {
 

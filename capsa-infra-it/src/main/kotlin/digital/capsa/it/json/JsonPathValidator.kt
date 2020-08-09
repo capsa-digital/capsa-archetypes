@@ -171,7 +171,6 @@ fun <T> assertk.Assert<T>.isJsonWhere(vararg validations: ValidationRule) = give
     JsonPathValidator.assertJson(actual.toString(), validations.asList())
 }
 
-
 data class ValidationRule(val jsonPath: String, val op: OpType, val value: Any?)
 
 enum class OpType {

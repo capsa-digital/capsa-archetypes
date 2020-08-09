@@ -11,7 +11,6 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestPropertySource
@@ -24,7 +23,7 @@ import kotlin.test.assertEquals
 @EnableAutoConfiguration
 @SpringBootTest(classes = [IntegrationConfig::class])
 @ExtendWith(DataLoader::class)
-class PreloadedDataTest {
+class PreloadedDataTest : CapsaApiTestBase() {
 
     @Autowired
     lateinit var httpManager: HttpManager
@@ -37,33 +36,30 @@ class PreloadedDataTest {
 
     @Test
     @EnabledIfSystemProperty(named = "spring.profiles.active", matches = "local")
-    fun verifyPreloadedLocalData(@Value("\${capsa.schema}") schema: String,
-                                 @Value("\${capsa.command.host}") host: String,
-                                 @Value("\${capsa.command.port}") port: String) {
-            given {
-                val response = httpManager.sendHttpRequest(requestJsonFileName = "/requests/actuator-info.json",
-                        transformationData = mapOf(
-                                "$.schema" to schema,
-                                "$.host" to host,
-                                "$.port" to port,
-                                "$.path" to "/api/actuator/info"))
-                assertEquals(200, response.statusCode.value())
-            }.on {
-
-            }.thenAssert {
-                logger.info("++++++++++++verifyPreloadedLocalData")
-            }
+    fun `verify preloaded data - local`() {
+        given {
+            mapOf(
+                    "$.schema" to schema,
+                    "$.host" to commandHost,
+                    "$.port" to commandPort,
+                    "$.path" to "/api/actuator/info")
+        }.on {
+            httpManager.sendHttpRequest(requestJsonFileName = "/requests/actuator-info.json",
+                    transformationData = this)
+        }.then { response ->
+            assertEquals(200, response.statusCode.value())
+        }
     }
 
     @Test
     @EnabledIfSystemProperty(named = "spring.profiles.active", matches = "dev")
-    fun verifyPreloadedDevData() {
+    fun `verify preloaded data - dev`() {
         logger.info("++++++++++++verifyPreloadedDevData")
     }
 
     @Test
     @EnabledIfSystemProperty(named = "spring.profiles.active", matches = "qa")
-    fun verifyPreloadedQaData() {
+    fun `verify preloaded data - qa`() {
         logger.info("++++++++++++verifyPreloadedQaData")
     }
 }

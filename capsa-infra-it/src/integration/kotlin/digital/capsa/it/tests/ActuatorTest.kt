@@ -20,15 +20,15 @@ import org.springframework.test.context.junit4.SpringRunner
 @TestPropertySource(locations = ["classpath:application.properties"])
 @EnableAutoConfiguration
 @SpringBootTest(classes = [IntegrationConfig::class])
-class ActuatorTest : CapsaApiTest() {
+class ActuatorTest : CapsaApiTestBase() {
 
     @Test
-    fun callCommandActuator() {
+    fun `call command actuator`() {
         callActuator(schema, commandHost, commandPort, "Capsa Command Application")
     }
 
     @Test
-    fun callQueryActuator() {
+    fun `call query actuator`() {
         callActuator(schema, queryHost, queryPort, "Capsa Query Application")
     }
 
