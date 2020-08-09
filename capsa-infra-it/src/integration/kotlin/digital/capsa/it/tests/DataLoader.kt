@@ -16,14 +16,21 @@ class DataLoader : BeforeAllCallback {
         val profilesFromConsole = System.getProperty("spring.profiles.active", "")
         if (!profilesFromConsole.contains("prod") && !started) {
             started = true;
-            buildDemoBusinessAccount().create(TestContext(applicationContext = SpringExtension.getApplicationContext(extensionContext)))
+            buildInitialData().create(TestContext(applicationContext = SpringExtension.getApplicationContext(extensionContext)))
         }
     }
 
-    private fun buildDemoBusinessAccount() =
+    private fun buildInitialData() =
             account {
                 library {
-                    for (i in 1..5) {
+                    member {
+                        firstName = "John"
+                        lastName = "Doe"
+                    }
+                    member {
+                        phone = "324-222-4567"
+                    }
+                    for (i in 1..3) {
                         member { }
                     }
                     for (i in 1..2) {
