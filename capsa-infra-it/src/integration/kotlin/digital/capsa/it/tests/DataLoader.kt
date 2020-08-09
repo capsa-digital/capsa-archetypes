@@ -22,7 +22,6 @@ class DataLoader : BeforeAllCallback {
 
     private fun buildDemoBusinessAccount() =
             account {
-                domain = "demo"
                 library {
                     member { }
                     member { }
