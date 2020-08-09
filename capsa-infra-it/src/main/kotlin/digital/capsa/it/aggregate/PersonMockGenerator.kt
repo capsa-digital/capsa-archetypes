@@ -29,10 +29,10 @@ object PersonMockGenerator {
         return lastNames[index % lastNames.size]
     }
 
-    fun mockEmail(index: Int, firstName: String, lastName: String?, domain: String): String {
+    fun mockEmail(index: Int, firstName: String, lastName: String?): String {
         val firstNameSegment = firstName.replace("\\s".toRegex(), "")
         val lastNameSegment = lastName?.let { "." + it.replace("\\s".toRegex(), "") } ?: ""
-        return "$firstNameSegment$lastNameSegment@$domain$index"
+        return "$firstNameSegment$lastNameSegment@bookclub$index.ca"
     }
 
     fun mockPhone(random: Random): String? {
