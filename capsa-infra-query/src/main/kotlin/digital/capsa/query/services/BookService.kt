@@ -14,6 +14,10 @@ class BookService(private val repository: BookRepository) {
         return repository.getOne(bookId)
     }
 
+    fun getAllBooks(): List<Book> {
+        return repository.findAll()
+    }
+
     //TODO
 //    fun getBookList(agencyId: UUID, pageNumber: Int, pageSize: Int, search: String?, filter: BookFilter, sort: BookSort): List<Book> {
 //        return repository.findAllLeadsByCriteria(agencyId, pageNumber, pageSize, search, filter, sort)

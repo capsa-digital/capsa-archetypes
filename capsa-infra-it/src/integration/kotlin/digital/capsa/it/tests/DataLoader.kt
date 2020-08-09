@@ -26,7 +26,7 @@ class DataLoader : BeforeAllCallback {
                     for (i in 1..5) {
                         member { }
                     }
-                    for (i in 1..20) {
+                    for (i in 1..2) {
                         book { }
                     }
                 }

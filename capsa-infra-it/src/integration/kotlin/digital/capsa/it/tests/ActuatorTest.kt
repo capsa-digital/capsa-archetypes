@@ -40,8 +40,7 @@ class ActuatorTest : CapsaApiTestBase() {
             mapOf(
                     "$.schema" to schema,
                     "$.host" to host,
-                    "$.port" to port,
-                    "$.path" to "/api/actuator/info")
+                    "$.port" to port)
         }.on {
             context.httpManager.sendHttpRequest(
                     requestJsonFileName = "/requests/actuator-info.json",

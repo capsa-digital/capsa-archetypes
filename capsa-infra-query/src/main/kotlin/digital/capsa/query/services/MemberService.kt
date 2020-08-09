@@ -1,10 +1,6 @@
 package digital.capsa.query.services
 
-import digital.capsa.query.model.book.BookFilter
-import digital.capsa.query.model.book.Book
-import digital.capsa.query.model.book.BookSort
 import digital.capsa.query.model.member.Member
-import digital.capsa.query.repo.BookRepository
 import digital.capsa.query.repo.MemberRepository
 import org.springframework.stereotype.Component
 import java.util.UUID
@@ -14,6 +10,10 @@ class MemberService(private val repository: MemberRepository) {
 
     fun getMember(memberId: UUID): Member {
         return repository.getOne(memberId)
+    }
+
+    fun getAllMembers(): List<Member> {
+        return repository.findAll()
     }
 
     fun registerMember(member: Member) {

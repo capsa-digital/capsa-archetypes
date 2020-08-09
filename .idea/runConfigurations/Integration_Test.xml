@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Regression Test" type="JUnit" factoryName="JUnit">
+  <configuration default="false" name="Integration Test" type="JUnit" factoryName="JUnit">
     <module name="capsa-infra.capsa-infra-it.integration" />
     <useClassPathOnly />
     <option name="MAIN_CLASS_NAME" value="" />

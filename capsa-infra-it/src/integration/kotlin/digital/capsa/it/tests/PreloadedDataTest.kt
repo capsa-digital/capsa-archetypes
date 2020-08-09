@@ -1,13 +1,15 @@
 package digital.capsa.it.tests
 
-import digital.capsa.core.logger
+import assertk.assertThat
 import digital.capsa.it.dsl.given
+import digital.capsa.it.json.OpType
+import digital.capsa.it.json.ValidationRule
+import digital.capsa.it.json.isJsonWhere
 import digital.capsa.it.runner.HttpManager
 import org.junit.Assume
 import org.junit.BeforeClass
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -35,31 +37,34 @@ class PreloadedDataTest : CapsaApiTestBase() {
     }
 
     @Test
-    @EnabledIfSystemProperty(named = "spring.profiles.active", matches = "local")
-    fun `verify preloaded data - local`() {
+    fun `verify preloaded data`() {
         given {
             mapOf(
                     "$.schema" to schema,
-                    "$.host" to commandHost,
-                    "$.port" to commandPort,
-                    "$.path" to "/api/actuator/info")
+                    "$.host" to queryHost,
+                    "$.port" to queryPort)
         }.on {
-            httpManager.sendHttpRequest(requestJsonFileName = "/requests/actuator-info.json",
+            httpManager.sendHttpRequest(requestJsonFileName = "/requests/get-all-books.json",
                     transformationData = this)
         }.then { response ->
             assertEquals(200, response.statusCode.value())
+            assertThat(response.body).isJsonWhere(
+                    ValidationRule("\$.length()", OpType.equal, "{2}")
+            )
         }
-    }
-
-    @Test
-    @EnabledIfSystemProperty(named = "spring.profiles.active", matches = "dev")
-    fun `verify preloaded data - dev`() {
-        logger.info("++++++++++++verifyPreloadedDevData")
-    }
-
-    @Test
-    @EnabledIfSystemProperty(named = "spring.profiles.active", matches = "qa")
-    fun `verify preloaded data - qa`() {
-        logger.info("++++++++++++verifyPreloadedQaData")
+        given {
+            mapOf(
+                    "$.schema" to schema,
+                    "$.host" to queryHost,
+                    "$.port" to queryPort)
+        }.on {
+            httpManager.sendHttpRequest(requestJsonFileName = "/requests/get-all-members.json",
+                    transformationData = this)
+        }.then { response ->
+            assertEquals(200, response.statusCode.value())
+            assertThat(response.body).isJsonWhere(
+                    ValidationRule("\$.length()", OpType.equal, "{5}")
+            )
+        }
     }
 }

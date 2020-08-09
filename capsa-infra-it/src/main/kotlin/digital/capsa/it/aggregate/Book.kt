@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import digital.capsa.core.logger
 import digital.capsa.core.vocab.AggregateType
 import digital.capsa.it.TestContext
-import java.util.Random
 import java.util.UUID
 
 class Book(var volume: String? = null
@@ -40,9 +39,11 @@ class Book(var volume: String? = null
     }
 
     companion object {
-        val random = Random(0)
-
-        private val volumes = listOf("jjl4BgAAQBAJ", "UeK1swEACAAJ", "xOO5yQEACAAJ", "ota_DwAAQBAJ", "Ev2wDAAAQBAJ")
+        private val volumes = listOf(
+                "jjl4BgAAQBAJ", "8UbNBQAAQBAJ", "xOO5yQEACAAJ", "K0qWBUOAf6IC", "Ev2wDAAAQBAJ",
+                "eNF4zQEACAAJ", "DeTWDwAAQBAJ", "yHWADwAAQBAJ", "UQ3FCwAAQBAJ", "RpZGDwAAQBAJ",
+                "czCiJ6sbhpAC", "UeK1swEACAAJ", "GjNjvJCIGIAC", "mpcBw1OnyIgC", "v5PHDwAAQBAJ",
+                "xColAAPGubgC", "fGBwAAQBAJ", "8RueQPUOPssC", "2_gbZYZcZXgC", "ota_DwAAQBAJ")
 
         fun mockVolume(index: Int): String {
             return volumes[index % volumes.size]
