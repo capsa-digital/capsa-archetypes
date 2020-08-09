@@ -1,7 +1,7 @@
 package digital.capsa.it.runner
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import digital.capsa.it.aggregate.AggregateBuilderContext
+import digital.capsa.it.TestContext
 import digital.capsa.it.json.JsonPathModifyer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.FileSystemResource
@@ -65,7 +65,7 @@ class HttpManager {
 
     fun uploadFile(
             endpoint: String,
-            context: AggregateBuilderContext,
+            context: TestContext,
             name: String,
             testFilePath: String
     ): ResponseEntity<String> {

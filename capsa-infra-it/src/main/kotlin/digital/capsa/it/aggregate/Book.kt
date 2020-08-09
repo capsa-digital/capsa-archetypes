@@ -3,6 +3,7 @@ package digital.capsa.it.aggregate
 import com.fasterxml.jackson.databind.ObjectMapper
 import digital.capsa.core.logger
 import digital.capsa.core.vocab.AggregateType
+import digital.capsa.it.TestContext
 import java.util.Random
 import java.util.UUID
 
@@ -14,12 +15,12 @@ class Book(var volume: String? = null
         volume = volume ?: mockVolume(index)
     }
 
-    override fun onCreate(context: AggregateBuilderContext) {
+    override fun onCreate(context: TestContext) {
         addBook(context)
         logger.info("===> Book added, attr = ${getAttributes()}")
     }
 
-    private fun addBook(context: AggregateBuilderContext) {
+    private fun addBook(context: TestContext) {
         val response = context.httpManager.sendHttpRequest("/requests/add-book.json",
                 context.memento,
                 mapOf(

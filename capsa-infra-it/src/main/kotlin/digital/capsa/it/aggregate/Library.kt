@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import digital.capsa.core.logger
 import digital.capsa.core.model.Address
 import digital.capsa.core.vocab.AggregateType
+import digital.capsa.it.TestContext
 import digital.capsa.it.runner.HttpManager
 import org.springframework.core.env.Environment
 import java.util.UUID
@@ -22,7 +23,7 @@ class Library(var libraryName: String? = null,
         address = address ?: mockAddress(index)
     }
 
-    override fun onCreate(context: AggregateBuilderContext) {
+    override fun onCreate(context: TestContext) {
         val applicationContext = context.applicationContext
         val httpManager = applicationContext.getBean(HttpManager::class.java)
         val environment = applicationContext.getBean(Environment::class.java)
@@ -33,7 +34,7 @@ class Library(var libraryName: String? = null,
         logger.info("===> Library added, attr = ${getAttributes()}")
     }
 
-    private fun createLibrary(httpManager: HttpManager, context: AggregateBuilderContext) {
+    private fun createLibrary(httpManager: HttpManager, context: TestContext) {
         val response = httpManager.sendHttpRequest("/requests/create-library.json",
                 context.memento,
                 mapOf(

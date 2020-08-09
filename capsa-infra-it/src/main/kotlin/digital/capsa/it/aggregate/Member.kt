@@ -2,6 +2,7 @@ package digital.capsa.it.aggregate
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import digital.capsa.core.vocab.AggregateType
+import digital.capsa.it.TestContext
 import java.util.Random
 import java.util.UUID
 
@@ -26,7 +27,7 @@ class Member(
                 ?: PersonMockGenerator.mockPhone(random = random)
     }
 
-    override fun onCreate(context: AggregateBuilderContext) {
+    override fun onCreate(context: TestContext) {
         val response = context.httpManager.sendHttpRequest("/requests/register-member.json",
                 context.memento,
                 mapOf(

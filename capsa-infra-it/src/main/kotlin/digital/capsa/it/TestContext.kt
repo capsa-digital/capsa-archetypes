@@ -1,10 +1,10 @@
-package digital.capsa.it.aggregate
+package digital.capsa.it
 
 import digital.capsa.it.runner.HttpManager
 import org.springframework.context.ApplicationContext
 import org.springframework.core.env.Environment
 
-class AggregateBuilderContext(val applicationContext: ApplicationContext) {
+class TestContext(val applicationContext: ApplicationContext) {
 
     val memento: HashMap<String, String> = HashMap()
 

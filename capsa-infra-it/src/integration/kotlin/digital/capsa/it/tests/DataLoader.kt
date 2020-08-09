@@ -1,6 +1,6 @@
 package digital.capsa.it.tests
 
-import digital.capsa.it.aggregate.AggregateBuilderContext
+import digital.capsa.it.TestContext
 import digital.capsa.it.aggregate.account
 import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.ExtensionContext
@@ -16,7 +16,7 @@ class DataLoader : BeforeAllCallback {
         val profilesFromConsole = System.getProperty("spring.profiles.active", "")
         if (!profilesFromConsole.contains("prod") && !started) {
             started = true;
-            buildDemoBusinessAccount().create(AggregateBuilderContext(applicationContext = SpringExtension.getApplicationContext(extensionContext)))
+            buildDemoBusinessAccount().create(TestContext(applicationContext = SpringExtension.getApplicationContext(extensionContext)))
         }
     }
 

@@ -1,6 +1,7 @@
 package digital.capsa.it.aggregate
 
 import digital.capsa.core.logger
+import digital.capsa.it.TestContext
 import java.util.UUID
 import kotlin.reflect.KClass
 import kotlin.reflect.KVisibility
@@ -15,9 +16,9 @@ interface Aggregate {
 
     val children: List<Aggregate>
 
-    fun create(context: AggregateBuilderContext)
+    fun create(context: TestContext)
 
-    fun onCreate(context: AggregateBuilderContext)
+    fun onCreate(context: TestContext)
 
     fun toString(builder: StringBuilder, nesting: Int)
 
@@ -58,7 +59,7 @@ abstract class AbstractAggregate(private val name: String) : Aggregate {
         return aggregate
     }
 
-    override fun create(context: AggregateBuilderContext) {
+    override fun create(context: TestContext) {
         if (parent == null) {
             logger.info("Aggregate Tree:\n $this")
         }
