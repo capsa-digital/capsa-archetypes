@@ -9,11 +9,11 @@ class BookCheckedOut(
 
         bookId: UUID,
 
-        memberId: UUID,
+        var memberId: UUID,
 
-        checkoutDate: LocalDate,
+        var checkoutDate: LocalDate,
 
-        returnDate: LocalDate
+        var returnDate: LocalDate
 
 ) : BookEventData(
         bookId = bookId

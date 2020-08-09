@@ -3,6 +3,7 @@ package digital.capsa.query.model.book
 import digital.capsa.core.vocab.BookStatus
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
+import java.time.LocalDate
 import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -32,5 +33,9 @@ data class Book(
         var memberId: UUID? = null,
 
         @Enumerated(EnumType.STRING)
-        var bookStatus: BookStatus
+        var bookStatus: BookStatus,
+
+        var checkoutDate: LocalDate? = null,
+
+        var returnDate: LocalDate? = null
 )

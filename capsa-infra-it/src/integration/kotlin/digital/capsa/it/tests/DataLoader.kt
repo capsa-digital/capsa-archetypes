@@ -23,12 +23,13 @@ class DataLoader : BeforeAllCallback {
     private fun buildDemoBusinessAccount() =
             account {
                 library {
-                    member { }
-                    member { }
-                    book { }
-                    book { }
+                    for (i in 1..5) {
+                        member { }
+                    }
+                    for (i in 1..20) {
+                        book { }
+                    }
                 }
                 library {}
             }
-
 }
