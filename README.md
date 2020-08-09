@@ -180,4 +180,3 @@ kubectl logs command-app-xxxxxxxxx-xxxxx
 https://github.com/eugenp/tutorials/tree/master/spring-mvc-forms-thymeleaf/src/main/java/com/baeldung/listbindingexample
 
 
-
