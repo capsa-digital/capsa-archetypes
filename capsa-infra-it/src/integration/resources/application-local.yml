@@ -1,3 +1,12 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        event-bus-input:
+          destination: capsa-event-bus-local
+          binder: kafka
+      schema-registry-client:
+        endpoint: http://localhost:8081
 capsa:
   command:
     host: localhost

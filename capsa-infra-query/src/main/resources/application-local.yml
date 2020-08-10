@@ -2,9 +2,6 @@ spring:
   cloud:
     stream:
       bindings:
-        event-bus-output:
-          destination: capsa-event-bus-local
-          binder: kafka
         event-bus-input:
           destination: capsa-event-bus-local
           binder: kafka

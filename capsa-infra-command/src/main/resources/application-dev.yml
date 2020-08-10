@@ -39,9 +39,6 @@ spring:
         event-bus-output:
           destination: capsa-event-bus-dev
           binder: kafka
-        event-bus-input:
-          destination: capsa-event-bus-dev
-          binder: kafka
       schema-registry-client:
         endpoint: https://psrc-lz3xz.us-central1.gcp.confluent.cloud
 info:

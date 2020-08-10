@@ -5,9 +5,6 @@ spring:
         event-bus-output:
           destination: capsa-event-bus-local
           binder: kafka
-        event-bus-input:
-          destination: capsa-event-bus-local
-          binder: kafka
       schema-registry-client:
         endpoint: http://localhost:8081
 server:

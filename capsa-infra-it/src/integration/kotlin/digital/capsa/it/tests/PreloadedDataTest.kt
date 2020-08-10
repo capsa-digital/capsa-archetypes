@@ -2,6 +2,7 @@ package digital.capsa.it.tests
 
 import assertk.assertThat
 import digital.capsa.it.dsl.given
+import digital.capsa.it.event.EventSnooper
 import digital.capsa.it.json.OpType
 import digital.capsa.it.json.ValidationRule
 import digital.capsa.it.json.isJsonWhere
@@ -23,7 +24,7 @@ import kotlin.test.assertEquals
 @RunWith(SpringRunner::class)
 @TestPropertySource(locations = ["classpath:application.yml"])
 @EnableAutoConfiguration
-@SpringBootTest(classes = [IntegrationConfig::class])
+@SpringBootTest(classes = [IntegrationConfig::class, EventSnooper::class])
 @ExtendWith(DataLoader::class)
 class PreloadedDataTest : CapsaApiTestBase() {
 

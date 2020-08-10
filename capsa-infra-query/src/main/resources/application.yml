@@ -13,9 +13,6 @@ spring:
         kafka:
           type: kafka
       bindings:
-        event-bus-output:
-          binder: kafka
-          group: capsaApp
         event-bus-input:
           binder: kafka
           group: capsaApp
@@ -23,11 +20,6 @@ spring:
         binder:
           headers: eventType
         bindings:
-          event-bus-output:
-            producer:
-              configuration:
-                key:
-                  serializer: org.apache.kafka.common.serialization.StringSerializer
           event-bus-input:
             consumer:
               configuration:

@@ -36,9 +36,6 @@ spring:
         binder:
           replication-factor: 3
       bindings:
-        event-bus-output:
-          destination: capsa-event-bus-dev
-          binder: kafka
         event-bus-input:
           destination: capsa-event-bus-dev
           binder: kafka

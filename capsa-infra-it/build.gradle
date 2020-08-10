@@ -15,6 +15,7 @@ dependencies {
             'com.h2database:h2',
             'com.icegreen:greenmail',
             'com.willowtreeapps.assertk:assertk-jvm',
+            'io.confluent:kafka-avro-serializer',
             'io.cucumber:cucumber-java8',
             'io.cucumber:cucumber-junit',
             'io.cucumber:cucumber-spring',
@@ -36,9 +37,11 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-data-rest',
             'org.springframework.boot:spring-boot-starter-mail',
             'org.springframework.boot:spring-boot-starter-test',
+            'org.springframework.cloud:spring-cloud-starter-stream-kafka',
             'org.springframework.integration:spring-integration-mail',
             'org.springframework:spring-context',
-            project(':capsa-infra-core')
+            project(':capsa-infra-core'),
+            project(':capsa-infra-eventbus')
     )
 }
 
