@@ -15,8 +15,11 @@ class EventSnooper() {
     @Autowired
     private lateinit var objectMapper: ObjectMapper
 
+    private val eventBuffer = mutableListOf<Event<EventData>>()
+
     @StreamListener(EventBusInput.INPUT)
     fun handleEvent(event: Event<EventData>) {
         logger.info("\n<==== ${objectMapper.writeValueAsString(event)}")
+        eventBuffer.add(event)
     }
 }
