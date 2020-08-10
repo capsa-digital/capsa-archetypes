@@ -17,10 +17,6 @@ class Given<S>(private val setup: () -> S) {
 
 class Result<R>(private val result: () -> R) {
 
-    fun thenAssert(assert: Assert<R>.() -> Unit) {
-        assertThat(result()).assert()
-    }
-
     fun then(assert: Assertions.(R) -> Unit) {
         val assertions = Assertions()
         assertAll {
@@ -30,36 +26,9 @@ class Result<R>(private val result: () -> R) {
 }
 
 class Assertions {
-    infix fun <T> T.should(asserter: Asserter<T>) {
-        asserter.assertValue(this)
-    }
+
 }
 
 interface Asserter<T> {
     fun assertValue(t: T)
-}
-
-
-typealias startWith = StartsWithAsserter
-
-class StartsWithAsserter(val expected: String) : Asserter<String> {
-    override fun assertValue(t: String) {
-        assertThat(t).startsWith(expected)
-    }
-}
-
-typealias contain = ContainsAsserter
-
-class ContainsAsserter(val expected: String) : Asserter<String> {
-    override fun assertValue(t: String) {
-        assertThat(t).contains(expected)
-    }
-}
-
-typealias endWith = EndsWithAsserter
-
-class EndsWithAsserter(val expected: String) : Asserter<String> {
-    override fun assertValue(t: String) {
-        assertThat(t).endsWith(expected)
-    }
 }
