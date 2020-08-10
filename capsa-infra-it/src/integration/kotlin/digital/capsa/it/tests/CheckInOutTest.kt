@@ -13,10 +13,11 @@ import digital.capsa.it.aggregate.account
 import digital.capsa.it.aggregate.getChild
 import digital.capsa.it.dsl.given
 import digital.capsa.it.event.EventSnooper
+import digital.capsa.it.runner.TabularSource
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Tag
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
@@ -58,8 +59,12 @@ class CheckInOutTest : CapsaApiTestBase() {
     @Autowired
     lateinit var eventSnooper: EventSnooper
 
-    @Test
-    fun `verify check in events`() {
+    @ParameterizedTest
+    @TabularSource("""
+           | Five days | 5  |
+           | Ten days  | 10 |
+        """)
+    fun `verify check in events`(description: String, days: Int) {
         val bookId = testAccount.getChild<Library>(0).getChild<Book>(0).id
         val memberId = testAccount.getChild<Member>(0).id
         given {
@@ -69,7 +74,7 @@ class CheckInOutTest : CapsaApiTestBase() {
                     "$.port" to commandPort,
                     "$.body.bookId" to bookId.toString(),
                     "$.body.memberId" to memberId.toString(),
-                    "$.body.days" to 5
+                    "$.body.days" to days
             )
         }.on {
             Thread.sleep(2000L)
@@ -85,7 +90,7 @@ class CheckInOutTest : CapsaApiTestBase() {
                 assertThat(eventData.bookId).isEqualTo(bookId)
                 assertThat(eventData.memberId).isEqualTo(memberId)
                 assertThat(eventData.checkoutDate).isEqualTo(LocalDate.now())
-                assertThat(eventData.returnDate).isEqualTo(LocalDate.now().plusDays(5))
+                assertThat(eventData.returnDate).isEqualTo(LocalDate.now().plusDays(days.toLong()))
             }
         }
     }
