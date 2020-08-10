@@ -14,6 +14,7 @@ import digital.capsa.it.aggregate.getChild
 import digital.capsa.it.dsl.given
 import digital.capsa.it.event.EventSnooper
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
@@ -31,6 +32,7 @@ import kotlin.test.assertEquals
 @TestPropertySource(locations = ["classpath:application.yml"])
 @EnableAutoConfiguration
 @SpringBootTest(classes = [IntegrationConfig::class, EventSnooper::class])
+@DisplayName("Verify Book CheckIn/CheckOut functionality")
 class CheckInOutTest : CapsaApiTestBase() {
 
     companion object {

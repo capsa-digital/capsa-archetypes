@@ -7,6 +7,7 @@ import digital.capsa.it.event.EventSnooper
 import digital.capsa.it.json.OpType
 import digital.capsa.it.json.ValidationRule
 import digital.capsa.it.json.isJsonWhere
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
@@ -20,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner
 @TestPropertySource(locations = ["classpath:application.yml"])
 @EnableAutoConfiguration
 @SpringBootTest(classes = [IntegrationConfig::class])
+@DisplayName("Actuator Test")
 class ActuatorTest : CapsaApiTestBase() {
 
     @Test

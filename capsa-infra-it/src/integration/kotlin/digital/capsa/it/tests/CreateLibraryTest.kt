@@ -9,6 +9,7 @@ import digital.capsa.it.json.OpType
 import digital.capsa.it.json.ValidationRule
 import digital.capsa.it.json.isJsonWhere
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -26,6 +27,7 @@ import kotlin.test.assertEquals
 @EnableAutoConfiguration
 @SpringBootTest(classes = [IntegrationConfig::class])
 @ExtendWith(DataLoader::class)
+@DisplayName("Create Library, Members and Books")
 class CreateLibraryTest : CapsaApiTestBase() {
 
     companion object {
