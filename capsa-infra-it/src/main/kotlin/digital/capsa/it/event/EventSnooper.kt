@@ -8,6 +8,7 @@ import digital.capsa.eventbus.EventData
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cloud.stream.annotation.EnableBinding
 import org.springframework.cloud.stream.annotation.StreamListener
+import java.util.Collections
 
 @EnableBinding(EventBusInput::class)
 class EventSnooper() {
@@ -21,5 +22,13 @@ class EventSnooper() {
     fun handleEvent(event: Event<EventData>) {
         logger.info("\n<==== ${objectMapper.writeValueAsString(event)}")
         eventBuffer.add(event)
+    }
+
+    fun getEvents(): List<Event<EventData>> {
+        return Collections.unmodifiableList(eventBuffer)
+    }
+
+    fun clear() {
+        eventBuffer.clear()
     }
 }

@@ -15,8 +15,6 @@ class Library(var libraryName: String? = null,
 
     fun book(init: Book.() -> Unit) = initAggregate(Book(), init)
 
-    fun member(init: Member.() -> Unit) = initAggregate(Member(), init)
-
     override fun construct() {
         val index = parent?.getChildCount(Library::class) ?: 0
         libraryName = libraryName ?: mockLibraryName(index)

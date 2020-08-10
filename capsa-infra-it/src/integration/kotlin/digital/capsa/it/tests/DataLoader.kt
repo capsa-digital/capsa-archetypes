@@ -13,30 +13,16 @@ class DataLoader : BeforeAllCallback {
     }
 
     override fun beforeAll(extensionContext: ExtensionContext) {
-        val profilesFromConsole = System.getProperty("spring.profiles.active", "")
-        if (!profilesFromConsole.contains("prod") && !started) {
+        if (!started) {
             started = true;
             buildInitialData().create(TestContext(applicationContext = SpringExtension.getApplicationContext(extensionContext)))
         }
     }
 
+    // Use to load DB with data for load test
     private fun buildInitialData() =
             account {
-                library {
-                    member {
-                        firstName = "John"
-                        lastName = "Doe"
-                    }
-                    member {
-                        phone = "324-222-4567"
-                    }
-                    for (i in 1..3) {
-                        member { }
-                    }
-                    for (i in 1..2) {
-                        book { }
-                    }
-                }
-                library {}
+                library { }
+                member { }
             }
 }

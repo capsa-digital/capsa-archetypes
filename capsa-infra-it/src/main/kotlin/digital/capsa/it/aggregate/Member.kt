@@ -42,7 +42,7 @@ class Member(
         )
         val ids = ObjectMapper().readTree(response.body)?.get("ids")
         ids?.also {
-            it.get(AggregateType.book.name)?.also { node ->
+            it.get(AggregateType.member.name)?.also { node ->
                 id = UUID.fromString(node.asText())
             }
         }
