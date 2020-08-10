@@ -12,10 +12,6 @@ spring:
       binders:
         kafka:
           type: kafka
-      bindings:
-        event-bus-input:
-          binder: kafka
-          group: capsaApp
       kafka:
         binder:
           headers: eventType
