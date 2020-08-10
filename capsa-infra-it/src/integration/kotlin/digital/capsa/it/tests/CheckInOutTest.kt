@@ -58,13 +58,15 @@ class CheckInOutTest : CapsaApiTestBase() {
 
     @Test
     fun `verify check in events`() {
+        val bookId = testAccount.getChild<Library>(0).getChild<Book>(0).id
+        val memberId = testAccount.getChild<Member>(0).id
         given {
             mapOf(
                     "$.schema" to schema,
                     "$.host" to commandHost,
                     "$.port" to commandPort,
-                    "$.body.bookId" to testAccount.getChild<Library>(0).getChild<Book>(0).id.toString(),
-                    "$.body.memberId" to testAccount.getChild<Member>(0).id.toString(),
+                    "$.body.bookId" to bookId.toString(),
+                    "$.body.memberId" to memberId.toString(),
                     "$.body.days" to 5
             )
         }.on {
@@ -78,8 +80,8 @@ class CheckInOutTest : CapsaApiTestBase() {
             val eventData = eventSnooper.getEvents()[0].data
             assertThat(eventData).isInstanceOf(BookCheckedOut::class).also {
                 eventData as BookCheckedOut
-                assertThat(eventData.bookId).isEqualTo(testAccount.getChild<Library>(0).getChild<Book>(0).id!!)
-                assertThat(eventData.memberId).isEqualTo(testAccount.getChild<Member>(0).id!!)
+                assertThat(eventData.bookId).isEqualTo(bookId)
+                assertThat(eventData.memberId).isEqualTo(memberId)
                 assertThat(eventData.checkoutDate).isEqualTo(LocalDate.now())
                 assertThat(eventData.returnDate).isEqualTo(LocalDate.now().plusDays(5))
             }
