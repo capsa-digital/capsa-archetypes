@@ -1,11 +1,6 @@
 package digital.capsa.it.dsl
 
-import assertk.Assert
 import assertk.assertAll
-import assertk.assertThat
-import assertk.assertions.contains
-import assertk.assertions.endsWith
-import assertk.assertions.startsWith
 
 typealias given<S> = Given<S>
 
@@ -25,10 +20,4 @@ class Result<R>(private val result: () -> R) {
     }
 }
 
-class Assertions {
-
-}
-
-interface Asserter<T> {
-    fun assertValue(t: T)
-}
+class Assertions

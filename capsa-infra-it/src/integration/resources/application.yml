@@ -1,3 +1,33 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    stream:
+      binders:
+        kafka:
+          type: kafka
+      bindings:
+        event-bus-input:
+          binder: kafka
+          group: integrationTest
+      kafka:
+        binder:
+          headers: eventType
+        bindings:
+          event-bus-input:
+            consumer:
+              configuration:
+                key:
+                  serializer: org.apache.kafka.common.serialization.StringSerializer
+      inMemory:
+        binder:
+          headers: eventType
 context:
   initializer:
     classes: digital.capsa.it.tests.ContextInitializer
