@@ -15,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
 
-
 @Tag("it")
 @RunWith(SpringRunner::class)
 @TestPropertySource(locations = ["classpath:application.yml"])

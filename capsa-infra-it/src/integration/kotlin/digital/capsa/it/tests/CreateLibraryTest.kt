@@ -69,6 +69,7 @@ class CreateLibraryTest : CapsaApiTestBase() {
                     transformationData = this)
         }.then { response ->
             assertEquals(200, response.statusCode.value())
+
 //            assertThat(response.body).isJsonWhere(
 //                    ValidationRule("\$.length()", OpType.equal, "{2}")
 //            )
