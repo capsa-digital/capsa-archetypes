@@ -1,0 +1,8 @@
+capsa:
+  command:
+    host: localhost
+    port: 9590
+  query:
+    host: localhost
+    port: 9591
+  schema: http

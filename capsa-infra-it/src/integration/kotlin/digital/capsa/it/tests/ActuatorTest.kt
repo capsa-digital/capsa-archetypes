@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @Tag("it")
 @RunWith(SpringRunner::class)
-@TestPropertySource(locations = ["classpath:application.properties"])
+@TestPropertySource(locations = ["classpath:application.yml"])
 @EnableAutoConfiguration
 @SpringBootTest(classes = [IntegrationConfig::class])
 class ActuatorTest : CapsaApiTestBase() {

@@ -1,0 +1,8 @@
+capsa:
+  command:
+    host: '!!PENDING!!'
+    port: 80
+  query:
+    host: '!!PENDING!!'
+    port: 80
+  schema: http

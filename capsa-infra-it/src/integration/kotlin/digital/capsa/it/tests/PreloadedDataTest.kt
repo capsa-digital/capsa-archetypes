@@ -21,7 +21,7 @@ import kotlin.test.assertEquals
 
 @Tag("it")
 @RunWith(SpringRunner::class)
-@TestPropertySource(locations = ["classpath:application.properties"])
+@TestPropertySource(locations = ["classpath:application.yml"])
 @EnableAutoConfiguration
 @SpringBootTest(classes = [IntegrationConfig::class])
 @ExtendWith(DataLoader::class)
