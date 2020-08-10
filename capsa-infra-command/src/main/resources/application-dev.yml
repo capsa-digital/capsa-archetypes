@@ -35,6 +35,13 @@ spring:
                 factor: 3
         binder:
           replication-factor: 3
+        bindings:
+          event-bus-output:
+            destination: capsa-event-bus-dev
+            producer:
+              configuration:
+                key:
+                  serializer: org.apache.kafka.common.serialization.StringSerializer
       bindings:
         event-bus-output:
           destination: capsa-event-bus-dev

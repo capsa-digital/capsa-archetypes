@@ -15,12 +15,6 @@ spring:
       kafka:
         binder:
           headers: eventType
-        bindings:
-          event-bus-output:
-            producer:
-              configuration:
-                key:
-                  serializer: org.apache.kafka.common.serialization.StringSerializer
       inMemory:
         binder:
           headers: eventType
