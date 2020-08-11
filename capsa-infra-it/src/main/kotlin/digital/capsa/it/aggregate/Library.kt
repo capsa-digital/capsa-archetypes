@@ -16,8 +16,9 @@ class Library(var libraryName: String? = null,
     fun book(init: Book.() -> Unit) = initAggregate(Book(), init)
 
     override fun construct() {
-        libraryName = libraryName ?: mockLibraryName()
-        address = address ?: mockAddress()
+        val library = mockLibrary()
+        libraryName = libraryName ?: library.first
+        address = address ?: library.second
     }
 
     override fun onCreate(context: TestContext) {
@@ -51,40 +52,35 @@ class Library(var libraryName: String? = null,
     }
 
     companion object {
-        private val libraryNames = listOf("Royal Library", "National Library", "Central Library", "York Library", "Refference Library")
-
         private var libraryIndex = 0
 
-        private var addressIndex = 0
-
-
-        fun mockLibraryName(): String {
-            return libraryNames[libraryIndex++ % libraryNames.size]
+        fun mockLibrary(): Pair<String, Address> {
+            return libraries[libraryIndex++ % libraries.size]
         }
 
-        private val addresses = listOf(
-                Pair("Toronto Branch", Address(
+        private val libraries = listOf(
+                Pair("Camp Chicka Chicka Boom Boom", Address(
                         addressLine1 = "33 Victoria St",
                         city = "Toronto",
                         state = "ON",
                         zipCode = "M5C 2A1",
                         country = "Canada"
                 )),
-                Pair("Toronto Branch", Address(
+                Pair("Enchanting Library", Address(
                         addressLine1 = "441 Clark Ave W",
                         city = "Thornhill",
                         state = "ON",
                         zipCode = "L4J 6W8",
                         country = "Canada"
                 )),
-                Pair("Toronto Branch", Address(
+                Pair("Libby Friends of the Library", Address(
                         addressLine1 = "7509 Yonge St",
                         city = "Thornhill",
                         state = "ON",
                         zipCode = "L3T 2B4",
                         country = "Canada"
                 )),
-                Pair("Montreal Branch", Address(
+                Pair("Little Book House", Address(
                         addressLine1 = "425 Boulevard de Maisonneuve O 3e étage",
                         city = "Montréal",
                         state = "QC",
@@ -92,18 +88,35 @@ class Library(var libraryName: String? = null,
                         country = "Canada"
 
                 )),
-                Pair("Calgary Branch", Address(
+                Pair("Peace Center Books", Address(
                         addressLine1 = "700 2nd Street SW",
                         city = "Calgary",
                         state = "AB",
                         zipCode = "T2P 2W1",
                         country = "Canada"
+                )),
+                Pair("Little Free Food Pantry", Address(
+                        addressLine1 = "208 West Clark St",
+                        city = "Colby",
+                        state = "WI",
+                        zipCode = "54421",
+                        country = "US"
+                )),
+                Pair("Gerlinde", Address(
+                        addressLine1 = "1013 LITHIA WAY",
+                        city = "TALENT",
+                        state = "OR",
+                        zipCode = "97540",
+                        country = "US"
+                )),
+                Pair("Little Book House", Address(
+                        addressLine1 = "12216 Dovercourt Crescent NW",
+                        city = "Edmonton",
+                        state = "AB",
+                        zipCode = "T5L 4E5",
+                        country = "Canada"
                 ))
         )
-
-        fun mockAddress(): Address {
-            return addresses[addressIndex++ % addresses.size].second
-        }
     }
 }
 
