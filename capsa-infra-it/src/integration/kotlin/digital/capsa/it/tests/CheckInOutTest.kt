@@ -48,7 +48,7 @@ class CheckInOutTest : CapsaApiTestBase() {
                     book { }
                 }
                 member {
-                    firstName = "John"
+                    firstName = "Jane"
                     lastName = "Doe"
                 }
             }

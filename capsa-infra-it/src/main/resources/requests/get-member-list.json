@@ -4,7 +4,7 @@
   "host": null,
   "port": null,
   "basePath": "",
-  "path": "/api/getMemberList",
+  "path": "/getMemberList",
   "queryParams": "",
   "connectTimeout": 30000,
   "readTimeout": 30000,

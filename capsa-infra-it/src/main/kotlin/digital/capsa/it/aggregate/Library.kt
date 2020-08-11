@@ -16,9 +16,8 @@ class Library(var libraryName: String? = null,
     fun book(init: Book.() -> Unit) = initAggregate(Book(), init)
 
     override fun construct() {
-        val index = parent?.getChildCount(Library::class) ?: 0
-        libraryName = libraryName ?: mockLibraryName(index)
-        address = address ?: mockAddress(index)
+        libraryName = libraryName ?: mockLibraryName()
+        address = address ?: mockAddress()
     }
 
     override fun onCreate(context: TestContext) {
@@ -52,18 +51,37 @@ class Library(var libraryName: String? = null,
     }
 
     companion object {
-        private val libraryNames = listOf("Royal Library", "National Library", "Central Library")
+        private val libraryNames = listOf("Royal Library", "National Library", "Central Library", "York Library", "Refference Library")
 
-        fun mockLibraryName(index: Int): String {
-            return libraryNames[index % libraryNames.size]
+        private var libraryIndex = 0
+
+        private var addressIndex = 0
+
+
+        fun mockLibraryName(): String {
+            return libraryNames[libraryIndex++ % libraryNames.size]
         }
 
         private val addresses = listOf(
                 Pair("Toronto Branch", Address(
-                        addressLine1 = "33 Victoria St Unit 150",
+                        addressLine1 = "33 Victoria St",
                         city = "Toronto",
                         state = "ON",
                         zipCode = "M5C 2A1",
+                        country = "Canada"
+                )),
+                Pair("Toronto Branch", Address(
+                        addressLine1 = "441 Clark Ave W",
+                        city = "Thornhill",
+                        state = "ON",
+                        zipCode = "L4J 6W8",
+                        country = "Canada"
+                )),
+                Pair("Toronto Branch", Address(
+                        addressLine1 = "7509 Yonge St",
+                        city = "Thornhill",
+                        state = "ON",
+                        zipCode = "L3T 2B4",
                         country = "Canada"
                 )),
                 Pair("Montreal Branch", Address(
@@ -83,8 +101,8 @@ class Library(var libraryName: String? = null,
                 ))
         )
 
-        fun mockAddress(index: Int): Address {
-            return addresses[index % addresses.size].second
+        fun mockAddress(): Address {
+            return addresses[addressIndex++ % addresses.size].second
         }
     }
 }

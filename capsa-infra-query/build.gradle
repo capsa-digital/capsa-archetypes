@@ -18,6 +18,7 @@ dependencies {
             'org.postgresql:postgresql',
             'org.springframework.boot:spring-boot-starter-actuator',
             'org.springframework.boot:spring-boot-starter-data-jpa',
+            'org.springframework.boot:spring-boot-starter-thymeleaf',
             'org.springframework.boot:spring-boot-starter-web',
             'org.springframework.cloud:spring-cloud-function-kotlin',
             'org.springframework.cloud:spring-cloud-starter-function-web',

@@ -4,7 +4,7 @@
   "host": null,
   "port": null,
   "basePath": "",
-  "path": "/api/actuator/info",
+  "path": "/actuator/info",
   "queryParams": "",
   "connectTimeout": 30000,
   "readTimeout": 30000,

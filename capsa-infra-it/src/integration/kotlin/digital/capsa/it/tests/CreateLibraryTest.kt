@@ -86,7 +86,7 @@ class CreateLibraryTest : CapsaApiTestBase() {
                     "$.schema" to schema,
                     "$.host" to queryHost,
                     "$.port" to queryPort,
-                    "$.path" to "/api/getMemberDetails/${memberId.toString()}")
+                    "$.path" to "/getMemberDetails/${memberId.toString()}")
         }.on {
             context.httpManager.sendHttpRequest(requestJsonFileName = "/requests/get-member-details.json",
                     transformationData = this)

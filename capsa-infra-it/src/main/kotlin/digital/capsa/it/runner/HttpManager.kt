@@ -83,7 +83,7 @@ class HttpManager {
         val requestEntity: HttpEntity<MultiValueMap<String, Any>> = HttpEntity(body, headers)
 
         return RestTemplate()
-                .postForEntity("$endpoint/api/uploadFile", requestEntity, String::class.java)
+                .postForEntity("$endpoint/uploadFile", requestEntity, String::class.java)
     }
 
     private fun getClientHttpRequestFactory(connectTimeout: Int, readTimeout: Int):

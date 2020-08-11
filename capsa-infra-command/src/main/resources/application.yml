@@ -18,9 +18,6 @@ spring:
       inMemory:
         binder:
           headers: eventType
-server:
-  servlet:
-    context-path: /api
 info:
   app:
     name:  Capsa Command Application
