@@ -3,7 +3,10 @@ package digital.capsa.it.tests
 import assertk.assertThat
 import digital.capsa.it.TestContext
 import digital.capsa.it.aggregate.Account
+import digital.capsa.it.aggregate.Library
+import digital.capsa.it.aggregate.Member
 import digital.capsa.it.aggregate.account
+import digital.capsa.it.aggregate.getChild
 import digital.capsa.it.dsl.given
 import digital.capsa.it.json.OpType
 import digital.capsa.it.json.ValidationRule
@@ -61,34 +64,37 @@ class CreateLibraryTest : CapsaApiTestBase() {
     @Test
     fun `verify demo data`() {
         Thread.sleep(2000L)
+        val libraryId = demoAccount.getChild<Library>(0).id
         given {
             mapOf(
                     "$.schema" to schema,
                     "$.host" to queryHost,
-                    "$.port" to queryPort)
+                    "$.port" to queryPort,
+                    "$.body.libraryId" to libraryId.toString())
         }.on {
-            context.httpManager.sendHttpRequest(requestJsonFileName = "/requests/get-all-books.json",
+            context.httpManager.sendHttpRequest(requestJsonFileName = "/requests/get-book-list.json",
                     transformationData = this)
         }.then { response ->
             assertEquals(200, response.statusCode.value())
-
-//            assertThat(response.body).isJsonWhere(
-//                    ValidationRule("\$.length()", OpType.equal, "{2}")
-//            )
+            assertThat(response.body).isJsonWhere(
+                    ValidationRule("\$.bookList.length()", OpType.equal, "{2}")
+            )
         }
+        val memberId = demoAccount.getChild<Member>(0).id
         given {
             mapOf(
                     "$.schema" to schema,
                     "$.host" to queryHost,
-                    "$.port" to queryPort)
+                    "$.port" to queryPort,
+                    "$.path" to "/api/getMemberDetails/${memberId.toString()}")
         }.on {
-            context.httpManager.sendHttpRequest(requestJsonFileName = "/requests/get-all-members.json",
+            context.httpManager.sendHttpRequest(requestJsonFileName = "/requests/get-member-details.json",
                     transformationData = this)
         }.then { response ->
             assertEquals(200, response.statusCode.value())
-//            assertThat(response.body).isJsonWhere(
-//                    ValidationRule("\$.length()", OpType.equal, "{5}")
-//            )
+            assertThat(response.body).isJsonWhere(
+                    ValidationRule("$.firstName", OpType.equal, "John")
+            )
         }
     }
 }

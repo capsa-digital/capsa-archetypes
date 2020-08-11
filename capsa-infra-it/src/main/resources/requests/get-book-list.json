@@ -1,15 +1,18 @@
 {
-  "method": "GET",
+  "method": "POST",
   "schema": null,
   "host": null,
   "port": null,
   "basePath": "",
-  "path": "/api/getAllMembers",
+  "path": "/api/getBookList",
   "queryParams": "",
   "connectTimeout": 30000,
   "readTimeout": 30000,
   "headers": {
     "Content-Type": "application/json",
     "X-Request-ID": "cf86fbca-8e6d-11ea-bc55-0242ac130003"
+  },
+  "body": {
+    "libraryId": null
   }
 }

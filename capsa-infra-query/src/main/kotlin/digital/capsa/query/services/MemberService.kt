@@ -12,7 +12,7 @@ class MemberService(private val repository: MemberRepository) {
         return repository.getOne(memberId)
     }
 
-    fun getAllMembers(): List<Member> {
+    fun getMemberList(): List<Member> {
         return repository.findAll()
     }
 

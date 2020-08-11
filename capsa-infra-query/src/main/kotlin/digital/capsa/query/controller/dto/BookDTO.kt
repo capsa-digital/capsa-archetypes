@@ -1,4 +1,4 @@
-package digital.capsa.query.query.v1.dto
+package digital.capsa.query.controller.dto
 
 import digital.capsa.core.vocab.BookSortByType
 import digital.capsa.core.vocab.BookStatus
@@ -28,7 +28,7 @@ data class BookDetailsDTO(
 ) : BookDTO by bookInfo
 
 data class BookSearchCriteriaDTO(
-        val bookId: UUID,
+        val libraryId: UUID,
         val pageNumber: Int = 1,
         val pageSize: Int = 15,
         val bookStatus: BookStatus?,
@@ -40,5 +40,5 @@ data class BookSearchCriteriaDTO(
 )
 
 data class BookSearchResultDTO(
-        val customerList: List<BookInfoDTO>
+        val bookList: List<BookInfoDTO>
 )

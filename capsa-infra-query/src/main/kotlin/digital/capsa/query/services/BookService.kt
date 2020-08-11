@@ -14,8 +14,8 @@ class BookService(private val repository: BookRepository) {
         return repository.getOne(bookId)
     }
 
-    fun getAllBooks(): List<Book> {
-        return repository.findAll()
+    fun getBookList(libraryId: UUID): List<Book> {
+        return repository.findAllByLibraryId(libraryId)
     }
 
     //TODO
