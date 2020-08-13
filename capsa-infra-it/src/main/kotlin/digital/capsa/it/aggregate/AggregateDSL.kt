@@ -96,11 +96,4 @@ abstract class AbstractAggregate(private val name: String) : Aggregate {
     }
 }
 
-fun account(init: Account.() -> Unit): Account {
-    val businessAccount = Account()
-    businessAccount.construct()
-    businessAccount.init()
-    return businessAccount
-}
-
 

@@ -12,3 +12,11 @@ class Account : AbstractAggregate("Account") {
 
     override fun onCreate(context: TestContext) {}
 }
+
+fun account(init: Account.() -> Unit): Account {
+    val businessAccount = Account()
+    businessAccount.construct()
+    businessAccount.init()
+    return businessAccount
+}
+

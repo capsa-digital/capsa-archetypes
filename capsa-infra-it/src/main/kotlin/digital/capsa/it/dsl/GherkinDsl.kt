@@ -6,18 +6,18 @@ typealias given<S> = Given<S>
 
 class Given<S>(private val setup: () -> S) {
 
-    fun <R> on(test: S.() -> R): Result<R> =
-            Result { setup().test() }
+    fun <R> on(init: S.() -> R): On<R> =
+            On { setup().init() }
 }
 
-class Result<R>(private val result: () -> R) {
+class On<R>(private val result: () -> R) {
 
-    fun then(assert: Assertions.(R) -> Unit) {
-        val assertions = Assertions()
+    fun then(assert: Then.(R) -> Unit) {
+        val assertions = Then()
         assertAll {
             assertions.assert(result())
         }
     }
 }
 
-class Assertions
+class Then
