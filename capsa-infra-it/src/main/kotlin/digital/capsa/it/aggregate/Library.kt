@@ -1,12 +1,11 @@
 package digital.capsa.it.aggregate
 
+import assertk.assertThat
+import assertk.assertions.isEqualTo
 import com.fasterxml.jackson.databind.ObjectMapper
 import digital.capsa.core.logger
 import digital.capsa.core.model.Address
 import digital.capsa.core.vocab.AggregateType
-import digital.capsa.it.TestContext
-import digital.capsa.it.runner.HttpManager
-import org.springframework.core.env.Environment
 import java.util.UUID
 
 class Library(var libraryName: String? = null,
@@ -21,34 +20,31 @@ class Library(var libraryName: String? = null,
         address = address ?: library.second
     }
 
-    override fun onCreate(context: TestContext) {
-        val applicationContext = context.applicationContext
-        val httpManager = applicationContext.getBean(HttpManager::class.java)
-        val environment = applicationContext.getBean(Environment::class.java)
-
+    override fun onCreate() {
         if (id == null) {
-            createLibrary(httpManager, context)
+            createLibrary()
         }
         logger.info("===> Library added, attr = ${getAttributes()}")
     }
 
-    private fun createLibrary(httpManager: HttpManager, context: TestContext) {
-        val response = httpManager.sendHttpRequest("/requests/create-library.json",
-                context.memento,
-                mapOf(
+    private fun createLibrary() {
+        httpRequest("/requests/create-library.json")
+                .withTransformation(
                         "$.schema" to context.environment.getProperty("capsa.schema"),
                         "$.host" to context.environment.getProperty("capsa.command.host"),
                         "$.port" to context.environment.getProperty("capsa.command.port"),
                         "$.body.libraryName" to libraryName,
                         "$.body.address" to address
                 )
-        )
-        val ids = ObjectMapper().readTree(response.body)?.get("ids")
-        ids?.also {
-            it.get(AggregateType.library.name)?.also { node ->
-                id = UUID.fromString(node.asText())
-            }
-        }
+                .send {
+                    assertThat(statusCode.value()).isEqualTo(200)
+                    val ids = ObjectMapper().readTree(body)?.get("ids")
+                    ids?.also {
+                        it.get(AggregateType.library.name)?.also { node ->
+                            id = UUID.fromString(node.asText())
+                        }
+                    }
+                }
     }
 
     companion object {

@@ -1,6 +1,8 @@
 package digital.capsa.it.tests
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import digital.capsa.it.TestContext
+import digital.capsa.it.runner.HttpRequestBuilder
 import org.junit.Assume
 import org.junit.jupiter.api.BeforeAll
 import org.springframework.context.ApplicationContext
@@ -8,6 +10,8 @@ import org.springframework.context.ApplicationContext
 abstract class CapsaApiTestBase {
 
     companion object {
+
+        lateinit var objectMapper: ObjectMapper
 
         lateinit var context: TestContext
 
@@ -27,6 +31,7 @@ abstract class CapsaApiTestBase {
             val profilesFromConsole = System.getProperty("spring.profiles.active", "")
             Assume.assumeFalse(profilesFromConsole.contains("prod"))
 
+            objectMapper = applicationContext.getBean(ObjectMapper::class.java)
             context = TestContext(applicationContext = applicationContext)
             schema = context.environment.getProperty("capsa.schema")!!
             commandHost = context.environment.getProperty("capsa.command.host")!!
@@ -35,4 +40,8 @@ abstract class CapsaApiTestBase {
             queryPort = context.environment.getProperty("capsa.query.port")!!
         }
     }
+}
+
+fun httpRequest(requestJsonFileName: String): HttpRequestBuilder {
+    return HttpRequestBuilder(CapsaApiTestBase.objectMapper, requestJsonFileName)
 }

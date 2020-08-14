@@ -2,7 +2,6 @@ package digital.capsa.it.tests
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import digital.capsa.it.dsl.given
 import digital.capsa.it.json.OpType
 import digital.capsa.it.json.ValidationRule
 import digital.capsa.it.json.isJsonWhere
@@ -37,22 +36,18 @@ class ActuatorTest : CapsaApiTestBase() {
                              host: String,
                              port: String,
                              appName: String) {
-        given {
-            mapOf(
-                    "$.schema" to schema,
-                    "$.host" to host,
-                    "$.port" to port)
-        }.on {
-            context.httpManager.sendHttpRequest(
-                    requestJsonFileName = "/requests/actuator-info.json",
-                    transformationData = this)
-        }.then { response ->
-            assertThat(response.statusCode.value()).isEqualTo(200)
-            assertThat(response.body).isJsonWhere(
-                    ValidationRule("$.app.name", OpType.equal, appName),
-                    ValidationRule("$.app.env", OpType.equal,
-                            System.getProperty("spring.profiles.active", ""))
-            )
-        }
+        httpRequest("/requests/actuator-info.json")
+                .withTransformation(
+                        "$.schema" to schema,
+                        "$.host" to host,
+                        "$.port" to port
+                )
+                .send {
+                    assertThat(statusCode.value()).isEqualTo(200)
+                    assertThat(body).isJsonWhere(
+                            ValidationRule("$.app.name", OpType.equal, appName),
+                            ValidationRule("$.app.env", OpType.equal,
+                                    System.getProperty("spring.profiles.active", "")))
+                }
     }
 }

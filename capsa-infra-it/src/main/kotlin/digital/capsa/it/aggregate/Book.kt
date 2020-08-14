@@ -1,9 +1,10 @@
 package digital.capsa.it.aggregate
 
+import assertk.assertThat
+import assertk.assertions.isEqualTo
 import com.fasterxml.jackson.databind.ObjectMapper
 import digital.capsa.core.logger
 import digital.capsa.core.vocab.AggregateType
-import digital.capsa.it.TestContext
 import java.util.UUID
 
 class Book(var volume: String? = null
@@ -14,28 +15,29 @@ class Book(var volume: String? = null
         volume = volume ?: mockVolume(index)
     }
 
-    override fun onCreate(context: TestContext) {
-        addBook(context)
+    override fun onCreate() {
+        addBook()
         logger.info("===> Book added, attr = ${getAttributes()}")
     }
 
-    private fun addBook(context: TestContext) {
-        val response = context.httpManager.sendHttpRequest("/requests/add-book.json",
-                context.memento,
-                mapOf(
+    private fun addBook() {
+        httpRequest("/requests/add-book.json")
+                .withTransformation(
                         "$.schema" to context.environment.getProperty("capsa.schema"),
                         "$.host" to context.environment.getProperty("capsa.command.host"),
                         "$.port" to context.environment.getProperty("capsa.command.port"),
                         "$.body.libraryId" to parent!!.id.toString(),
                         "$.body.volume" to volume
                 )
-        )
-        val ids = ObjectMapper().readTree(response.body)?.get("ids")
-        ids?.also {
-            it.get(AggregateType.book.name)?.also { node ->
-                id = UUID.fromString(node.asText())
-            }
-        }
+                .send {
+                    assertThat(statusCode.value()).isEqualTo(200)
+                    val ids = ObjectMapper().readTree(body)?.get("ids")
+                    ids?.also {
+                        it.get(AggregateType.book.name)?.also { node ->
+                            id = UUID.fromString(node.asText())
+                        }
+                    }
+                }
     }
 
     companion object {

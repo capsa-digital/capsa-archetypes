@@ -11,7 +11,6 @@ import digital.capsa.it.aggregate.Library
 import digital.capsa.it.aggregate.Member
 import digital.capsa.it.aggregate.account
 import digital.capsa.it.aggregate.getChild
-import digital.capsa.it.dsl.given
 import digital.capsa.it.event.EventSnooper
 import digital.capsa.it.runner.TabularSource
 import org.junit.jupiter.api.BeforeAll
@@ -67,31 +66,29 @@ class CheckInOutTest : CapsaApiTestBase() {
     fun `verify check in events`(description: String, days: Int) {
         val bookId = testAccount.getChild<Library>(0).getChild<Book>(0).id
         val memberId = testAccount.getChild<Member>(0).id
-        given {
-            mapOf(
-                    "$.schema" to schema,
-                    "$.host" to commandHost,
-                    "$.port" to commandPort,
-                    "$.body.bookId" to bookId.toString(),
-                    "$.body.memberId" to memberId.toString(),
-                    "$.body.days" to days
-            )
-        }.on {
-            Thread.sleep(2000L)
-            eventSnooper.clear()
-            context.httpManager.sendHttpRequest(requestJsonFileName = "/requests/check-out-book.json",
-                    transformationData = this)
-        }.then { response ->
-            Thread.sleep(2000L)
-            assertEquals(200, response.statusCode.value())
-            val eventData = eventSnooper.getEvents()[0].data
-            assertThat(eventData).isInstanceOf(BookCheckedOut::class).also {
-                eventData as BookCheckedOut
-                assertThat(eventData.bookId).isEqualTo(bookId)
-                assertThat(eventData.memberId).isEqualTo(memberId)
-                assertThat(eventData.checkoutDate).isEqualTo(LocalDate.now())
-                assertThat(eventData.returnDate).isEqualTo(LocalDate.now().plusDays(days.toLong()))
-            }
-        }
+        Thread.sleep(2000L)
+        eventSnooper.clear()
+        httpRequest("/requests/check-out-book.json")
+                .withTransformation(
+                        "$.schema" to schema,
+                        "$.host" to commandHost,
+                        "$.port" to commandPort,
+                        "$.body.bookId" to bookId.toString(),
+                        "$.body.memberId" to memberId.toString(),
+                        "$.body.days" to days
+                )
+                .send {
+                    Thread.sleep(2000L)
+                    assertEquals(200, statusCode.value())
+                    val eventData = eventSnooper.getEvents()[0].data
+                    assertThat(eventData).isInstanceOf(BookCheckedOut::class).also {
+                        with(eventData as BookCheckedOut) {
+                            assertThat(bookId).isEqualTo(bookId)
+                            assertThat(memberId).isEqualTo(memberId)
+                            assertThat(checkoutDate).isEqualTo(LocalDate.now())
+                            assertThat(returnDate).isEqualTo(LocalDate.now().plusDays(days.toLong()))
+                        }
+                    }
+                }
     }
 }

@@ -1,44 +1,43 @@
 package digital.capsa.it.runner
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import digital.capsa.it.TestContext
 import digital.capsa.it.json.JsonPathModifyer
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.core.io.FileSystemResource
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
 import org.springframework.stereotype.Component
-import org.springframework.util.LinkedMultiValueMap
-import org.springframework.util.MultiValueMap
 import org.springframework.web.client.RestTemplate
 import java.io.BufferedReader
-import java.io.File
 import java.io.InputStreamReader
 import java.net.URI
 import java.util.stream.Collectors
 
 @Component
-class HttpManager {
+class HttpRequestBuilder(private val objectMapper: ObjectMapper, private val requestFile: String) {
 
-    @Autowired
-    lateinit var objectMapper: ObjectMapper
+    private var transformations: Map<String, Any?> = emptyMap()
 
-    @Suppress("TooGenericExceptionThrown")
-    fun sendHttpRequest(
-            requestJsonFileName: String,
-            memento: HashMap<String, String>? = null,
-            transformationData: Map<String, Any?>
-    ): ResponseEntity<String> {
-        val requestJson = javaClass.getResourceAsStream(requestJsonFileName)
+    private var token: String? = null
+
+    fun withTransformation(vararg transformations: Pair<String, Any?>): HttpRequestBuilder {
+        this.transformations = transformations.toMap()
+        return this
+    }
+
+    fun withAuthenticationToken(token: String?): HttpRequestBuilder {
+        this.token = token
+        return this
+    }
+
+    fun send(block: (ResponseEntity<String>.() -> Unit)? = null): ResponseEntity<String> {
+        val requestJson = javaClass.getResourceAsStream(requestFile)
                 .let(::InputStreamReader)
                 .let(::BufferedReader)
                 .lines()
                 .collect(Collectors.joining())
 
-        val transformRequestJson: String = JsonPathModifyer.modifyJson(requestJson, transformationData, null)
+        val transformRequestJson: String = JsonPathModifyer.modifyJson(requestJson, transformations, null)
         val httpRequest = objectMapper.readValue(transformRequestJson, HttpRequest::class.java)
 
         val restTemplate = RestTemplate(
@@ -46,44 +45,25 @@ class HttpManager {
 
         val headers = HttpHeaders()
 
-        memento?.let {
-            it["jwtToken"]?.let { token ->
-                headers.setBearerAuth(token)
-            }
+        token?.let { token ->
+            headers.setBearerAuth(token)
         }
 
         httpRequest.headers.forEach { (key, value) -> headers[key] = value }
 
         val requestEntity = HttpEntity(httpRequest.body.toString(), headers)
 
-        return restTemplate.exchange(
+        val response = restTemplate.exchange(
                 URI(httpRequest.schema, null, httpRequest.host, httpRequest.port,
                         (httpRequest.basePath?.let { "${httpRequest.basePath}" } ?: "")
                                 + httpRequest.path, httpRequest.queryParams, null).toString(),
                 httpRequest.method, requestEntity, String::class.java)
-    }
 
-    fun uploadFile(
-            endpoint: String,
-            context: TestContext,
-            name: String,
-            testFilePath: String
-    ): ResponseEntity<String> {
-
-        val file = File(HttpManager::class.java.getResource(testFilePath).file)
-
-        val headers = HttpHeaders()
-        headers.contentType = MediaType.MULTIPART_FORM_DATA
-        context.memento["jwtToken"]?.let { token ->
-            headers.setBearerAuth(token)
+        if (block != null) {
+            response.block()
         }
-        val body: MultiValueMap<String, Any> = LinkedMultiValueMap()
-        body.add(name, FileSystemResource(file))
 
-        val requestEntity: HttpEntity<MultiValueMap<String, Any>> = HttpEntity(body, headers)
-
-        return RestTemplate()
-                .postForEntity("$endpoint/uploadFile", requestEntity, String::class.java)
+        return response
     }
 
     private fun getClientHttpRequestFactory(connectTimeout: Int, readTimeout: Int):
@@ -93,6 +73,4 @@ class HttpManager {
         clientHttpRequestFactory.setReadTimeout(readTimeout)
         return clientHttpRequestFactory
     }
-
-
 }

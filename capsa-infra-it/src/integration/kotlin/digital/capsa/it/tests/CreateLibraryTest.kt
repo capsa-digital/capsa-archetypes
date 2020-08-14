@@ -1,13 +1,13 @@
 package digital.capsa.it.tests
 
 import assertk.assertThat
+import assertk.assertions.isEqualTo
 import digital.capsa.it.TestContext
 import digital.capsa.it.aggregate.Account
 import digital.capsa.it.aggregate.Library
 import digital.capsa.it.aggregate.Member
 import digital.capsa.it.aggregate.account
 import digital.capsa.it.aggregate.getChild
-import digital.capsa.it.dsl.given
 import digital.capsa.it.json.OpType
 import digital.capsa.it.json.ValidationRule
 import digital.capsa.it.json.isJsonWhere
@@ -65,36 +65,33 @@ class CreateLibraryTest : CapsaApiTestBase() {
     fun `verify demo data`() {
         Thread.sleep(2000L)
         val libraryId = demoAccount.getChild<Library>(0).id
-        given {
-            mapOf(
-                    "$.schema" to schema,
-                    "$.host" to queryHost,
-                    "$.port" to queryPort,
-                    "$.body.libraryId" to libraryId.toString())
-        }.on {
-            context.httpManager.sendHttpRequest(requestJsonFileName = "/requests/get-book-list.json",
-                    transformationData = this)
-        }.then { response ->
-            assertEquals(200, response.statusCode.value())
-            assertThat(response.body).isJsonWhere(
-                    ValidationRule("\$.bookList.length()", OpType.equal, "{2}")
-            )
-        }
+        httpRequest("/requests/get-book-list.json")
+                .withTransformation(
+                        "$.schema" to schema,
+                        "$.host" to queryHost,
+                        "$.port" to queryPort,
+                        "$.body.libraryId" to libraryId.toString()
+                )
+                .send {
+                    assertThat(statusCode.value()).isEqualTo(200)
+                    assertEquals(200, statusCode.value())
+                    assertThat(body).isJsonWhere(
+                            ValidationRule("\$.bookList.length()", OpType.equal, "{2}")
+                    )
+                }
         val memberId = demoAccount.getChild<Member>(0).id
-        given {
-            mapOf(
-                    "$.schema" to schema,
-                    "$.host" to queryHost,
-                    "$.port" to queryPort,
-                    "$.path" to "/getMemberDetails/${memberId.toString()}")
-        }.on {
-            context.httpManager.sendHttpRequest(requestJsonFileName = "/requests/get-member-details.json",
-                    transformationData = this)
-        }.then { response ->
-            assertEquals(200, response.statusCode.value())
-            assertThat(response.body).isJsonWhere(
-                    ValidationRule("$.firstName", OpType.equal, "John")
-            )
-        }
+        httpRequest("/requests/get-member-details.json")
+                .withTransformation(
+                        "$.schema" to schema,
+                        "$.host" to queryHost,
+                        "$.port" to queryPort,
+                        "$.path" to "/getMemberDetails/${memberId.toString()}"
+                )
+                .send {
+                    assertEquals(200, statusCode.value())
+                    assertThat(body).isJsonWhere(
+                            ValidationRule("$.firstName", OpType.equal, "John")
+                    )
+                }
     }
 }

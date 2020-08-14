@@ -2,6 +2,7 @@ package digital.capsa.it.aggregate
 
 import digital.capsa.core.logger
 import digital.capsa.it.TestContext
+import digital.capsa.it.runner.HttpRequestBuilder
 import java.util.UUID
 import kotlin.reflect.KClass
 import kotlin.reflect.KVisibility
@@ -18,7 +19,7 @@ interface Aggregate {
 
     fun create(context: TestContext)
 
-    fun onCreate(context: TestContext)
+    fun onCreate()
 
     fun toString(builder: StringBuilder, nesting: Int)
 
@@ -43,6 +44,8 @@ data class Key(var value: String)
 @AggregateMarker
 abstract class AbstractAggregate(private val name: String) : Aggregate {
 
+    lateinit var context: TestContext
+
     override var key: Key? = null
 
     override var id: UUID? = null
@@ -60,10 +63,11 @@ abstract class AbstractAggregate(private val name: String) : Aggregate {
     }
 
     override fun create(context: TestContext) {
+        this.context = context
         if (parent == null) {
             logger.info("Aggregate Tree:\n $this")
         }
-        onCreate(context)
+        onCreate()
         for (c in children) {
             c.create(context)
         }
@@ -93,6 +97,10 @@ abstract class AbstractAggregate(private val name: String) : Aggregate {
 
     operator fun Key.unaryPlus() {
         key = this
+    }
+
+    fun httpRequest(requestJsonFileName: String): HttpRequestBuilder {
+        return HttpRequestBuilder(context.objectMapper, requestJsonFileName)
     }
 }
 

@@ -1,8 +1,9 @@
 package digital.capsa.it.aggregate
 
+import assertk.assertThat
+import assertk.assertions.isEqualTo
 import com.fasterxml.jackson.databind.ObjectMapper
 import digital.capsa.core.vocab.AggregateType
-import digital.capsa.it.TestContext
 import java.util.Random
 import java.util.UUID
 
@@ -27,10 +28,9 @@ class Member(
                 ?: PersonMockGenerator.mockPhone(random = random)
     }
 
-    override fun onCreate(context: TestContext) {
-        val response = context.httpManager.sendHttpRequest("/requests/register-member.json",
-                context.memento,
-                mapOf(
+    override fun onCreate() {
+        httpRequest("/requests/register-member.json")
+                .withTransformation(
                         "$.schema" to context.environment.getProperty("capsa.schema"),
                         "$.host" to context.environment.getProperty("capsa.command.host"),
                         "$.port" to context.environment.getProperty("capsa.command.port"),
@@ -39,13 +39,15 @@ class Member(
                         "$.body.email" to email,
                         "$.body.phone" to phone
                 )
-        )
-        val ids = ObjectMapper().readTree(response.body)?.get("ids")
-        ids?.also {
-            it.get(AggregateType.member.name)?.also { node ->
-                id = UUID.fromString(node.asText())
-            }
-        }
+                .send {
+                    assertThat(statusCode.value()).isEqualTo(200)
+                    val ids = ObjectMapper().readTree(body)?.get("ids")
+                    ids?.also {
+                        it.get(AggregateType.member.name)?.also { node ->
+                            id = UUID.fromString(node.asText())
+                        }
+                    }
+                }
     }
 
     companion object {
