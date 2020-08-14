@@ -1,5 +1,6 @@
 package digital.capsa.it
 
+import digital.capsa.it.dsl.given
 import digital.capsa.it.json.JsonPathValidator
 import digital.capsa.it.json.OpType
 import digital.capsa.it.json.ValidationRule
@@ -13,22 +14,27 @@ class JsonPathValidatorTest {
     @Test
     @Suppress("FunctionNaming")
     fun testValidator_happyPath() {
-        JsonPathValidator.assertJson("""
-            [{
-              "id": "12345",
-              "data": "abcd",
-              "num": 12345
-            }, {
-              "id": "23456",
-              "data": "bcde",
-              "num": 23456
-            }]
-
-        """.trimIndent(), listOf(
-                ValidationRule("\$.*.id", OpType.equal, """12345, 23456"""),
-                ValidationRule("@[?(@.id == '12345')].data", OpType.equal, "abcd"),
-                ValidationRule("@[?(@.id == '23456')].num", OpType.equal, "{23456}")
-        ))
+        given {
+            """
+                    [{
+                      "id": "12345",
+                      "data": "abcd",
+                      "num": 12345
+                    }, {
+                      "id": "23456",
+                      "data": "bcde",
+                      "num": 23456
+                    }]
+                """
+        }.on {
+            it.trimIndent()
+        }.then {
+            JsonPathValidator.assertJson(it, listOf(
+                    ValidationRule("$.*.id", OpType.equal, """12345, 23456"""),
+                    ValidationRule("@[?(@.id == '12345')].data", OpType.equal, "abcd"),
+                    ValidationRule("@[?(@.id == '23456')].num", OpType.equal, "{23456}")
+            ))
+        }
     }
 
     @Test

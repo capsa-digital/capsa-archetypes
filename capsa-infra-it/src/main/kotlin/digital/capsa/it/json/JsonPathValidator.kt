@@ -113,20 +113,16 @@ object JsonPathValidator {
 
     @Suppress("MagicNumber")
     fun verifyJwtPayload(jwtToken: String, payloadName: String, payloadValue: String) {
-        try {
-            val claims: Claims = Jwts.parser()
-                    .setSigningKeyResolver(object : SigningKeyResolverAdapter() {
-                        override fun resolveSigningKey(header: JwsHeader<*>?, claims: Claims?): Key? {
-                            Assert.assertTrue(
-                                    "JWT token validation failed for $payloadName == $payloadValue, claims = $claims",
-                                    claims?.get(payloadName)?.equals(payloadValue) ?: false)
-                            return null // will throw exception, can be caught in caller
-                        }
-                    })
-                    .parseClaimsJws(jwtToken).getBody()
-        } catch (e: Exception) {
-            // do nothing
-        }
+        Jwts.parser()
+                .setSigningKeyResolver(object : SigningKeyResolverAdapter() {
+                    override fun resolveSigningKey(header: JwsHeader<*>?, claims: Claims?): Key? {
+                        Assert.assertTrue(
+                                "JWT token validation failed for $payloadName == $payloadValue, claims = $claims",
+                                claims?.get(payloadName)?.equals(payloadValue) ?: false)
+                        return null // will throw exception, can be caught in caller
+                    }
+                })
+                .parseClaimsJws(jwtToken).getBody()
     }
 
     @Suppress("MagicNumber")

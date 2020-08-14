@@ -1,23 +1,19 @@
 package digital.capsa.it.dsl
 
-import assertk.assertAll
+fun <S> given(block: () -> S): Given<S> =
+        Given(block())
 
-typealias given<S> = Given<S>
+class Given<S>(private val setup: S) {
 
-class Given<S>(private val setup: () -> S) {
-
-    fun <R> on(init: S.() -> R): On<R> =
-            On { setup().init() }
+    fun <R> on(block: (S) -> R): On<R> =
+            On(block(setup))
 }
 
-class On<R>(private val result: () -> R) {
+class On<R>(private val result: R) {
 
-    fun then(assert: Then.(R) -> Unit) {
-        val assertions = Then()
-        assertAll {
-            assertions.assert(result()).also {  }
-        }
-    }
+    fun <O> then(block: (R) -> O): Then<O> =
+            Then(block(result))
 }
 
-class Then
+class Then<O>(private val result: O)
+
