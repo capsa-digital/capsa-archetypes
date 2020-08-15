@@ -22,6 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.ApplicationContext
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
+import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 
 @Tag("it")
@@ -63,7 +64,7 @@ class CreateLibraryTest : CapsaApiTestBase() {
 
     @Test
     fun `verify demo data`() {
-        Thread.sleep(2000L)
+        TimeUnit.SECONDS.sleep(5)
         val libraryId = demoAccount.getChild<Library>(0).id
         httpRequest("/requests/get-book-list.json")
                 .withTransformation(

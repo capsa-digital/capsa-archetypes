@@ -8,7 +8,10 @@ import io.kubernetes.client.openapi.models.V1LoadBalancerIngress
 import io.kubernetes.client.util.Config
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext
+import org.springframework.http.HttpStatus
 import org.springframework.test.context.support.TestPropertySourceUtils
+import org.springframework.web.client.ResourceAccessException
+import org.springframework.web.client.RestTemplate
 import java.util.concurrent.TimeUnit
 
 
@@ -21,15 +24,19 @@ class ContextInitializer : ApplicationContextInitializer<ConfigurableApplication
             val client: ApiClient = Config.defaultClient()
             Configuration.setDefaultApiClient(client)
 
-            val commandPodIp = waitForExternalIp("metadata.name=command-app-service")
+            val commandPodIp = waitForExternalIp("metadata.name=command-app-service")?: throw Error("Command IP is null")
             println("Command Pod IP: $commandPodIp")
             TestPropertySourceUtils.addInlinedPropertiesToEnvironment(applicationContext,
                     "capsa.command.host=$commandPodIp")
 
-            val queryPodIp = waitForExternalIp("metadata.name=query-app-service")
+            val queryPodIp = waitForExternalIp("metadata.name=query-app-service")?: throw Error("Query IP is null")
             println("Query Pod IP: $queryPodIp")
             TestPropertySourceUtils.addInlinedPropertiesToEnvironment(applicationContext,
                     "capsa.query.host=$queryPodIp")
+
+            waitForServiceReady(commandPodIp)
+
+            waitForServiceReady(queryPodIp)
         }
     }
 
@@ -55,6 +62,23 @@ class ContextInitializer : ApplicationContextInitializer<ConfigurableApplication
             }
         }
         return null
+    }
+
+    private fun waitForServiceReady(ip: String) {
+        var live = false
+        var retryCount = 0
+        do {
+            try {
+                val response = RestTemplate().getForEntity("http://$ip/api/actuator/info", String::class.java)
+                live = response.statusCode == HttpStatus.OK
+            } catch (e: ResourceAccessException) {
+                println("Service on $ip is not ready yet")
+            }
+            retryCount++
+            if (!live) {
+                TimeUnit.SECONDS.sleep(5)
+            }
+        } while (!live && retryCount < 25)
     }
 
     private fun waitForExternalIp(fieldSelector: String): String? {

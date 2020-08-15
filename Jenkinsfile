@@ -62,9 +62,6 @@ pipeline {
         }
         stage('Component Test') {
             steps {
-                // TODO use LivenessProbe and ReadinessProbe from inside integration test digital.capsa.it.tests.ContextInitializer
-                // instead hardcoded sleep
-                sleep 150
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     sh './gradlew integrationTest -Pprofiles=dev'
                 }
