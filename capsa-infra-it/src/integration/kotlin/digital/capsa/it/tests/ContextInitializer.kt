@@ -69,7 +69,7 @@ class ContextInitializer : ApplicationContextInitializer<ConfigurableApplication
         var retryCount = 0
         do {
             try {
-                val response = RestTemplate().getForEntity("http://$ip/api/actuator/info", String::class.java)
+                val response = RestTemplate().getForEntity("http://$ip/actuator/info", String::class.java)
                 live = response.statusCode == HttpStatus.OK
             } catch (e: ResourceAccessException) {
                 println("Service on $ip is not ready yet")
