@@ -5,8 +5,10 @@ import digital.capsa.it.json.JsonPathModifyer
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
+import org.springframework.http.client.ClientHttpResponse
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
 import org.springframework.stereotype.Component
+import org.springframework.web.client.ResponseErrorHandler
 import org.springframework.web.client.RestTemplate
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -42,6 +44,13 @@ class HttpRequestBuilder(private val objectMapper: ObjectMapper, private val req
 
         val restTemplate = RestTemplate(
                 getClientHttpRequestFactory(httpRequest.connectTimeout, httpRequest.readTimeout))
+        restTemplate.errorHandler = object : ResponseErrorHandler {
+            override fun hasError(response: ClientHttpResponse): Boolean {
+                return false
+            }
+
+            override fun handleError(response: ClientHttpResponse) {}
+        }
 
         val headers = HttpHeaders()
 
