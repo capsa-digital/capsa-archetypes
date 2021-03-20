@@ -23,8 +23,8 @@ dependencies {
             'org.springframework.cloud:spring-cloud-function-kotlin',
             'org.springframework.cloud:spring-cloud-starter-function-web',
             'org.springframework.cloud:spring-cloud-starter-stream-kafka',
-            project(':capsa-infra-core'),
-            project(':capsa-infra-eventbus')
+            project(':capsa-archetypes-core'),
+            project(':capsa-archetypes-eventbus')
     )
 }
 

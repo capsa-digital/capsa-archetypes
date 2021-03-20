@@ -18,10 +18,10 @@ plugins {
    id 'com.gradle.enterprise'
 }
 
-rootProject.name = 'capsa-infra'
-include 'capsa-infra-core'
-include 'capsa-infra-eventbus'
-include 'capsa-infra-command'
-include 'capsa-infra-query'
-include 'capsa-infra-it'
+rootProject.name = 'capsa-archetypes'
+include 'capsa-archetypes-core'
+include 'capsa-archetypes-eventbus'
+include 'capsa-archetypes-command'
+include 'capsa-archetypes-query'
+include 'capsa-archetypes-it'
 

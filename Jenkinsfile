@@ -9,25 +9,25 @@ pipeline {
         stage('Create `Command` Docker Image') {
             steps {
                 sh 'docker build \
-                              --file capsa-infra-command/Dockerfile \
-                              --build-arg JAR_FILE=capsa-infra-command/build/libs/capsa-infra-command-latest.jar \
+                              --file capsa-archetypes-command/Dockerfile \
+                              --build-arg JAR_FILE=capsa-archetypes-command/build/libs/capsa-archetypes-command-latest.jar \
                               --build-arg INFO_APP_BUILD=$BUILD_NUMBER \
-                              --tag gcr.io/capsa-digital/capsa-infra-command:$BUILD_NUMBER \
-                              --tag gcr.io/capsa-digital/capsa-infra-command:latest .'
-                sh 'docker push gcr.io/capsa-digital/capsa-infra-command:$BUILD_NUMBER'
-                sh 'docker push gcr.io/capsa-digital/capsa-infra-command:latest'
+                              --tag gcr.io/capsa-digital/capsa-archetypes-command:$BUILD_NUMBER \
+                              --tag gcr.io/capsa-digital/capsa-archetypes-command:latest .'
+                sh 'docker push gcr.io/capsa-digital/capsa-archetypes-command:$BUILD_NUMBER'
+                sh 'docker push gcr.io/capsa-digital/capsa-archetypes-command:latest'
             }
         }
         stage('Create `Query` Docker Image') {
             steps {
                 sh 'docker build \
-                              --file capsa-infra-query/Dockerfile \
-                              --build-arg JAR_FILE=capsa-infra-query/build/libs/capsa-infra-query-latest.jar \
+                              --file capsa-archetypes-query/Dockerfile \
+                              --build-arg JAR_FILE=capsa-archetypes-query/build/libs/capsa-archetypes-query-latest.jar \
                               --build-arg INFO_APP_BUILD=$BUILD_NUMBER \
-                              --tag gcr.io/capsa-digital/capsa-infra-query:$BUILD_NUMBER \
-                              --tag gcr.io/capsa-digital/capsa-infra-query:latest .'
-                sh 'docker push gcr.io/capsa-digital/capsa-infra-query:$BUILD_NUMBER'
-                sh 'docker push gcr.io/capsa-digital/capsa-infra-query:latest'
+                              --tag gcr.io/capsa-digital/capsa-archetypes-query:$BUILD_NUMBER \
+                              --tag gcr.io/capsa-digital/capsa-archetypes-query:latest .'
+                sh 'docker push gcr.io/capsa-digital/capsa-archetypes-query:$BUILD_NUMBER'
+                sh 'docker push gcr.io/capsa-digital/capsa-archetypes-query:latest'
             }
         }
         stage('Create K8s Cluster') {
@@ -40,7 +40,7 @@ pipeline {
         }
         stage('Deploy `Command` Docker Container') {
             steps {
-                sh 'kubectl create deployment command-app --image=gcr.io/capsa-digital/capsa-infra-command:$BUILD_NUMBER'
+                sh 'kubectl create deployment command-app --image=gcr.io/capsa-digital/capsa-archetypes-command:$BUILD_NUMBER'
                 sh 'kubectl scale deployment command-app --replicas=1'
                 sh 'kubectl autoscale deployment command-app --cpu-percent=80 --min=1 --max=1'
                 sh 'kubectl set env deployment/command-app --env SPRING_PROFILES_ACTIVE=dev'
@@ -51,7 +51,7 @@ pipeline {
         }
         stage('Deploy `Query` Docker Container') {
             steps {
-                sh 'kubectl create deployment query-app --image=gcr.io/capsa-digital/capsa-infra-query:$BUILD_NUMBER'
+                sh 'kubectl create deployment query-app --image=gcr.io/capsa-digital/capsa-archetypes-query:$BUILD_NUMBER'
                 sh 'kubectl scale deployment query-app --replicas=1'
                 sh 'kubectl autoscale deployment query-app --cpu-percent=80 --min=1 --max=1'
                 sh 'kubectl set env deployment/query-app --env SPRING_PROFILES_ACTIVE=dev'

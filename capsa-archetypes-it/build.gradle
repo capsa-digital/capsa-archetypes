@@ -37,8 +37,8 @@ dependencies {
             'org.springframework.cloud:spring-cloud-starter-stream-kafka',
             'org.springframework.integration:spring-integration-mail',
             'org.springframework:spring-context',
-            project(':capsa-infra-core'),
-            project(':capsa-infra-eventbus')
+            project(':capsa-archetypes-core'),
+            project(':capsa-archetypes-eventbus')
     )
 }
 
