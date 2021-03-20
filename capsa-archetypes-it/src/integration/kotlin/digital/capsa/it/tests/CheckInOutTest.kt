@@ -71,8 +71,8 @@ class CheckInOutTest : CapsaApiTestBase() {
         httpRequest("/requests/check-out-book.json")
                 .withTransformation(
                         "$.schema" to schema,
-                        "$.host" to commandHost,
-                        "$.port" to commandPort,
+                        "$.host" to appHost,
+                        "$.port" to appPort,
                         "$.body.bookId" to bookId.toString(),
                         "$.body.memberId" to memberId.toString(),
                         "$.body.days" to days

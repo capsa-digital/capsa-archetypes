@@ -43,10 +43,6 @@ spring:
       schema-registry-client:
         endpoint: https://psrc-lz3xz.us-central1.gcp.confluent.cloud
 capsa:
-  command:
-    host: '!!PENDING!!'
-    port: 80
-  query:
-    host: '!!PENDING!!'
-    port: 80
+  host: '!!PENDING!!'
+  port: 80
   schema: http

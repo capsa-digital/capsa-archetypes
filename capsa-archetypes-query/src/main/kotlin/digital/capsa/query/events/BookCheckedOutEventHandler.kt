@@ -11,7 +11,7 @@ import org.springframework.cloud.stream.annotation.EnableBinding
 import org.springframework.cloud.stream.annotation.StreamListener
 
 @EnableBinding(EventBusInput::class)
-class BookCheckedOutEventHandler(private var bookService: BookService) {
+open class BookCheckedOutEventHandler(private var bookService: BookService) {
 
     @Autowired
     private lateinit var objectMapper: ObjectMapper

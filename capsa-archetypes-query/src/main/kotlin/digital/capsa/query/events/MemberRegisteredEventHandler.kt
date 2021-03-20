@@ -12,7 +12,7 @@ import org.springframework.cloud.stream.annotation.EnableBinding
 import org.springframework.cloud.stream.annotation.StreamListener
 
 @EnableBinding(EventBusInput::class)
-class MemberRegisteredEventHandler(private var memberService: MemberService) {
+open class MemberRegisteredEventHandler(private var memberService: MemberService) {
 
     @Autowired
     private lateinit var objectMapper: ObjectMapper

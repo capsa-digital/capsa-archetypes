@@ -31,8 +31,8 @@ class Library(var libraryName: String? = null,
         httpRequest("/requests/create-library.json")
                 .withTransformation(
                         "$.schema" to context.environment.getProperty("capsa.schema"),
-                        "$.host" to context.environment.getProperty("capsa.command.host"),
-                        "$.port" to context.environment.getProperty("capsa.command.port"),
+                        "$.host" to context.environment.getProperty("capsa.host"),
+                        "$.port" to context.environment.getProperty("capsa.port"),
                         "$.body.libraryName" to libraryName,
                         "$.body.address" to address
                 )

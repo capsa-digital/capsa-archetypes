@@ -10,7 +10,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 @Configuration
-class QueryConfig : WebMvcConfigurer {
+open class QueryConfig : WebMvcConfigurer {
     override fun addViewControllers(registry: ViewControllerRegistry) {
         registry.addViewController("/")
                 .setViewName("index")
@@ -18,7 +18,7 @@ class QueryConfig : WebMvcConfigurer {
     }
 
     @Bean
-    fun templateResolver(): ITemplateResolver? {
+    open fun templateResolver(): ITemplateResolver? {
         val resolver = ClassLoaderTemplateResolver()
         resolver.prefix = "templates/library/"
         resolver.suffix = ".html"

@@ -69,8 +69,8 @@ class CreateLibraryTest : CapsaApiTestBase() {
         httpRequest("/requests/get-book-list.json")
                 .withTransformation(
                         "$.schema" to schema,
-                        "$.host" to queryHost,
-                        "$.port" to queryPort,
+                        "$.host" to appHost,
+                        "$.port" to appPort,
                         "$.body.libraryId" to libraryId.toString()
                 )
                 .send {
@@ -84,8 +84,8 @@ class CreateLibraryTest : CapsaApiTestBase() {
         httpRequest("/requests/get-member-details.json")
                 .withTransformation(
                         "$.schema" to schema,
-                        "$.host" to queryHost,
-                        "$.port" to queryPort,
+                        "$.host" to appHost,
+                        "$.port" to appPort,
                         "$.path" to "/getMemberDetails/${memberId.toString()}"
                 )
                 .send {

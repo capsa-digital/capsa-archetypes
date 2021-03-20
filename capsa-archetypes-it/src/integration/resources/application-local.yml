@@ -9,10 +9,6 @@ spring:
       schema-registry-client:
         endpoint: http://localhost:8081
 capsa:
-  command:
-    host: localhost
-    port: 9590
-  query:
-    host: localhost
-    port: 9591
+  host: localhost
+  port: 9590
   schema: http

@@ -24,12 +24,7 @@ class ActuatorTest : CapsaApiTestBase() {
 
     @Test
     fun `call command actuator`() {
-        callActuator(schema, commandHost, commandPort, "Capsa Command Application")
-    }
-
-    @Test
-    fun `call query actuator`() {
-        callActuator(schema, queryHost, queryPort, "Capsa Query Application")
+        callActuator(schema, appHost, appPort, "Capsa Application")
     }
 
     private fun callActuator(schema: String,

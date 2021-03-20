@@ -27,12 +27,12 @@ class ContextInitializer : ApplicationContextInitializer<ConfigurableApplication
             val commandPodIp = waitForExternalIp("metadata.name=command-app-service")?: throw Error("Command IP is null")
             println("Command Pod IP: $commandPodIp")
             TestPropertySourceUtils.addInlinedPropertiesToEnvironment(applicationContext,
-                    "capsa.command.host=$commandPodIp")
+                    "capsa.host=$commandPodIp")
 
             val queryPodIp = waitForExternalIp("metadata.name=query-app-service")?: throw Error("Query IP is null")
             println("Query Pod IP: $queryPodIp")
             TestPropertySourceUtils.addInlinedPropertiesToEnvironment(applicationContext,
-                    "capsa.query.host=$queryPodIp")
+                    "capsa.host=$queryPodIp")
 
             waitForServiceReady(commandPodIp)
 

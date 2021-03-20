@@ -13,6 +13,7 @@ spring:
         event-bus-output:
           destination: capsa-event-bus-local
           binder: kafka
+          group: capsaApp
       schema-registry-client:
         endpoint: http://localhost:8081
 server:

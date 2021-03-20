@@ -15,10 +15,16 @@ spring:
       kafka:
         binder:
           headers: eventType
+        bindings:
+          event-bus-input:
+            consumer:
+              configuration:
+                key:
+                  serializer: org.apache.kafka.common.serialization.StringSerializer
       inMemory:
         binder:
           headers: eventType
 info:
   app:
-    name:  Capsa Command Application
+    name:  Capsa Application
     version: 0.0.2

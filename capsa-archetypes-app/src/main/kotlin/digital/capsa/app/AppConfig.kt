@@ -1,6 +1,6 @@
-package digital.capsa.command
+package digital.capsa.app
 
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class CommandConfig
+open class CommandConfig

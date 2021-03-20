@@ -17,13 +17,9 @@ abstract class CapsaApiTestBase {
 
         lateinit var schema: String
 
-        lateinit var commandHost: String
+        lateinit var appHost: String
 
-        lateinit var commandPort: String
-
-        lateinit var queryHost: String
-
-        lateinit var queryPort: String
+        lateinit var appPort: String
 
         @BeforeAll
         @JvmStatic
@@ -34,10 +30,8 @@ abstract class CapsaApiTestBase {
             objectMapper = applicationContext.getBean(ObjectMapper::class.java)
             context = TestContext(applicationContext = applicationContext)
             schema = context.environment.getProperty("capsa.schema")!!
-            commandHost = context.environment.getProperty("capsa.command.host")!!
-            commandPort = context.environment.getProperty("capsa.command.port")!!
-            queryHost = context.environment.getProperty("capsa.query.host")!!
-            queryPort = context.environment.getProperty("capsa.query.port")!!
+            appHost = context.environment.getProperty("capsa.host")!!
+            appPort = context.environment.getProperty("capsa.port")!!
         }
     }
 }
