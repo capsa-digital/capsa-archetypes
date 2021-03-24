@@ -15,7 +15,7 @@ abstract class CapsaApiTestBase {
 
         lateinit var context: TestContext
 
-        lateinit var schema: String
+        lateinit var appSchema: String
 
         lateinit var appHost: String
 
@@ -29,7 +29,7 @@ abstract class CapsaApiTestBase {
 
             objectMapper = applicationContext.getBean(ObjectMapper::class.java)
             context = TestContext(applicationContext = applicationContext)
-            schema = context.environment.getProperty("capsa.schema")!!
+            appSchema = context.environment.getProperty("capsa.schema")!!
             appHost = context.environment.getProperty("capsa.host")!!
             appPort = context.environment.getProperty("capsa.port")!!
         }

@@ -16,8 +16,27 @@ spring:
           group: capsaApp
       schema-registry-client:
         endpoint: http://localhost:8081
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+  jpa:
+    properties:
+    ###### generate schema ########
+    #      javax:
+    #        persistence:
+    #          schema-generation:
+    #            create-source: metadata
+    #            scripts:
+    #              action: create
+    #              create-target: metrofox-monolith/build/db/create.sql
+    hibernate:
+      ddl-auto: create
 server:
-  port: 9590
+  port: 8080
 info:
   app:
     env: local

@@ -68,7 +68,7 @@ class CreateLibraryTest : CapsaApiTestBase() {
         val libraryId = demoAccount.getChild<Library>(0).id
         httpRequest("/requests/get-book-list.json")
                 .withTransformation(
-                        "$.schema" to schema,
+                        "$.schema" to appSchema,
                         "$.host" to appHost,
                         "$.port" to appPort,
                         "$.body.libraryId" to libraryId.toString()
@@ -83,7 +83,7 @@ class CreateLibraryTest : CapsaApiTestBase() {
         val memberId = demoAccount.getChild<Member>(0).id
         httpRequest("/requests/get-member-details.json")
                 .withTransformation(
-                        "$.schema" to schema,
+                        "$.schema" to appSchema,
                         "$.host" to appHost,
                         "$.port" to appPort,
                         "$.path" to "/getMemberDetails/${memberId.toString()}"

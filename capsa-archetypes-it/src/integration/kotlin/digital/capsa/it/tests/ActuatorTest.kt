@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringRunner
@@ -17,32 +20,43 @@ import org.springframework.test.context.junit4.SpringRunner
 @Tag("it")
 @RunWith(SpringRunner::class)
 @TestPropertySource(locations = ["classpath:application.yml"])
-@EnableAutoConfiguration
+@EnableAutoConfiguration(
+    exclude = [
+        DataSourceAutoConfiguration::class,
+        DataSourceTransactionManagerAutoConfiguration::class,
+        HibernateJpaAutoConfiguration::class
+    ]
+)
 @SpringBootTest(classes = [IntegrationConfig::class])
 @DisplayName("Actuator Test")
 class ActuatorTest : CapsaApiTestBase() {
 
     @Test
     fun `call command actuator`() {
-        callActuator(schema, appHost, appPort, "Capsa Application")
+        callActuator(appSchema, appHost, appPort, "Capsa Application")
     }
 
-    private fun callActuator(schema: String,
-                             host: String,
-                             port: String,
-                             appName: String) {
+    private fun callActuator(
+        schema: String,
+        host: String,
+        port: String,
+        appName: String
+    ) {
         httpRequest("/requests/actuator-info.json")
-                .withTransformation(
-                        "$.schema" to schema,
-                        "$.host" to host,
-                        "$.port" to port
+            .withTransformation(
+                "$.schema" to schema,
+                "$.host" to host,
+                "$.port" to port
+            )
+            .send {
+                assertThat(statusCode.value()).isEqualTo(200)
+                assertThat(body).isJsonWhere(
+                    ValidationRule("$.app.name", OpType.equal, appName),
+                    ValidationRule(
+                        "$.app.env", OpType.equal,
+                        System.getProperty("spring.profiles.active", "")
+                    )
                 )
-                .send {
-                    assertThat(statusCode.value()).isEqualTo(200)
-                    assertThat(body).isJsonWhere(
-                            ValidationRule("$.app.name", OpType.equal, appName),
-                            ValidationRule("$.app.env", OpType.equal,
-                                    System.getProperty("spring.profiles.active", "")))
-                }
+            }
     }
 }

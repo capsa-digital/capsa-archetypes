@@ -176,8 +176,6 @@ kubectl describe pods
 kubectl logs command-app-xxxxxxxxx-xxxxx
 ```
 
-### Helpful links
-https://github.com/eugenp/tutorials/tree/master/spring-mvc-forms-thymeleaf/src/main/java/com/baeldung/listbindingexample
 
 
 

@@ -1,7 +1,6 @@
 dependencies {
     implementation(
             'com.fasterxml.jackson.module:jackson-module-kotlin',
-            'com.h2database:h2',
             'io.confluent:kafka-avro-serializer',
             'io.projectreactor.kotlin:reactor-kotlin-extensions',
             'org.apache.commons:commons-lang3',

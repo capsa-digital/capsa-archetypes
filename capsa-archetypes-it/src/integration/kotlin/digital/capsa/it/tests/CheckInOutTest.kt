@@ -70,7 +70,7 @@ class CheckInOutTest : CapsaApiTestBase() {
         eventSnooper.clear()
         httpRequest("/requests/check-out-book.json")
                 .withTransformation(
-                        "$.schema" to schema,
+                        "$.schema" to appSchema,
                         "$.host" to appHost,
                         "$.port" to appPort,
                         "$.body.bookId" to bookId.toString(),
