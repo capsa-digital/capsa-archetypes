@@ -27,7 +27,7 @@ plugins {
 rootProject.name = "capsa-archetypes"
 include("capsa-archetypes-core")
 include("capsa-archetypes-eventbus")
-//include("capsa-archetypes-command")
+include("capsa-archetypes-command")
 //include("capsa-archetypes-query")
 //include("capsa-archetypes-app")
 //include("capsa-archetypes-it")
