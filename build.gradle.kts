@@ -78,6 +78,7 @@ subprojects {
             dependency("digital.capsa:capsa-it:${CoreVersion.CAPSA}")
             dependency("javax.validation:validation-api:${CoreVersion.JAVAX_VALIDATION}")
             dependency("javax.xml.bind:jaxb-api:${CoreVersion.JAXB_API}")
+            dependency("org.apache.commons:commons-text:${CoreVersion.APACHE_COMMONS}")
             dependency("org.hamcrest:java-hamcrest:${CoreVersion.JAVA_HAMCREST}")
             dependency("org.seleniumhq.selenium:selenium-chrome-driver:${CoreVersion.SELENIUM}")
             dependency("org.seleniumhq.selenium:selenium-firefox-driver:${CoreVersion.SELENIUM}")

@@ -1,6 +1,7 @@
 @file:Suppress("detekt.StringLiteralDuplication")
 
 object CoreVersion {
+    const val APACHE_COMMONS = "1.9"
     const val ASSERTK_JVM = "0.22"
     const val CAPSA = "0.2.4"
     const val GUAVA = "30.1-jre"
