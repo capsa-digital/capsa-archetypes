@@ -3,13 +3,13 @@ package digital.capsa.archetypes.it.tests
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import digital.capsa.archetypes.it.TestBase
-import digital.capsa.it.TestContext
 import digital.capsa.archetypes.it.aggregate.Account
 import digital.capsa.archetypes.it.aggregate.Library
 import digital.capsa.archetypes.it.aggregate.Member
 import digital.capsa.archetypes.it.aggregate.account
-import digital.capsa.it.aggregate.getChild
 import digital.capsa.archetypes.it.httpRequest
+import digital.capsa.it.TestContext
+import digital.capsa.it.aggregate.getChild
 import digital.capsa.it.json.isJsonWhere
 import digital.capsa.it.validation.OpType
 import digital.capsa.it.validation.ValidationRule
@@ -66,7 +66,7 @@ class CreateLibraryTest : TestBase() {
                 assertThat(statusCode.value()).isEqualTo(200)
                 assertEquals(200, statusCode.value())
                 assertThat(body).isJsonWhere(
-                    ValidationRule("\$.bookList.length()", OpType.equal, "{2}")
+                    ValidationRule("\$.bookList.length()", OpType.equal, 2)
                 )
             }
         val memberId = demoAccount.getChild<Member>(0).id

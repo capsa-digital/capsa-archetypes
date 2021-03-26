@@ -1,13 +1,13 @@
 package digital.capsa.archetypes.query.events
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import digital.capsa.core.logger
 import digital.capsa.archetypes.core.vocab.BookStatus
 import digital.capsa.archetypes.eventbus.Event
 import digital.capsa.archetypes.eventbus.EventBusInput
 import digital.capsa.archetypes.eventbus.data.BookAdded
 import digital.capsa.archetypes.query.model.book.Book
 import digital.capsa.archetypes.query.services.BookService
+import digital.capsa.core.logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cloud.stream.annotation.EnableBinding
 import org.springframework.cloud.stream.annotation.StreamListener
