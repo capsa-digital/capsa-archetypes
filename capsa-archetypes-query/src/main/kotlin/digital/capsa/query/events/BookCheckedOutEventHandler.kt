@@ -20,7 +20,7 @@ open class BookCheckedOutEventHandler(private var bookService: BookService) {
     fun handleEvent(event: Event<BookCheckedOut>) {
         logger.info("\n<==== ${objectMapper.writeValueAsString(event)}")
         bookService.checkOutBook(
-                bookId = event.data.bookId,
+                bookId = event.data.id,
                 memberId = event.data.memberId,
                 checkoutDate = event.data.checkoutDate,
                 returnDate = event.data.returnDate

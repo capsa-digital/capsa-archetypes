@@ -1,12 +1,13 @@
 package digital.capsa.command.controller
 
-import java.util.UUID
+import digital.capsa.core.aggregates.BookId
+import digital.capsa.core.aggregates.MemberId
 
 data class CheckOutBookCommand(
 
-        val bookId: UUID,
+    val bookId: BookId,
 
-        val memberId: UUID,
+    val memberId: MemberId,
 
-        val days: Int
+    val days: Int
 )

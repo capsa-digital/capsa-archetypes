@@ -1,10 +1,10 @@
 package digital.capsa.command.controller
 
-import digital.capsa.core.vocab.AggregateType
+import digital.capsa.core.aggregates.AggregateId
 import java.util.UUID
 
 data class CommandResponse(
-        val saga: UUID,
-        val ids: Map<AggregateType, UUID> = emptyMap(),
-        val payload: Any? = null
+    val saga: UUID,
+    val ids: List<AggregateId> = emptyList(),
+    val payload: Any? = null
 )

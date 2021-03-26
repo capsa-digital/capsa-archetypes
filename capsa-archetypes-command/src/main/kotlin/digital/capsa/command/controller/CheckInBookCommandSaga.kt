@@ -29,7 +29,7 @@ class CheckInBookCommandSaga(private val sagaManager: SagaManager) {
 
     private fun CheckInBookCommand.bookCheckedIn(): BookCheckedIn {
         return BookCheckedIn(
-                bookId = bookId
+                id = bookId
         )
     }
 }

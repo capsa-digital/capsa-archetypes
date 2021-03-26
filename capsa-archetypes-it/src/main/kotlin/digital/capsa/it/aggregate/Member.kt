@@ -4,6 +4,7 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.fasterxml.jackson.databind.ObjectMapper
 import digital.capsa.core.vocab.AggregateType
+import digital.capsa.it.httpRequest
 import java.util.Random
 import java.util.UUID
 

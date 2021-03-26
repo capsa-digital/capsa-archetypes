@@ -1,8 +1,7 @@
 package digital.capsa.query.model.member
 
-import org.hibernate.annotations.Cache
-import org.hibernate.annotations.CacheConcurrencyStrategy
-import java.util.UUID
+import digital.capsa.core.aggregates.Aggregate
+import digital.capsa.core.aggregates.MemberId
 import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.Table
@@ -11,14 +10,14 @@ import javax.persistence.Table
 @Table(name = "member")
 data class Member(
 
-        @Id
-        var memberId: UUID,
+    @Id
+    override var id: MemberId,
 
-        var firstName: String,
+    var firstName: String,
 
-        var lastName: String,
+    var lastName: String,
 
-        var email: String,
+    var email: String,
 
-        var phone: String? = null
-)
+    var phone: String? = null
+) : Aggregate<MemberId>()

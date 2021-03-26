@@ -22,6 +22,6 @@ open class BookCheckedInEventHandler(private var bookService: BookService) {
     @StreamListener(EventBusInput.INPUT, condition = "headers['eventType']=='BookCheckedIn'")
     fun handleEvent(event: Event<BookCheckedIn>) {
         logger.info("\n<==== ${objectMapper.writeValueAsString(event)}")
-        bookService.checkInBook(event.data.bookId)
+        bookService.checkInBook(event.data.id)
     }
 }

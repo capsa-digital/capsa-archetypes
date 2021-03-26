@@ -1,5 +1,8 @@
 package digital.capsa.query.services
 
+import digital.capsa.core.aggregates.BookId
+import digital.capsa.core.aggregates.LibraryId
+import digital.capsa.core.aggregates.MemberId
 import digital.capsa.core.vocab.BookStatus
 import digital.capsa.query.model.book.Book
 import digital.capsa.query.repo.BookRepository
@@ -10,11 +13,11 @@ import java.util.UUID
 @Component
 class BookService(private val repository: BookRepository) {
 
-    fun getBook(bookId: UUID): Book {
+    fun getBook(bookId: BookId): Book {
         return repository.getOne(bookId)
     }
 
-    fun getBookList(libraryId: UUID): List<Book> {
+    fun getBookList(libraryId: LibraryId): List<Book> {
         return repository.findAllByLibraryId(libraryId)
     }
 
@@ -24,13 +27,13 @@ class BookService(private val repository: BookRepository) {
 //    }
 
     fun addBook(book: Book) {
-        if (repository.existsById(book.bookId)) {
-            throw Error("Book with ${book.bookId} already exist")
+        if (repository.existsById(book.id)) {
+            throw Error("Book with ${book.id} already exist")
         }
         repository.save(book)
     }
 
-    fun checkInBook(bookId: UUID) {
+    fun checkInBook(bookId: BookId) {
         val book = repository.getOne(bookId)
         book.bookStatus = BookStatus.available
         book.memberId = null
@@ -39,10 +42,11 @@ class BookService(private val repository: BookRepository) {
         repository.save(book)
     }
 
-    fun checkOutBook(bookId: UUID,
-                     memberId: UUID,
-                     checkoutDate: LocalDate,
-                     returnDate: LocalDate
+    fun checkOutBook(
+        bookId: BookId,
+        memberId: MemberId,
+        checkoutDate: LocalDate,
+        returnDate: LocalDate
     ) {
         val book = repository.getOne(bookId)
         book.bookStatus = BookStatus.checkedOut

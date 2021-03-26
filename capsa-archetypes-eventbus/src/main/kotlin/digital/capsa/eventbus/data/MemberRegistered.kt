@@ -1,21 +1,21 @@
 package digital.capsa.eventbus.data
 
 import com.fasterxml.jackson.annotation.JsonTypeName
-import java.util.UUID
+import digital.capsa.core.aggregates.MemberId
 
 @JsonTypeName("MemberRegistered")
 class MemberRegistered(
 
-        memberId: UUID,
+    id: MemberId,
 
-        var firstName: String,
+    var firstName: String,
 
-        var lastName: String,
+    var lastName: String,
 
-        var email: String,
+    var email: String,
 
-        var phone: String? = null
+    var phone: String? = null
 
 ) : MemberEventData(
-        memberId = memberId
+    id = id
 )

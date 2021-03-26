@@ -1,6 +1,6 @@
 package digital.capsa.command.controller
 
-import digital.capsa.core.vocab.AggregateType
+import digital.capsa.core.aggregates.LibraryId
 import digital.capsa.eventbus.SagaManager
 import digital.capsa.eventbus.data.LibraryCreated
 import org.springframework.beans.factory.annotation.Qualifier
@@ -21,21 +21,19 @@ class CreateLibraryCommandSaga(private val sagaManager: SagaManager) {
     }
 
     private fun CreateLibraryCommand.createLibrarySaga(): CommandResponse {
-        val libraryId: UUID = UUID.randomUUID()
+        val libraryId = LibraryId(UUID.randomUUID())
         val sagaId = sagaManager.runSaga(
-                libraryCreated(libraryId = libraryId)
+            libraryCreated(libraryId = libraryId)
         )
         return CommandResponse(
-                saga = sagaId,
-                ids = mapOf(
-                        AggregateType.library to libraryId
-                )
+            saga = sagaId,
+            ids = listOf(libraryId)
         )
     }
 
-    private fun CreateLibraryCommand.libraryCreated(libraryId: UUID) = LibraryCreated(
-            libraryId = libraryId,
-            libraryName = libraryName,
-            address = address
+    private fun CreateLibraryCommand.libraryCreated(libraryId: LibraryId) = LibraryCreated(
+        id = libraryId,
+        libraryName = libraryName,
+        address = address
     )
 }

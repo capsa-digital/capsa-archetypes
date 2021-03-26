@@ -24,8 +24,8 @@ open class LibraryCreatedEventHandler(private var libraryService: LibraryService
     }
 
     fun LibraryCreated.transform(): Library = Library(
-            libraryId = libraryId,
-            libraryName = libraryName,
-            address = address
+        id = id,
+        libraryName = libraryName,
+        address = address
     )
 }

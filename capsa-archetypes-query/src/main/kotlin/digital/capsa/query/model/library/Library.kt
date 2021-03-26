@@ -1,7 +1,8 @@
 package digital.capsa.query.model.library
 
+import digital.capsa.core.aggregates.Aggregate
+import digital.capsa.core.aggregates.LibraryId
 import digital.capsa.core.model.Address
-import java.util.UUID
 import javax.persistence.Embedded
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -11,11 +12,11 @@ import javax.persistence.Table
 @Table(name = "library")
 data class Library(
 
-        @Id
-        var libraryId: UUID,
+    @Id
+    override var id: LibraryId,
 
-        var libraryName: String,
+    var libraryName: String,
 
-        @Embedded
-        var address: Address
-)
+    @Embedded
+    var address: Address
+) : Aggregate<LibraryId>()

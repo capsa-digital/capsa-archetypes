@@ -2,34 +2,16 @@ package digital.capsa.it.tests
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import digital.capsa.it.json.OpType
-import digital.capsa.it.json.ValidationRule
+import digital.capsa.it.TestBase
+import digital.capsa.it.httpRequest
 import digital.capsa.it.json.isJsonWhere
+import digital.capsa.it.validation.OpType
+import digital.capsa.it.validation.ValidationRule
 import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
-import org.junit.runner.RunWith
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestPropertySource
-import org.springframework.test.context.junit4.SpringRunner
 
-@Tag("it")
-@RunWith(SpringRunner::class)
-@TestPropertySource(locations = ["classpath:application.yml"])
-@EnableAutoConfiguration(
-    exclude = [
-        DataSourceAutoConfiguration::class,
-        DataSourceTransactionManagerAutoConfiguration::class,
-        HibernateJpaAutoConfiguration::class
-    ]
-)
-@SpringBootTest(classes = [IntegrationConfig::class])
 @DisplayName("Actuator Test")
-class ActuatorTest : CapsaApiTestBase() {
+class ActuatorTest : TestBase() {
 
     @Test
     fun `call command actuator`() {

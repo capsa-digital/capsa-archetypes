@@ -2,7 +2,8 @@ package digital.capsa.command.controller
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
-import digital.capsa.core.vocab.AggregateType
+import digital.capsa.core.aggregates.BookId
+import digital.capsa.core.aggregates.LibraryId
 import digital.capsa.eventbus.SagaManager
 import digital.capsa.eventbus.data.BookAdded
 import org.springframework.beans.factory.annotation.Qualifier
@@ -25,19 +26,17 @@ class AddBookCommandSaga(private val sagaManager: SagaManager) {
     }
 
     private fun AddBookCommand.addBookSaga(): CommandResponse {
-        val bookId: UUID = UUID.randomUUID()
+        val bookId = BookId(UUID.randomUUID())
         val sagaId = sagaManager.runSaga(
-                bookAdded(bookId = bookId, volume = volume)
+            bookAdded(bookId = bookId, volume = volume)
         )
         return CommandResponse(
-                saga = sagaId,
-                ids = mapOf(
-                        AggregateType.book to bookId
-                )
+            saga = sagaId,
+            ids = listOf(bookId)
         )
     }
 
-    private fun AddBookCommand.bookAdded(bookId: UUID, volume: String): BookAdded {
+    private fun AddBookCommand.bookAdded(bookId: BookId, volume: String): BookAdded {
         val restTemplate = RestTemplate()
         val url = "https://www.googleapis.com/books/v1/volumes/$volume"
         val response = restTemplate.getForEntity(url, String::class.java)
@@ -45,12 +44,12 @@ class AddBookCommandSaga(private val sagaManager: SagaManager) {
         val mapper = ObjectMapper()
         val root: JsonNode = mapper.readTree(response.body)
         return BookAdded(
-                bookId = bookId,
-                libraryId = libraryId,
-                volume = volume,
-                bookTitle = root.path("volumeInfo").path("title").textValue(),
-                authorName = root.path("volumeInfo").path("authors")[0].textValue(),
-                coverURI = root.path("volumeInfo").path("imageLinks").path("thumbnail").textValue()
+            id = bookId,
+            libraryId = LibraryId(libraryId),
+            volume = volume,
+            bookTitle = root.path("volumeInfo").path("title").textValue(),
+            authorName = root.path("volumeInfo").path("authors")[0].textValue(),
+            coverURI = root.path("volumeInfo").path("imageLinks").path("thumbnail").textValue()
         )
     }
 }

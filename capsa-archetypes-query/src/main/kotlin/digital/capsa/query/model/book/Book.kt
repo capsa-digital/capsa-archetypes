@@ -1,10 +1,11 @@
 package digital.capsa.query.model.book
 
+import digital.capsa.core.aggregates.Aggregate
+import digital.capsa.core.aggregates.BookId
+import digital.capsa.core.aggregates.LibraryId
+import digital.capsa.core.aggregates.MemberId
 import digital.capsa.core.vocab.BookStatus
-import org.hibernate.annotations.Cache
-import org.hibernate.annotations.CacheConcurrencyStrategy
 import java.time.LocalDate
-import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
@@ -16,26 +17,26 @@ import javax.persistence.Table
 @Table(name = "book")
 data class Book(
 
-        @Id
-        var bookId: UUID,
+    @Id
+    override var id: BookId,
 
-        var libraryId: UUID,
+    var libraryId: LibraryId,
 
-        var volume: String,
+    var volume: String,
 
-        var bookTitle: String,
+    var bookTitle: String,
 
-        var authorName: String,
+    var authorName: String,
 
-        @Column(length=1000)
-        var coverURI: String,
+    @Column(length = 1000)
+    var coverURI: String,
 
-        var memberId: UUID? = null,
+    var memberId: MemberId? = null,
 
-        @Enumerated(EnumType.STRING)
-        var bookStatus: BookStatus,
+    @Enumerated(EnumType.STRING)
+    var bookStatus: BookStatus,
 
-        var checkoutDate: LocalDate? = null,
+    var checkoutDate: LocalDate? = null,
 
-        var returnDate: LocalDate? = null
-)
+    var returnDate: LocalDate? = null
+) : Aggregate<BookId>()

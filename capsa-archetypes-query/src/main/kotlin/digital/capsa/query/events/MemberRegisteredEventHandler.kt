@@ -24,10 +24,10 @@ open class MemberRegisteredEventHandler(private var memberService: MemberService
     }
 
     fun MemberRegistered.transform(): Member = Member(
-            memberId = memberId,
-            firstName = firstName,
-            lastName = lastName,
-            email = email,
-            phone = phone
+        id = id,
+        firstName = firstName,
+        lastName = lastName,
+        email = email,
+        phone = phone
     )
 }

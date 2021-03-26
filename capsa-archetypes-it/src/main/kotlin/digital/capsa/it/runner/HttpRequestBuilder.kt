@@ -1,7 +1,7 @@
 package digital.capsa.it.runner
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import digital.capsa.it.json.JsonPathModifyer
+import digital.capsa.it.json.JsonPathModifier
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
@@ -34,16 +34,17 @@ class HttpRequestBuilder(private val objectMapper: ObjectMapper, private val req
 
     fun send(block: (ResponseEntity<String>.() -> Unit)? = null): ResponseEntity<String> {
         val requestJson = javaClass.getResourceAsStream(requestFile)
-                .let(::InputStreamReader)
-                .let(::BufferedReader)
-                .lines()
-                .collect(Collectors.joining())
+            .let(::InputStreamReader)
+            .let(::BufferedReader)
+            .lines()
+            .collect(Collectors.joining())
 
-        val transformRequestJson: String = JsonPathModifyer.modifyJson(requestJson, transformations, null)
+        val transformRequestJson: String = JsonPathModifier.modifyJson(requestJson, transformations)
         val httpRequest = objectMapper.readValue(transformRequestJson, HttpRequest::class.java)
 
         val restTemplate = RestTemplate(
-                getClientHttpRequestFactory(httpRequest.connectTimeout, httpRequest.readTimeout))
+            getClientHttpRequestFactory(httpRequest.connectTimeout, httpRequest.readTimeout)
+        )
         restTemplate.errorHandler = object : ResponseErrorHandler {
             override fun hasError(response: ClientHttpResponse): Boolean {
                 return false
@@ -63,10 +64,10 @@ class HttpRequestBuilder(private val objectMapper: ObjectMapper, private val req
         val requestEntity = HttpEntity(httpRequest.body.toString(), headers)
 
         val response = restTemplate.exchange(
-                URI(httpRequest.schema, null, httpRequest.host, httpRequest.port,
-                        (httpRequest.basePath?.let { "${httpRequest.basePath}" } ?: "")
-                                + httpRequest.path, httpRequest.queryParams, null).toString(),
-                httpRequest.method, requestEntity, String::class.java)
+            URI(httpRequest.schema, null, httpRequest.host, httpRequest.port,
+                (httpRequest.basePath?.let { "${httpRequest.basePath}" } ?: "")
+                        + httpRequest.path, httpRequest.queryParams, null).toString(),
+            httpRequest.method, requestEntity, String::class.java)
 
         if (block != null) {
             response.block()

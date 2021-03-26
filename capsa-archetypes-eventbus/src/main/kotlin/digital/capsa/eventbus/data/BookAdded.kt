@@ -1,14 +1,16 @@
 package digital.capsa.eventbus.data
 
 import com.fasterxml.jackson.annotation.JsonTypeName
+import digital.capsa.core.aggregates.BookId
+import digital.capsa.core.aggregates.LibraryId
 import java.util.UUID
 
 @JsonTypeName("BookAdded")
 class BookAdded(
 
-        bookId: UUID,
+        id: BookId,
 
-        var libraryId: UUID,
+        var libraryId: LibraryId,
 
         var volume: String,
 
@@ -19,5 +21,5 @@ class BookAdded(
         var coverURI: String
 
 ) : BookEventData(
-        bookId = bookId
+        id = id
 )

@@ -21,19 +21,19 @@ class CheckOutBookCommandSaga(private val sagaManager: SagaManager) {
 
     private fun CheckOutBookCommand.checkOutBookSaga(): CommandResponse {
         val sagaId = sagaManager.runSaga(
-                bookCheckedOut()
+            bookCheckedOut()
         )
         return CommandResponse(
-                saga = sagaId
+            saga = sagaId
         )
     }
 
     private fun CheckOutBookCommand.bookCheckedOut(): BookCheckedOut {
         return BookCheckedOut(
-                bookId = bookId,
-                memberId = memberId,
-                checkoutDate = LocalDate.now(),
-                returnDate = LocalDate.now().plusDays(days.toLong())
+            id = bookId,
+            memberId = memberId,
+            checkoutDate = LocalDate.now(),
+            returnDate = LocalDate.now().plusDays(days.toLong())
         )
     }
 }

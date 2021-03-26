@@ -1,6 +1,6 @@
 package digital.capsa.command.controller
 
-import digital.capsa.core.vocab.AggregateType
+import digital.capsa.core.aggregates.MemberId
 import digital.capsa.eventbus.SagaManager
 import digital.capsa.eventbus.data.MemberRegistered
 import org.springframework.beans.factory.annotation.Qualifier
@@ -21,23 +21,21 @@ class RegisterMemberCommandSaga(private val sagaManager: SagaManager) {
     }
 
     private fun RegisterMemberCommand.registerMemberSaga(): CommandResponse {
-        val memberId: UUID = UUID.randomUUID()
+        val memberId = MemberId(UUID.randomUUID())
         val sagaId = sagaManager.runSaga(
-                memberRegistered(memberId = memberId)
+            memberRegistered(memberId = memberId)
         )
         return CommandResponse(
-                saga = sagaId,
-                ids = mapOf(
-                        AggregateType.member to memberId
-                )
+            saga = sagaId,
+            ids = listOf(memberId)
         )
     }
 
-    private fun RegisterMemberCommand.memberRegistered(memberId: UUID) = MemberRegistered(
-            memberId = memberId,
-            firstName = firstName,
-            lastName = lastName,
-            email = email,
-            phone = phone
+    private fun RegisterMemberCommand.memberRegistered(memberId: MemberId) = MemberRegistered(
+        id = memberId,
+        firstName = firstName,
+        lastName = lastName,
+        email = email,
+        phone = phone
     )
 }

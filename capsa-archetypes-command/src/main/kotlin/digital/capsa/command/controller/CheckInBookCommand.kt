@@ -1,8 +1,8 @@
 package digital.capsa.command.controller
 
-import java.util.UUID
+import digital.capsa.core.aggregates.BookId
 
 data class CheckInBookCommand(
 
-        val bookId: UUID
+    val bookId: BookId
 )
