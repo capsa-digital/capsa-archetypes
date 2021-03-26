@@ -9,7 +9,6 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.client.RestTemplate
 
 @Configuration
 @ConfigurationProperties
@@ -18,14 +17,11 @@ open class TestConfig {
     @Bean
     open fun getObjectMapper(): ObjectMapper {
         return jacksonObjectMapper()
-                .findAndRegisterModules()
-                .registerKotlinModule().registerModule(JavaTimeModule())
-                .configure(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS, false)
-                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
+            .findAndRegisterModules()
+            .registerKotlinModule().registerModule(JavaTimeModule())
+            .configure(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS, false)
+            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
     }
-
-    @Bean
-    fun restTemplate(): RestTemplate = RestTemplate()
 }

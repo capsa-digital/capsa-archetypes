@@ -1,8 +1,10 @@
 package digital.capsa.archetypes.it
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import digital.capsa.it.TestContext
+import digital.capsa.archetypes.eventbus.EventBusInput
+import digital.capsa.archetypes.it.event.EventSnooper
 import digital.capsa.archetypes.it.runner.HttpRequestBuilder
+import digital.capsa.it.TestContext
 import org.junit.jupiter.api.Assumptions
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Tag
@@ -16,11 +18,12 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.ApplicationContext
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit.jupiter.SpringExtension
+import org.springframework.web.client.RestTemplate
 
 @Tag("it")
 @ExtendWith(SpringExtension::class)
 @TestPropertySource(locations = ["classpath:application.yml"])
-@SpringBootTest(classes = [TestConfig::class])
+@SpringBootTest(classes = [TestConfig::class, RestTemplate::class, EventSnooper::class, EventBusInput::class])
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @EnableAutoConfiguration(
     exclude = [
