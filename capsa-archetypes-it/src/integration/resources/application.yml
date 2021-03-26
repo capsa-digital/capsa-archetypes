@@ -20,4 +20,4 @@ spring:
           headers: eventType
 context:
   initializer:
-    classes: digital.capsa.it.tests.ContextInitializer
+    classes: digital.capsa.archetypes.tests.ContextInitializer
