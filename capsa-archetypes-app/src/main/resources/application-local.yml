@@ -1,14 +1,6 @@
 spring:
   cloud:
     stream:
-      kafka:
-        bindings:
-          event-bus-output:
-            destination: capsa-event-bus-local
-            producer:
-              configuration:
-                key:
-                  serializer: org.apache.kafka.common.serialization.StringSerializer
       bindings:
         event-bus-output:
           destination: capsa-event-bus-local

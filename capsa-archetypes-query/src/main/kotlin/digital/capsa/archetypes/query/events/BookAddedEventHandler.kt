@@ -24,7 +24,7 @@ open class BookAddedEventHandler(private var bookService: BookService) {
         bookService.addBook(event.data.transform())
     }
 
-    fun BookAdded.transform(): Book = Book(
+    private fun BookAdded.transform(): Book = Book(
         id = id,
         libraryId = libraryId,
         volume = volume,

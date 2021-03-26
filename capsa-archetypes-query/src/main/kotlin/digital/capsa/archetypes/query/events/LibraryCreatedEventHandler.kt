@@ -23,7 +23,7 @@ open class LibraryCreatedEventHandler(private var libraryService: LibraryService
         libraryService.createLibrary(event.data.transform())
     }
 
-    fun LibraryCreated.transform(): Library = Library(
+    private fun LibraryCreated.transform(): Library = Library(
         id = id,
         libraryName = libraryName,
         address = address

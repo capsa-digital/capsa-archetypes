@@ -16,6 +16,11 @@ spring:
         binder:
           headers: eventType
         bindings:
+          event-bus-output:
+            producer:
+              configuration:
+                key:
+                  serializer: org.apache.kafka.common.serialization.StringSerializer
           event-bus-input:
             consumer:
               configuration:

@@ -23,7 +23,7 @@ open class MemberRegisteredEventHandler(private var memberService: MemberService
         memberService.registerMember(event.data.transform())
     }
 
-    fun MemberRegistered.transform(): Member = Member(
+    private fun MemberRegistered.transform(): Member = Member(
         id = id,
         firstName = firstName,
         lastName = lastName,
