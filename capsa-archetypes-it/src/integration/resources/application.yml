@@ -18,6 +18,3 @@ spring:
       inMemory:
         binder:
           headers: eventType
-context:
-  initializer:
-    classes: digital.capsa.archetypes.tests.ContextInitializer
