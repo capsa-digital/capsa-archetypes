@@ -14,6 +14,7 @@ pluginManagement {
         id("com.gradle.enterprise") version gradlePluginVersion.GRADLE_ENTERPRISE_VERSION
         id("com.moowork.node") version gradlePluginVersion.MOOWORK_VERSION
         kotlin("jvm") version gradlePluginVersion.KOTLIN_GRADLE_VERSION
+        kotlin("plugin.jpa") version gradlePluginVersion.KOTLIN_GRADLE_VERSION
         kotlin("plugin.allope") version gradlePluginVersion.KOTLIN_GRADLE_VERSION
         kotlin("plugin.noarg") version gradlePluginVersion.KOTLIN_GRADLE_VERSION
         kotlin("plugin.spring") version gradlePluginVersion.KOTLIN_GRADLE_VERSION

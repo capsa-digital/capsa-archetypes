@@ -1,5 +1,7 @@
 package digital.capsa.archetypes.command.controller
 
+import digital.capsa.archetypes.core.aggregates.BookId
+import digital.capsa.archetypes.core.aggregates.MemberId
 import digital.capsa.archetypes.eventbus.SagaManager
 import digital.capsa.archetypes.eventbus.data.BookCheckedOut
 import org.springframework.beans.factory.annotation.Qualifier
@@ -30,8 +32,8 @@ class CheckOutBookCommandSaga(private val sagaManager: SagaManager) {
 
     private fun CheckOutBookCommand.bookCheckedOut(): BookCheckedOut {
         return BookCheckedOut(
-            id = bookId,
-            memberId = memberId,
+            id = BookId(bookId),
+            memberId = MemberId(memberId),
             checkoutDate = LocalDate.now(),
             returnDate = LocalDate.now().plusDays(days.toLong())
         )

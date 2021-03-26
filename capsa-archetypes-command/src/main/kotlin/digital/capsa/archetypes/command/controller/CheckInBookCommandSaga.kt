@@ -1,5 +1,6 @@
 package digital.capsa.archetypes.command.controller
 
+import digital.capsa.archetypes.core.aggregates.BookId
 import digital.capsa.archetypes.eventbus.SagaManager
 import digital.capsa.archetypes.eventbus.data.BookCheckedIn
 import org.springframework.beans.factory.annotation.Qualifier
@@ -29,7 +30,7 @@ class CheckInBookCommandSaga(private val sagaManager: SagaManager) {
 
     private fun CheckInBookCommand.bookCheckedIn(): BookCheckedIn {
         return BookCheckedIn(
-                id = bookId
+                id = BookId(bookId)
         )
     }
 }

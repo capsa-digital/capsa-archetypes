@@ -24,7 +24,6 @@ dependencies {
     implementation("org.apache.httpcomponents:httpmime")
     implementation("org.hamcrest:java-hamcrest")
     implementation("org.jetbrains.kotlin:kotlin-compiler-embeddable")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlin:kotlin-test")
     implementation("org.junit.platform:junit-platform-launcher")

@@ -8,18 +8,17 @@ plugins {
     id("org.springframework.boot") apply false
     kotlin("jvm") apply false
     kotlin("plugin.spring") apply false
+    kotlin("plugin.jpa") apply false
     idea
     java
 }
 
 subprojects {
-    if ( name == "cust-prof-web-ui" ) {
-        return@subprojects
-    }
-
     apply(plugin = "io.gitlab.arturbosch.detekt")
     apply(plugin = "kotlin")
     apply(plugin = "io.spring.dependency-management")
+    apply(plugin = "kotlin-jpa")
+
     group = "com.telus.custprof.web"
 
     tasks.withType<Detekt> {
