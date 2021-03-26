@@ -3,9 +3,11 @@ package digital.capsa.archetypes.it.aggregate
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.node.ArrayNode
 import digital.capsa.core.logger
 import digital.capsa.archetypes.it.httpRequest
 import digital.capsa.it.aggregate.AbstractAggregate
+import java.util.UUID
 
 class Book(
     var volume: String? = null
@@ -33,10 +35,12 @@ class Book(
             .send {
                 assertThat(statusCode.value()).isEqualTo(200)
                 val ids = ObjectMapper().readTree(body)?.get("ids")
-                ids?.also {
-// TODO                        it.get(AggregateType.book.name)?.also { node ->
-//                            id = UUID.fromString(node.asText())
-//                        }
+                ids?.also { idsNode ->
+                    (idsNode as ArrayNode).forEach { idNode ->
+                        when (idNode.fields().next().key) {
+                            "bookId" -> id = UUID.fromString(idNode["bookId"].asText())
+                        }
+                    }
                 }
             }
     }

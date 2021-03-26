@@ -1,10 +1,10 @@
 package digital.capsa.archetypes.query.model.book
 
-import digital.capsa.archetypes.core.aggregates.Aggregate
 import digital.capsa.archetypes.core.aggregates.BookId
 import digital.capsa.archetypes.core.aggregates.LibraryId
 import digital.capsa.archetypes.core.aggregates.MemberId
 import digital.capsa.archetypes.core.vocab.BookStatus
+import digital.capsa.core.aggregate.Aggregate
 import java.time.LocalDate
 import javax.persistence.Column
 import javax.persistence.Entity

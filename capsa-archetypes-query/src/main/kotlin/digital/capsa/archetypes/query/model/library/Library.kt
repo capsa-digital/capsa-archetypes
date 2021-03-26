@@ -1,8 +1,8 @@
 package digital.capsa.archetypes.query.model.library
 
-import digital.capsa.archetypes.core.aggregates.Aggregate
 import digital.capsa.archetypes.core.aggregates.LibraryId
 import digital.capsa.archetypes.core.model.Address
+import digital.capsa.core.aggregate.Aggregate
 import javax.persistence.Embedded
 import javax.persistence.Entity
 import javax.persistence.Id

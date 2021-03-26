@@ -1,5 +1,6 @@
 package digital.capsa.archetypes.core.aggregates
 
+import digital.capsa.core.aggregate.AggregateId
 import java.util.UUID
 import javax.persistence.AttributeConverter
 import javax.persistence.Converter
