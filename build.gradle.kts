@@ -1,6 +1,6 @@
 import io.gitlab.arturbosch.detekt.Detekt
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("io.gitlab.arturbosch.detekt") apply false
@@ -14,8 +14,13 @@ plugins {
 }
 
 subprojects {
+    if (name == "capsa-archetypes-web") {
+        apply(plugin = "org.jetbrains.kotlin.js")
+    } else {
+        apply(plugin = "org.jetbrains.kotlin.jvm")
+    }
+
     apply(plugin = "io.gitlab.arturbosch.detekt")
-    apply(plugin = "kotlin")
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "kotlin-jpa")
 
@@ -86,28 +91,30 @@ subprojects {
         }
     }
 
-    tasks {
-        test {
-            useJUnitPlatform {
-                includeEngines("junit-jupiter")
-                excludeEngines("junit-vintage")
+    if (name != "capsa-archetypes-web") {
+        tasks {
+            test {
+                useJUnitPlatform {
+                    includeEngines("junit-jupiter")
+                    excludeEngines("junit-vintage")
+                }
+                //testLogging.showStandardStreams = false
+                testLogging {
+                    showCauses = true
+                    showExceptions = true
+                    showStackTraces = true
+                    showStandardStreams = true
+                    exceptionFormat = TestExceptionFormat.FULL
+                    afterSuite(KotlinClosure2<TestDescriptor, TestResult, Any>({ desc, result ->
+                        if (desc.parent == null) { // will match the outermost suite
+                            val output =
+                                "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+                            println(output)
+                        }
+                    }))
+                }
+                jvmArgs("-Dspring.profiles.active=test")
             }
-            //testLogging.showStandardStreams = false
-            testLogging {
-                showCauses = true
-                showExceptions = true
-                showStackTraces = true
-                showStandardStreams = true
-                exceptionFormat = TestExceptionFormat.FULL
-                afterSuite(KotlinClosure2<TestDescriptor, TestResult, Any>({ desc, result ->
-                    if (desc.parent == null) { // will match the outermost suite
-                        val output =
-                            "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
-                        println(output)
-                    }
-                }))
-            }
-            jvmArgs("-Dspring.profiles.active=test")
         }
     }
 }

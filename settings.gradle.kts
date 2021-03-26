@@ -13,6 +13,7 @@ pluginManagement {
         id("io.gitlab.arturbosch.detekt") version gradlePluginVersion.DETEKT_VERSION
         id("com.gradle.enterprise") version gradlePluginVersion.GRADLE_ENTERPRISE_VERSION
         id("com.moowork.node") version gradlePluginVersion.MOOWORK_VERSION
+        kotlin("js") version gradlePluginVersion.KOTLIN_GRADLE_VERSION
         kotlin("jvm") version gradlePluginVersion.KOTLIN_GRADLE_VERSION
         kotlin("plugin.jpa") version gradlePluginVersion.KOTLIN_GRADLE_VERSION
         kotlin("plugin.allope") version gradlePluginVersion.KOTLIN_GRADLE_VERSION
@@ -32,3 +33,4 @@ include("capsa-archetypes-command")
 include("capsa-archetypes-query")
 include("capsa-archetypes-app")
 include("capsa-archetypes-it")
+include("capsa-archetypes-web")
