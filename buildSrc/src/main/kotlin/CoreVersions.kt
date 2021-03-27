@@ -1,6 +1,8 @@
 @file:Suppress("detekt.StringLiteralDuplication")
 
 object CoreVersion {
+    const val EXPOSED = "0.17.9"
+    const val KTOR = "1.5.2"
     const val APACHE_COMMONS = "1.9"
     const val ASSERTK_JVM = "0.22"
     const val CAPSA = "0.2.6"
@@ -9,7 +11,6 @@ object CoreVersion {
     const val JAVA_HAMCREST = "2.0.0.0"
     const val JAXB_API = "2.3.1"
     const val JAXB_IMPL = "3.0.0"
-    const val KOTLIN = "1.4.21"
     const val LOGBACK_CONTRIB = "0.1.5"
     const val OPENAPI = "1.5.3"
     const val REACTOR_BOM = "Californium-RELEASE"
