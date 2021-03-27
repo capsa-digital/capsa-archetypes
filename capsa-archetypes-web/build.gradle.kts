@@ -10,6 +10,11 @@ dependencies {
 kotlin {
     js(LEGACY) {
         browser {
+            browser {
+                runTask {
+                    devServer = devServer?.copy(port = 3000)
+                }
+            }
             binaries.executable()
             webpackTask {
                 cssSupport.enabled = true

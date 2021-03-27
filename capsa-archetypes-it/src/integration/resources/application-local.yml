@@ -8,7 +8,7 @@ spring:
           group: integrationTest
 ui:
   host: 172.17.0.1
-  port: 8081
+  port: 3000
   schema: http
   basePath:
 api:
