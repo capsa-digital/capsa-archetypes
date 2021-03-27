@@ -6,9 +6,22 @@ spring:
           destination: capsa-event-bus-local
           binder: kafka
           group: integrationTest
-      schema-registry-client:
-        endpoint: http://localhost:8081
-capsa:
+ui:
+  host: 172.17.0.1
+  port: 8081
+  schema: http
+  basePath:
+api:
   host: localhost
   port: 8080
+  schema: http
+  basePath:
+wireMock:
+  host: localhost
+  port: 9090
+  schema: http
+  basePath:
+webDriver:
+  host: localhost
+  port: 4444
   schema: http

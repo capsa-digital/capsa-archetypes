@@ -33,9 +33,9 @@ class Member(
     override fun onCreate() {
         httpRequest("/requests/register-member.json")
             .withTransformation(
-                "$.schema" to context.environment.getProperty("capsa.schema"),
-                "$.host" to context.environment.getProperty("capsa.host"),
-                "$.port" to context.environment.getProperty("capsa.port"),
+                "$.schema" to context.environment.getProperty("api.schema"),
+                "$.host" to context.environment.getProperty("api.host"),
+                "$.port" to context.environment.getProperty("api.port"),
                 "$.body.firstName" to firstName,
                 "$.body.lastName" to lastName,
                 "$.body.email" to email,

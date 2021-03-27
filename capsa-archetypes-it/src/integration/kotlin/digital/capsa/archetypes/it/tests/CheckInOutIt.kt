@@ -5,16 +5,16 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import digital.capsa.archetypes.eventbus.data.BookCheckedOut
 import digital.capsa.archetypes.it.TestBase
-import digital.capsa.it.TestContext
 import digital.capsa.archetypes.it.aggregate.Account
 import digital.capsa.archetypes.it.aggregate.Book
 import digital.capsa.archetypes.it.aggregate.Library
 import digital.capsa.archetypes.it.aggregate.Member
 import digital.capsa.archetypes.it.aggregate.account
-import digital.capsa.it.aggregate.getChild
 import digital.capsa.archetypes.it.event.EventSnooper
 import digital.capsa.archetypes.it.httpRequest
-import digital.capsa.archetypes.it.runner.TabularSource
+import digital.capsa.it.TestContext
+import digital.capsa.it.aggregate.getChild
+import digital.capsa.it.runner.TabularSource
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest
@@ -24,7 +24,7 @@ import java.time.LocalDate
 import kotlin.test.assertEquals
 
 @DisplayName("Verify Book CheckIn/CheckOut functionality")
-class CheckInOutTest : TestBase() {
+class CheckInOutIt : TestBase() {
 
     companion object {
 
@@ -63,9 +63,9 @@ class CheckInOutTest : TestBase() {
         eventSnooper.clear()
         httpRequest("/requests/check-out-book.json")
             .withTransformation(
-                "$.schema" to appSchema,
-                "$.host" to appHost,
-                "$.port" to appPort,
+                "$.schema" to apiSchema,
+                "$.host" to apiHost,
+                "$.port" to apiPort,
                 "$.body.bookId" to bookId.toString(),
                 "$.body.memberId" to memberId.toString(),
                 "$.body.days" to days

@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 
 @DisplayName("Create Library, Members and Books")
-class CreateLibraryTest : TestBase() {
+class CreateLibraryIt : TestBase() {
 
     companion object {
 
@@ -57,9 +57,9 @@ class CreateLibraryTest : TestBase() {
         val libraryId = demoAccount.getChild<Library>(0).id
         httpRequest("/requests/get-book-list.json")
             .withTransformation(
-                "$.schema" to appSchema,
-                "$.host" to appHost,
-                "$.port" to appPort,
+                "$.schema" to apiSchema,
+                "$.host" to apiHost,
+                "$.port" to apiPort,
                 "$.body.libraryId" to libraryId.toString()
             )
             .send {
@@ -72,9 +72,9 @@ class CreateLibraryTest : TestBase() {
         val memberId = demoAccount.getChild<Member>(0).id
         httpRequest("/requests/get-member-details.json")
             .withTransformation(
-                "$.schema" to appSchema,
-                "$.host" to appHost,
-                "$.port" to appPort,
+                "$.schema" to apiSchema,
+                "$.host" to apiHost,
+                "$.port" to apiPort,
                 "$.path" to "/getMemberDetails/${memberId.toString()}"
             )
             .send {

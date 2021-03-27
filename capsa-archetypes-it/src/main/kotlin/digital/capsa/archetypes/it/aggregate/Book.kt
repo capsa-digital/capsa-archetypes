@@ -26,9 +26,9 @@ class Book(
     private fun addBook() {
         httpRequest("/requests/add-book.json")
             .withTransformation(
-                "$.schema" to context.environment.getProperty("capsa.schema"),
-                "$.host" to context.environment.getProperty("capsa.host"),
-                "$.port" to context.environment.getProperty("capsa.port"),
+                "$.schema" to context.environment.getProperty("api.schema"),
+                "$.host" to context.environment.getProperty("api.host"),
+                "$.port" to context.environment.getProperty("api.port"),
                 "$.body.libraryId" to parent!!.id.toString(),
                 "$.body.volume" to volume
             )

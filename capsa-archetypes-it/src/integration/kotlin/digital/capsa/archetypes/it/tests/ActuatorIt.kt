@@ -11,29 +11,20 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 @DisplayName("Actuator Test")
-class ActuatorTest : TestBase() {
+class ActuatorIt : TestBase() {
 
     @Test
     fun `call command actuator`() {
-        callActuator(appSchema, appHost, appPort, "Capsa Application")
-    }
-
-    private fun callActuator(
-        schema: String,
-        host: String,
-        port: String,
-        appName: String
-    ) {
         httpRequest("/requests/actuator-info.json")
             .withTransformation(
-                "$.schema" to schema,
-                "$.host" to host,
-                "$.port" to port
+                "$.schema" to apiSchema,
+                "$.host" to apiHost,
+                "$.port" to apiPort
             )
             .send {
                 assertThat(statusCode.value()).isEqualTo(200)
                 assertThat(body).isJsonWhere(
-                    ValidationRule("$.app.name", OpType.equal, appName),
+                    ValidationRule("$.app.name", OpType.equal, "Capsa Application"),
                     ValidationRule(
                         "$.app.env", OpType.equal,
                         System.getProperty("spring.profiles.active", "")

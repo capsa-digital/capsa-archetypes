@@ -33,9 +33,9 @@ class Library(
     private fun createLibrary() {
         httpRequest("/requests/create-library.json")
             .withTransformation(
-                "$.schema" to context.environment.getProperty("capsa.schema"),
-                "$.host" to context.environment.getProperty("capsa.host"),
-                "$.port" to context.environment.getProperty("capsa.port"),
+                "$.schema" to context.environment.getProperty("api.schema"),
+                "$.host" to context.environment.getProperty("api.host"),
+                "$.port" to context.environment.getProperty("api.port"),
                 "$.body.libraryName" to libraryName,
                 "$.body.address" to address
             )
