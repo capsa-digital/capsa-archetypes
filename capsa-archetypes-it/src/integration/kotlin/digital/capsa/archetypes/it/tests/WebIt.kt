@@ -19,7 +19,7 @@ class WebIt : TestBase() {
                 driver.navigate().to("$uiSchema://$uiHost:$uiPort$uiBasePath")
             }
         }.then { driver ->
-            assertEquals("Capsa Library", driver.title)
+            assertEquals("Capsa UI", driver.title)
         }
     }
 }
