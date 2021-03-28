@@ -2,6 +2,7 @@ package digital.capsa.archetypes.bff
 
 import io.ktor.application.call
 import io.ktor.http.content.defaultResource
+import io.ktor.http.content.files
 import io.ktor.http.content.static
 import io.ktor.response.respondText
 import io.ktor.routing.get
@@ -14,6 +15,9 @@ fun main() {
         routing {
             static("/") {
                 defaultResource("index.html")
+            }
+            static("web") {
+                files("web")
             }
             get("/bff") {
                 call.respondText("Hello, bff!")
